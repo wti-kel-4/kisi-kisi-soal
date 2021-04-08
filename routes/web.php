@@ -14,20 +14,21 @@ use App\Http\Controllers\StudyController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\UserController;
 
-Route::get('/', function () {
-    return view('dashboard');
+
+
+Route::prefix('admin')->group(function(){
+    Route::get('dashboard', function () {
+        return view('admin.dashboard');
+    });
+
+    Route::resource('basic-competency', BasicCompetencyController::class);
+    Route::resource('department', DepartmentController::class);
+    Route::resource('grade', GradeController::class);
+    Route::resource('lesson', LessonController::class);
+    Route::resource('profile', ProfileController::class);
+    Route::resource('question-card', QuestionCardController::class);
+    Route::resource('question-grid', QuestionGridController::class);
+    Route::resource('study', StudyController::class);
+    Route::resource('teacher', TeacherController::class);
+    Route::resource('user', UserController::class);
 });
-
-Route::resource('basic-competency', BasicCompetencyController::class);
-Route::resource('department', DepartmentController::class);
-Route::resource('employee', EmployeeController::class);
-Route::resource('grade', GradeController::class);
-Route::resource('job', JobController::class);
-Route::resource('lesson', LessonController::class);
-Route::resource('profile', ProfileController::class);
-Route::resource('question-card', QuestionCardController::class);
-Route::resource('question-grid', QuestionGridController::class);
-Route::resource('study', StudyController::class);
-Route::resource('teacher', TeacherController::class);
-Route::resource('user', UserController::class);
-

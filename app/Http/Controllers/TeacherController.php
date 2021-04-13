@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Teacher;
 
 class TeacherController extends Controller
 {
@@ -13,7 +14,8 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        return view('admin.teacher.index');
+        $teachers = Teacher::orderBy('nip', 'ASC')->get();
+        return view('admin.teacher.index', compact('teachers'));
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\QuestionGrid;
 
 class QuestionGridController extends Controller
 {
@@ -13,7 +14,8 @@ class QuestionGridController extends Controller
      */
     public function index()
     {
-        //
+        $question_grids = QuestionGrid::orderBy('created_at', 'DESC')->get();
+        return view('admin.question_grid.index', compact('question_grids'));
     }
 
     /**

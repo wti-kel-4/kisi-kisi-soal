@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class BasicCompetency extends Model
 {
     use HasFactory;
+
+    public function study() {
+		  return $this->belongsTo('App\Models\Study', 'studies_id', 'id');
+	  }
 }

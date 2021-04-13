@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\BasicCompetency;
 
 class BasicCompetencyController extends Controller
 {
@@ -13,7 +14,8 @@ class BasicCompetencyController extends Controller
      */
     public function index()
     {
-        //
+        $basic_competencies = BasicCompetency::all();
+        return view('admin.basic_competency.index', compact('basic_competencies'));
     }
 
     /**

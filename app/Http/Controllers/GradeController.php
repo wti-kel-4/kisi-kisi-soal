@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Grade;
 
 class GradeController extends Controller
 {
@@ -13,7 +14,8 @@ class GradeController extends Controller
      */
     public function index()
     {
-        //
+        $grades = Grade::orderBy('name', 'ASC')->get();
+        return view('admin.grade.index', compact('grades'));
     }
 
     /**

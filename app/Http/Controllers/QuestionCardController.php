@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\QuestionCard;
 
 class QuestionCardController extends Controller
 {
@@ -13,7 +14,8 @@ class QuestionCardController extends Controller
      */
     public function index()
     {
-        //
+        $question_cards = QuestionCard::orderBy('created_at', 'DESC')->get();
+        return view('admin.question_card.index', compact('question_cards'));
     }
 
     /**

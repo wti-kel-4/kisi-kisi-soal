@@ -3,7 +3,7 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-        <h1>Data Guru</h1>
+        <h1>Data Mata Pelajaran</h1>
         <div class="section-header-breadcrumb">
             <a href="#" class="btn btn-icon icon-left btn-success"><i class="fas fa-plus"></i> Tambah Data</a>
         </div>
@@ -14,7 +14,7 @@
                 <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                    <h4>Data Guru</h4>
+                    <h4>Data Mata Pelajaran</h4>
                     <div class="card-header-form">
                         <form>
                         <div class="input-group">
@@ -31,18 +31,20 @@
                         <table class="table table-striped">
                         <tr>
                             <th>No</th>
-                            <th>NIP</th>
                             <th>Nama</th>
+                            <th>Guru Mata Pelajaran</th>
+                            <th>Kelas</th>
                             <th>Aksi</th>
                         </tr>
                         @php
                             $no = 1;  
                         @endphp
-                        @foreach ($teachers as $teacher)
+                        @foreach ($studies as $study)
                         <tr>
                             <td>{{ $no }}</td>
-                            <td>{{ $teacher->nip }}</td>
-                            <td>{{ $teacher->name }}</td>
+                            <td>{{ $study->name }}</td>
+                            <td>{{ $study->teacher->name }}</td>
+                            <td>{{ $study->grade->name }}</td>
                             <td><a href="#" class="btn btn-secondary">Detail</a></td>
                         </tr>
                             @php

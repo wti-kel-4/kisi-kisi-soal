@@ -21,9 +21,9 @@ class DatabaseSeeder extends Seeder
             StudySeeder::class,
             LessonSeeder::class,
             ProfileSeeder::class,
-            QuestionCardSeeder::class,
             BasicCompetencySeeder::class,
-            QuestionGridSeeder::class,            
+            QuestionGridSeeder::class,
+            QuestionCardSeeder::class,            
             UserSeeder::class
         ]);
     }

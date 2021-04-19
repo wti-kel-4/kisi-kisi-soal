@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="{{ asset('node_modules/weathericons/css/weather-icons.min.css') }}">
   <link rel="stylesheet" href="{{ asset('node_modules/weathericons/css/weather-icons-wind.min.css') }}">
   <link rel="stylesheet" href="{{ asset('node_modules/summernote/dist/summernote-bs4.css') }}">
-  <link rel="stylesheet" href="{{ asset('node_modules/select2/dist/css/select2.min.css') }}">
 
   <!-- Template CSS -->
   <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">

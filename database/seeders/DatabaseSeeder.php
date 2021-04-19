@@ -24,7 +24,8 @@ class DatabaseSeeder extends Seeder
             BasicCompetencySeeder::class,
             QuestionGridSeeder::class,
             QuestionCardSeeder::class,            
-            UserSeeder::class
+            UserSeeder::class,
+            AdminSeeder::class,
         ]);
     }
 }

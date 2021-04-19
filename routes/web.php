@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BasicCompetencyController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EmployeeController;
@@ -16,10 +17,15 @@ use App\Http\Controllers\UserController;
 
 
 
+Route::get('login', [AuthController::class, 'index']);
+Route::post('login', [AuthController::class, 'login'])->name('login');
+Route::post('logout', [AuthController::class, 'logout']);
+
 Route::prefix('admin')->group(function(){
     Route::get('dashboard', function () {
         return view('admin.dashboard');
     });
+
 
     Route::resource('basic-competency', BasicCompetencyController::class);
     Route::resource('department', DepartmentController::class);

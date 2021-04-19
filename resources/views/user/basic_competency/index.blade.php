@@ -3,9 +3,9 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-        <h1>Data Kelas</h1>
+        <h1>Data Kompetensi Dasar</h1>
         <div class="section-header-breadcrumb">
-            <a href="{{ route('grade.create') }}" class="btn btn-icon icon-left btn-success"><i class="fas fa-plus"></i> Tambah Data</a>
+            <a href="#" class="btn btn-icon icon-left btn-success"><i class="fas fa-plus"></i> Tambah Data</a>
         </div>
         </div>
 
@@ -14,7 +14,7 @@
                 <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                    <h4>Data Kelas</h4>
+                    <h4>Data Kompetensi Dasar</h4>
                     <div class="card-header-form">
                         <form>
                         <div class="input-group">
@@ -32,19 +32,17 @@
                         <tr>
                             <th>No</th>
                             <th>Nama</th>
-                            <th>Guru Wali Kelas</th>
-                            <th>Termasuk Kelas</th>
+                            <th>Mata Pelajaran</th>
                             <th>Aksi</th>
                         </tr>
                         @php
                             $no = 1;  
                         @endphp
-                        @foreach ($grades as $grade)
+                        @foreach ($basic_competencies as $basic_competency)
                         <tr>
                             <td>{{ $no }}</td>
-                            <td>{{ $grade->name }}</td>
-                            <td>{{ $grade->teacher->name }}</td>
-                            <td>{{ $grade->grade_specialization->name }}</td>
+                            <td>{{ $basic_competency->name }}</td>
+                            <td>{{ $basic_competency->study->name }}</td>
                             <td><a href="#" class="btn btn-secondary">Detail</a></td>
                         </tr>
                             @php

@@ -6,15 +6,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script src="{{ asset('assets/js/stisla.js') }}"></script>
 
-<!-- JS Libraies -->
-<script src="{{ asset('node_modules/simpleweather/jquery.simpleWeather.min.js') }}"></script>
-<script src="{{ asset('node_modules/chart.js/dist/Chart.min.js') }}"></script>
-<script src="{{ asset('node_modules/jqvmap/dist/jquery.vmap.min.js') }}"></script>
-<script src="{{ asset('node_modules/jqvmap/dist/maps/jquery.vmap.world.js') }}"></script>
-<script src="{{ asset('node_modules/summernote/dist/summernote-bs4.js') }}"></script>
-<script src="{{ asset('node_modules/chocolat/dist/js/jquery.chocolat.min.js') }}"></script>
-<script src="{{ asset('node_modules/select2/dist/js/select2.full.min.js') }}"></script>
-
 <!-- Template JS File -->
 <script src="{{ asset('assets/js/scripts.js') }}"></script>
 <script src="{{ asset('assets/js/custom.js') }}"></script>

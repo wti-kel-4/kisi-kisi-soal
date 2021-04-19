@@ -1,11 +1,11 @@
-@extends('admin.master.main')
+@extends('user.master.main')
 @section('body')
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-        <h1>Data Kelas</h1>
+        <h1>Data Kisi - Kisi Soal</h1>
         <div class="section-header-breadcrumb">
-            <a href="{{ route('grade.create') }}" class="btn btn-icon icon-left btn-success"><i class="fas fa-plus"></i> Tambah Data</a>
+            <a href="#" class="btn btn-icon icon-left btn-success"><i class="fas fa-plus"></i> Tambah Data</a>
         </div>
         </div>
 
@@ -14,7 +14,7 @@
                 <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                    <h4>Data Kelas</h4>
+                    <h4>Data Kisi - Kisi Soal</h4>
                     <div class="card-header-form">
                         <form>
                         <div class="input-group">
@@ -31,20 +31,26 @@
                         <table class="table table-striped">
                         <tr>
                             <th>No</th>
-                            <th>Nama</th>
-                            <th>Guru Wali Kelas</th>
-                            <th>Termasuk Kelas</th>
+                            <th>Digunakan Untuk</th>
+                            <th>Untuk Ujian</th>
+                            <th>Mata Pelajaran</th>
+                            <th>Total Soal</th>
+                            <th>Kompetensi Dasar</th>
+                            <th>Indikator</th>
                             <th>Aksi</th>
                         </tr>
                         @php
                             $no = 1;  
                         @endphp
-                        @foreach ($grades as $grade)
+                        @foreach ($question_grids as $question_grid)
                         <tr>
                             <td>{{ $no }}</td>
-                            <td>{{ $grade->name }}</td>
-                            <td>{{ $grade->teacher->name }}</td>
-                            <td>{{ $grade->grade_specialization->name }}</td>
+                            <td>{{ $question_grid->teacher->name }}</td>
+                            <td>{{ $question_grid->type }}</td>
+                            <td>{{ $question_grid->study->name }}</td>
+                            <td>{{ $question_grid->total }}</td>
+                            <td>{{ $question_grid->basic_competency->name }}</td>
+                            <td>{{ $question_grid->indicator }}</td>
                             <td><a href="#" class="btn btn-secondary">Detail</a></td>
                         </tr>
                             @php

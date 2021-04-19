@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Grade;
+use App\Models\GradeSpecialization;
+use App\Models\Teacher;
 
 class GradeController extends Controller
 {
@@ -25,7 +27,9 @@ class GradeController extends Controller
      */
     public function create()
     {
-        //
+        $teachers = Teacher::all();
+        $grade_specializations = GradeSpecialization::all();
+        return view('admin.grade.create', compact('teachers', 'grade_specializations'));
     }
 
     /**

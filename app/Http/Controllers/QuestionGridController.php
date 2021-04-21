@@ -83,4 +83,19 @@ class QuestionGridController extends Controller
     {
         //
     }
+
+    public function get_step_1()
+    {
+        return view('user.question_grid.step_1');
+    }
+
+    public function get_step_2()
+    {
+        return view('user.question_grid.step_2');
+    }
+
+    public function get_step_3()
+    {
+        return view('user.question_grid.step_3');
+    }
 }

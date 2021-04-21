@@ -19,13 +19,32 @@ use App\Http\Controllers\UserController;
 
 Route::get('login', [AuthController::class, 'index']);
 Route::post('login', [AuthController::class, 'login'])->name('login');
-Route::post('logout', [AuthController::class, 'logout']);
+Route::post('/logout', [AuthController::class, 'logout']);
 
-Route::prefix('admin')->group(function(){
+Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function(){
     Route::get('dashboard', function () {
         return view('admin.dashboard');
     });
+    Route::resource('basic-competency', BasicCompetencyController::class);
+    Route::resource('department', DepartmentController::class);
+    Route::resource('grade', GradeController::class);
+    Route::resource('lesson', LessonController::class);
+    Route::resource('profile', ProfileController::class);
+    Route::resource('question-card', QuestionCardController::class);
+    Route::resource('question-grid', QuestionGridController::class);
+    Route::resource('study', StudyController::class);
+    Route::resource('teacher', TeacherController::class);
+    Route::resource('user', UserController::class);
+});
 
+Route::group(['prefix' => 'user', 'middleware' => ['user']], function(){
+    Route::get('dashboard', function () {
+        return view('user.dashboard');
+    });
+
+    Route::get('step-1', [QuestionGridController::class, 'get_step_1'])->name('question_grid_step_1');
+    Route::get('step-2', [QuestionGridController::class, 'get_step_2'])->name('question_grid_step_2');
+    Route::get('step-3', [QuestionGridController::class, 'get_step_3'])->name('question_grid_step_3');;
 
     Route::resource('basic-competency', BasicCompetencyController::class);
     Route::resource('department', DepartmentController::class);

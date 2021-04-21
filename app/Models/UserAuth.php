@@ -12,4 +12,8 @@ class UserAuth extends Authenticatable
     use HasFactory, Notifiable;
 
     protected $table = 'users';
+
+    public function teacher() {
+        return $this->belongsTo('App\Models\Teacher', 'teachers_id', 'id');
+    }
 }

@@ -8,19 +8,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="EEducation master is one of the best eEducational html template, it's suitable for all eEducation websites like university,college,school,online eEducation,tution center,distance eEducation,computer eEducation">
     <meta name="keyword" content="eEducation html template, university template, college template, school template, online eEducation template, tution center template">
-    @include('admin.master.style')
+    @include('user.master.style')
 </head>
 
 <body>
     <div id="app">
         <div class="main-wrapper">
-            @include('admin.master.navbar')
-            @include('admin.master.sidebar')
+            @include('user.master.navbar')
+            @include('user.master.sidebar')
             @yield('body')
-            @include('admin.master.footer')
+            @include('user.master.footer')
         </div>
     </div>
-    @include('admin.master.script')
+    @include('user.master.script')
     @yield('script')
 </body>
 </html>

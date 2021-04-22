@@ -17,7 +17,7 @@
                       <div class="col-lg-6 col-md-6">
                         <div class="form-group">
                           <label>Satuan Pendidikan</label>
-                          <input type="text" class="form-control" disabled>
+                          <input type="text" class="form-control" value="{{ $profile->name }}" disabled>
                         </div>
                         <div class="form-group">
                           <label>Mata Pelajaran (Pilihan dari daftar mata pelajaran yang Anda ajar)</label>

@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\QuestionGrid;
+use App\Models\Profile;
+use App\Models\Study;
+use Auth;
 
 class QuestionGridController extends Controller
 {
@@ -86,7 +89,10 @@ class QuestionGridController extends Controller
 
     public function get_step_1()
     {
-        return view('user.question_grid.step_1');
+        $profile = Profile::first();
+        $teachers_id = Auth::guard('user')->user()->teacher->id;
+        $studies = Study::where('teachers_id', $teachers_id)->get();
+        return view('user.question_grid.step_1', compact('profile', 'studies'));
     }
 
     public function get_step_2()

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\BasicCompetency;
+use App\Models\Study;
 
 class BasicCompetencyController extends Controller
 {
@@ -15,7 +16,7 @@ class BasicCompetencyController extends Controller
     public function index()
     {
         $basic_competencies = BasicCompetency::all();
-        return view('admin.basic_competency.index', compact('basic_competencies'));
+        return view('admin.basic_competency.index', compact('basic_competencies'))->with('study');
     }
 
     /**
@@ -25,7 +26,9 @@ class BasicCompetencyController extends Controller
      */
     public function create()
     {
-        //
+        $study = Study::all();
+        return view('admin.basic_competency.create', compact('study'));
+        // return view('admin.basic_competency.create');
     }
 
     /**
@@ -36,7 +39,16 @@ class BasicCompetencyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $request->validate([
+            'name' => 'required',
+            'studies_id' => 'required',
+        ]);
+
+
+        BasicCompetency::create($request->all());
+        return redirect()->route('basic-competency.index')
+                            ->with('success', 'Berhasil menambahkan data.');
     }
 
     /**
@@ -47,7 +59,8 @@ class BasicCompetencyController extends Controller
      */
     public function show($id)
     {
-        //
+        $basic_competencies = BasicCompetency::find($id);
+        return view('admin.basic_competency.show', compact('basic_competencies'));
     }
 
     /**
@@ -58,7 +71,7 @@ class BasicCompetencyController extends Controller
      */
     public function edit($id)
     {
-        //
+        return redirect()->route('basic-competency.edit', compact('basic_competency'));
     }
 
     /**
@@ -68,9 +81,17 @@ class BasicCompetencyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    // public function update(Request $request, $id)
+    public function update(Request $request, BasicCompetency $basic_competencies)
     {
-        //
+        $request->validate([
+        'name' => 'required',
+        'studies_id' => 'required',
+        ]);
+
+        $basic_competencies->update($request->all());
+        return redirect()->route('basic-competency.index')
+                            ->with('success', 'Berhasil mengedit data.');
     }
 
     /**
@@ -81,6 +102,8 @@ class BasicCompetencyController extends Controller
      */
     public function destroy($id)
     {
-        //
+        BasicCompetency::find($id)->delete();
+        return redirect()->route('basic-competency.index')
+                            ->with('success', 'Berhasil menghapus data.');
     }
 }

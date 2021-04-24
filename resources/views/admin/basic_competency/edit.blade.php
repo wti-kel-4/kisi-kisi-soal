@@ -3,7 +3,7 @@
 <div class="main-content" style="min-height: 564px;">
     <section class="section">
         <div class="section-header">
-            <h1>Data Kompetensi Dasar</h1>
+            <h1>Edit Data Kompetensi Dasar</h1>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="#">Kompetensi Dasar</a></div>
             </div>
@@ -26,9 +26,9 @@
                             <div class="form-group">
                                 <label for="">Mata Pelajaran</label>
                                 <select name="studies_id" id="name" class="form-control">
-                                    @foreach ($study as $study)
-                                    <option selected value="{{$study->id}}">{{$study->name}}</option>
-                                    @endforeach
+                                    {{-- @foreach ($study as $study) --}}
+                                    <option value="{{$basic_competencies->study->id}}">{{$basic_competencies->study->name}}</option>
+                                    {{-- @endforeach --}}
                                 </select>
                             </div>
                         </div>

@@ -15,25 +15,23 @@
                     <div class="card">
                         <form action="{{ route('basic-competency.store') }}" method="post">
                             @csrf
+                            @method('GET')
                         <div class="card-header">
                             <h4>Default Validation</h4>
                         </div>
                         <div class="card-body">
                             <div class="form-group mb-0">
                             <label>Nama Kompetensi Dasar</label>
-                            <textarea name="name" class="form-control" required=""></textarea>
+                            <textarea disabled name="name" class="form-control" required="">{{$basic_competencies->name}}</textarea>
                             </div>
                             <div class="form-group">
                                 <label for="">Mata Pelajaran</label>
-                                <select name="studies_id" id="name" class="form-control">
-                                    @foreach ($study as $study)
-                                    <option selected value="{{$study->id}}">{{$study->name}}</option>
-                                    @endforeach
+                                <select disabled name="studies_id" id="name" class="form-control">
+                                    
+                                    <option selected value="{{$basic_competencies->study->id}}">{{$basic_competencies->study->name}}</option>
+                                    
                                 </select>
                             </div>
-                        </div>
-                        <div class="card-footer text-right">
-                            <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                         </form>
                     </div>

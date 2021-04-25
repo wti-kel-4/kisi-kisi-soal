@@ -5,7 +5,7 @@
         <div class="section-header">
         <h1>Data Kompetensi Dasar</h1>
         <div class="section-header-breadcrumb">
-            <a href="#" class="btn btn-icon icon-left btn-success"><i class="fas fa-plus"></i> Tambah Data</a>
+            <a href="{{ route('basic-competency.create') }}" class="btn btn-icon icon-left btn-success"><i class="fas fa-plus"></i> Tambah Data</a>
         </div>
         </div>
 
@@ -33,7 +33,7 @@
                             <th>No</th>
                             <th>Nama</th>
                             <th>Mata Pelajaran</th>
-                            <th>Aksi</th>
+                            <th style="width: 300px">Aksi</th>
                         </tr>
                         @php
                             $no = 1;  
@@ -43,7 +43,14 @@
                             <td>{{ $no }}</td>
                             <td>{{ $basic_competency->name }}</td>
                             <td>{{ $basic_competency->study->name }}</td>
-                            <td><a href="#" class="btn btn-secondary">Detail</a></td>
+                            <td><form action="{{ route('basic-competency.destroy', $basic_competency->id)}}">
+                                <a href="{{ route('basic-competency.show', $basic_competency->id) }}" class="btn btn-info">Detail</a>
+                                <a href="{{ route('basic-competency.edit', $basic_competency->id) }}" class="btn btn-primary">Edit</a>
+                                @csrf
+                                @method('DELETE')
+                                <button href="{{ route('basic-competency.destroy', $basic_competency->id) }}" type="submit" class="btn btn-danger">Hapus</button>
+                                </form>
+                            </td>
                         </tr>
                             @php
                                 $no++;

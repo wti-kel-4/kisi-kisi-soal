@@ -5,7 +5,7 @@
         <div class="section-header">
         <h1>Data Mata Pelajaran</h1>
         <div class="section-header-breadcrumb">
-            <a href="#" class="btn btn-icon icon-left btn-success"><i class="fas fa-plus"></i> Tambah Data</a>
+            <a href="{{ route('study.create') }}" class="btn btn-icon icon-left btn-success"><i class="fas fa-plus"></i> Tambah Data</a>
         </div>
         </div>
 
@@ -45,7 +45,13 @@
                             <td>{{ $study->name }}</td>
                             <td>{{ $study->teacher->name }}</td>
                             <td>{{ $study->grade->name }}</td>
-                            <td><a href="#" class="btn btn-secondary">Detail</a></td>
+                            <td><form action="{{ route('study.destroy', $study->id)}}">
+                                <a href="{{ route('study.edit', $study->id) }}" class="btn btn-primary">Edit</a>
+                                @csrf
+                                @method('DELETE')
+                                <button href="{{ route('study.destroy', $study->id) }}" type="submit" class="btn btn-danger">Hapus</button>
+                                </form>
+                            </td>
                         </tr>
                             @php
                                 $no++;

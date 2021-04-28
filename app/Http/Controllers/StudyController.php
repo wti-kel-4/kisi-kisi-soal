@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Study;
+use App\Models\Teacher;
+use App\Models\Grade;
 
 class StudyController extends Controller
 {
@@ -15,7 +17,7 @@ class StudyController extends Controller
     public function index()
     {
         $studies = Study::orderBy('name', 'ASC')->get();
-        return view('admin.study.index', compact('studies'));
+        return view('admin.study.index', compact('studies'))->with('teacher','grade');
     }
 
     /**
@@ -25,7 +27,9 @@ class StudyController extends Controller
      */
     public function create()
     {
-        //
+        $teacher = Teacher::all();
+        $grade = Grade::all();
+        return view('admin.study.create', compact('teacher','grade'));
     }
 
     /**
@@ -36,7 +40,15 @@ class StudyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'teachers_id' => 'required',
+            'grades_id' => 'required',
+        ]);
+
+        Study::create($request->all());
+        return redirect()->route('study.index')
+                            ->with('success', 'Berhasil menambahkan data.');
     }
 
     /**
@@ -58,7 +70,11 @@ class StudyController extends Controller
      */
     public function edit($id)
     {
-        //
+        $study = Study::with('teacher','grade')->findorfail($id);
+        $teacher = Teacher::all();
+        $grade = Grade::all();
+        return view('admin.study.edit', compact('study','teacher','grade'));
+        // return redirect()->route('study.edit', compact('study','teacher','grade'));
     }
 
     /**
@@ -70,7 +86,10 @@ class StudyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+            $study = Study::findorfail($id);
+            $study->update($request->all());
+            return redirect()->route('study.index')
+                                ->with('success', 'Berhasil mengedit data.');
     }
 
     /**
@@ -81,6 +100,8 @@ class StudyController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $study = Study::findorfail($id);
+        $study->delete();
+        return back()->with('info', 'Data berhasil dihapus');
     }
 }

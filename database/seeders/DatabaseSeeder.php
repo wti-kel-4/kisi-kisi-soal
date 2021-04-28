@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             QuestionCardSeeder::class,            
             UserSeeder::class,
             AdminSeeder::class,
+            TeacherGradeSeeder::class,
         ]);
     }
 }

@@ -4,11 +4,11 @@
      <div class="main-content">
         <section class="section">
           <div class="section-header">
-            <h1>Langkah Pertama</h1>
+            <h1>Langkah Ketiga</h1>
           </div>
           <div class="section-body">
-            <h2 class="section-title">Lengkapi Identitas Kisi - Kisi Soal</h2>
-            <p class="section-lead">We provide advanced input fields, such as date picker, color picker, and so on.</p>
+            <h2 class="section-title">Verifikasi Data Kartu Soal Dan Beri Nama</h2>
+            <p class="section-lead">Lihat Ulang Data, Apakah sudah valid?</p>
             <div class="row">
               <div class="col-12">
                 <div class="card">

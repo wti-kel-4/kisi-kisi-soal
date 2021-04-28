@@ -6,93 +6,46 @@ use Illuminate\Http\Request;
 use App\Models\QuestionGrid;
 use App\Models\Profile;
 use App\Models\Study;
+use App\Models\TeacherGrade;
 use Auth;
+use Session;
+use App\Classes\QuestionGridClass;
 
 class QuestionGridController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $question_grids = QuestionGrid::orderBy('created_at', 'DESC')->get();
-        return view('admin.question_grid.index', compact('question_grids'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
     public function get_step_1()
     {
         $profile = Profile::first();
         $teachers_id = Auth::guard('user')->user()->teacher->id;
         $studies = Study::where('teachers_id', $teachers_id)->get();
-        return view('user.question_grid.step_1', compact('profile', 'studies'));
+        $teacher_grades = TeacherGrade::select('grades.id','grades.name')
+                                        ->leftJoin('grades', 'teacher_grades.grades_id', 'grades.id')
+                                        ->where('teacher_grades.teachers_id', $teachers_id)
+                                        ->get();
+        return view('user.question_grid.step_1', compact('profile', 'studies', 'teacher_grades'));
+    }
+
+    public function get_step_1_store(Request $request)
+    {
+        $satuan_pendidikan = $request->satuan_pendidikan;
+        $mata_pelajaran = $request->mata_pelajaran;
+        $kelas = $request->kelas;
+        $alokasi_waktu = $request->alokasi_waktu;
+        $jumlah_soal = $request->jumlah_soal;
+        $jenis_soal = $request->jenis_soal;
+        $tahun_ajaran = $request->tahun_ajaran;
+
+        $user = Auth::guard('user')->user();
+        $question_grid_step_1 = new QuestionGridClass;
+        $question_grid_step_1->satuan_pendidikan = $satuan_pendidikan;
+        $question_grid_step_1->mata_pelajaran = $mata_pelajaran;
+        $question_grid_step_1->kelas = $kelas;
+        $question_grid_step_1->alokasi_waktu = $alokasi_waktu;
+        $question_grid_step_1->jumlah_soal = $jumlah_soal;
+        $question_grid_step_1->jenis_soal = $jenis_soal;
+        $question_grid_step_1->tahun_ajaran = $tahun_ajaran;
+        Session::put('teachers_id_'.$user->id.'_question_grid_step_1', $question_grid_step_1);
+        return redirect()->route('question_grid_step_2');
     }
 
     public function get_step_2()

@@ -5,7 +5,7 @@
         <div class="section-header">
             <h1>Edit Data Mata Pelajaran</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="#">Mata Pelajaran</a></div>
+                <div class="breadcrumb-item active"><a href="{{ route('study.index') }}">Mata Pelajaran</a></div>
             </div>
             </div>
 

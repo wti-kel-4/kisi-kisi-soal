@@ -5,7 +5,7 @@
         <div class="section-header">
         <h1>Data Guru</h1>
         <div class="section-header-breadcrumb">
-            <a href="#" class="btn btn-icon icon-left btn-success"><i class="fas fa-plus"></i> Tambah Data</a>
+            <a href="{{route('teacher.create')}}" class="btn btn-icon icon-left btn-success"><i class="fas fa-plus"></i> Tambah Data</a>
         </div>
         </div>
 

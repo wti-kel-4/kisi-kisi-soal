@@ -27,8 +27,8 @@ class StudyController extends Controller
      */
     public function create()
     {
-        $teacher = Teacher::all();
-        $grade = Grade::all();
+        $teacher = Teacher::orderBy('name', 'ASC')->get();
+        $grade = Grade::orderBy('name', 'ASC')->get();
         return view('admin.study.create', compact('teacher','grade'));
     }
 
@@ -100,8 +100,12 @@ class StudyController extends Controller
      */
     public function destroy($id)
     {
-        $study = Study::findorfail($id);
-        $study->delete();
-        return back()->with('info', 'Data berhasil dihapus');
+        try{
+            $study = Study::findorfail($id);
+            $study->delete();
+            return back()->with('info', 'Data berhasil dihapus');
+        }catch(\Exception $e){
+            return back()->with('error', 'Mata Pelajaran sedang digunakan');
+        }
     }
 }

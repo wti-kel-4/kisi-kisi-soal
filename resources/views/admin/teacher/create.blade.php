@@ -13,30 +13,27 @@
             <div class="row">
                 <div class="col">
                     <div class="card">
-                        <form>
+                        <form action="{{ route('teacher.store') }}" method="post">
+                            @csrf
                         <div class="card-header">
                             <h4>Default Validation</h4>
                         </div>
                         <div class="card-body">
-                            <div class="form-group">
-                            <label>Your Name</label>
-                            <input type="text" class="form-control" required="">
-                            </div>
-                            <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" class="form-control" required="">
-                            </div>
-                            <div class="form-group">
-                            <label>Subject</label>
-                            <input type="email" class="form-control">
-                            </div>
                             <div class="form-group mb-0">
-                            <label>Message</label>
-                            <textarea class="form-control" required=""></textarea>
+                            <label>Nama Guru</label>
+                            <textarea name="name" class="form-control" required=""></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Mata Pelajaran</label>
+                                <select name="studies_id" id="name" class="form-control">
+                                    @foreach ($study as $study)
+                                    <option selected value="{{$study->id}}">{{$study->name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="card-footer text-right">
-                            <button class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                         </form>
                     </div>

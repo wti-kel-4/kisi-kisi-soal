@@ -10,6 +10,18 @@
         </div>
 
         <div class="section-body">
+            @if (Session::get('error'))
+            <div class="alert alert-warning alert-has-icon alert-dismissible show fade">
+                <div class="alert-icon"><i class="far fa-lightbulb"></i></div>
+                <div class="alert-body">
+                    <button class="close" data-dismiss="alert">
+                        <span>×</span>
+                      </button>
+                  <div class="alert-title">Perhatian</div>
+                  Mata Pelajaran sedang digunakan, data tidak berhasil dihapus
+                </div>
+              </div>
+            @endif
             <div class="row">
                 <div class="col-12">
                 <div class="card">
@@ -45,12 +57,13 @@
                             <td>{{ $study->name }}</td>
                             <td>{{ $study->teacher->name }}</td>
                             <td>{{ $study->grade->name }}</td>
-                            <td><form action="{{ route('study.destroy', $study->id)}}">
-                                <a href="{{ route('study.edit', $study->id) }}" class="btn btn-primary">Edit</a>
+                            <td>
+                            <form method="POST" action="{{ route('study.destroy', $study->id) }}">
                                 @csrf
-                                @method('DELETE')
-                                <button href="{{ route('study.destroy', $study->id) }}" type="submit" class="btn btn-danger">Hapus</button>
-                                </form>
+                                <a href="{{ route('study.edit', $study->id) }}" class="btn btn-primary">Edit</a>
+                                <input type="hidden" name="_method" value="DELETE" />
+                                <button type="submit" class="btn btn-danger">Hapus</button>
+                            </form>
                             </td>
                         </tr>
                             @php

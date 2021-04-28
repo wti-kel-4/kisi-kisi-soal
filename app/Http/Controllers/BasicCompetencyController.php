@@ -71,7 +71,10 @@ class BasicCompetencyController extends Controller
      */
     public function edit($id)
     {
-        return redirect()->route('basic-competency.edit', compact('basic_competency'));
+        $basic_competencies = BasicCompetency::findorfail($id);
+        $study = Study::all();
+        return view('admin.basic_competency.edit', compact('basic_competencies', 'study'));
+        // return redirect()->route('basic-competency.edit', compact('basic_competency'));
     }
 
     /**
@@ -81,15 +84,15 @@ class BasicCompetencyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // public function update(Request $request, $id)
-    public function update(Request $request, BasicCompetency $basic_competencies)
+    public function update(Request $request, $id)
     {
         $request->validate([
         'name' => 'required',
         'studies_id' => 'required',
         ]);
 
-        $basic_competencies->update($request->all());
+        $basic_competency = BasicCompetency::findorfail($id);
+        $basic_competency->update($request->all());
         return redirect()->route('basic-competency.index')
                             ->with('success', 'Berhasil mengedit data.');
     }
@@ -102,7 +105,8 @@ class BasicCompetencyController extends Controller
      */
     public function destroy($id)
     {
-        BasicCompetency::find($id)->delete();
+        $basic_competency = BasicCompetency::findorfail($id);
+        $basic_competency->delete();
         return redirect()->route('basic-competency.index')
                             ->with('success', 'Berhasil menghapus data.');
     }

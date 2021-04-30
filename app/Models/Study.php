@@ -16,7 +16,7 @@ class Study extends Model
 		    'grades_id',
     ];
 
-    public function teacher() {
+  public function teacher() {
 		return $this->belongsTo('App\Models\Teacher', 'teachers_id', 'id');
 	}
 

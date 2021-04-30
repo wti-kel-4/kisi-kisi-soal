@@ -11,4 +11,12 @@ class TeacherGrade extends Model
 
     protected $table = 'teacher_grades';
     public $timestamps = false;
+
+    public function teacher() {
+		return $this->belongsTo('App\Models\Teacher', 'teachers_id', 'id');
+	}
+
+    public function grade() {
+		return $this->belongsTo('App\Models\Grade', 'grades_id', 'id');
+	}
 }

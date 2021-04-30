@@ -13,6 +13,29 @@ use App\Classes\QuestionGridClass;
 
 class QuestionGridController extends Controller
 {
+    public function index()
+    {
+        $question_grids = QuestionGrid::orderBy('teachers_id', 'ASC')->get();
+        return view('admin.question_grid.index', compact('question_grids'))->with('teacher','study','basic_competency');
+    }
+
+    public function show($id)
+    {
+        $question_grid = QuestionGrid::find($id);
+        return view('admin.question_grid.show', compact('question_grid'));
+    }
+
+    public function destroy($id)
+    {
+        try{
+            $question_grid = QuestionGrid::findorfail($id);
+            $question_grid->delete();
+            return back()->with('info', 'Data berhasil dihapus');
+        }catch(\Exception $e){
+            return back()->with('error', 'Mata Pelajaran sedang digunakan');
+        }
+    }
+
     public function get_step_1()
     {
         $profile = Profile::first();
@@ -57,4 +80,6 @@ class QuestionGridController extends Controller
     {
         return view('user.question_grid.step_3');
     }
+
+  
 }

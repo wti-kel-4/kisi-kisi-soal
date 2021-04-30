@@ -14,8 +14,8 @@ class QuestionCardController extends Controller
      */
     public function index()
     {
-        $question_cards = QuestionCard::orderBy('created_at', 'DESC')->get();
-        return view('admin.question_card.index', compact('question_cards'));
+        $question_cards = QuestionCard::orderBy('number', 'ASC')->get();
+        return view('admin.question_card.index', compact('question_cards'))->with('question_grid');
     }
 
     /**
@@ -47,7 +47,8 @@ class QuestionCardController extends Controller
      */
     public function show($id)
     {
-        //
+        $question_card = QuestionCard::find($id);
+        return view('admin.question_card.show', compact('question_card'));
     }
 
     /**
@@ -81,6 +82,12 @@ class QuestionCardController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try{
+            $question_card = QuestionCard::findorfail($id);
+            $question_card->delete();
+            return back()->with('info', 'Data berhasil dihapus');
+        }catch(\Exception $e){
+            return back()->with('error', 'Mata Pelajaran sedang digunakan');
+        }
     }
 }

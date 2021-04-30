@@ -26,6 +26,7 @@
             <h1>Langkah Pertama</h1>
           </div>
           <div class="section-body">
+            @include('user.master.alert_error')
             <h2 class="section-title">Lengkapi Identitas Kisi - Kisi Soal</h2>
             <p class="section-lead">Lengkapi bagian header kisi - kisi soal</p>
             <div class="row">
@@ -48,9 +49,9 @@
                               @endif
                               @foreach ($studies as $study)
                                 @if ($mata_pelajaran == $study->name)
-                                  <option value="{{ $study->id }}" selected>{{ $study->name }}</option>
+                                  <option value="{{ $study->id }}" selected>{{ $study->name }} ({{ $study->grade->name }})</option>
                                 @else
-                                  <option value="{{ $study->id }}">{{ $study->name }}</option>
+                                  <option value="{{ $study->id }}">{{ $study->name }} ({{ $study->grade->name }})</option>
                                 @endif
                               @endforeach
                             </select>
@@ -74,7 +75,7 @@
                         <div class="col-lg-6 col-md-6">
                           <div class="form-group">
                             <label>Alokasi Waktu</label>
-                            <input name="alokasi_waktu" type="number" class="form-control" value="{{ $alokasi_waktu }}" placeholder="Masukkan alokasi waktu pengerjaan" required>
+                            <input name="alokasi_waktu" type="number" class="form-control" value="{{ $alokasi_waktu }}" placeholder="Masukkan alokasi waktu pengerjaan (dalam menit)" required>
                           </div>
                           <div class="row">
                             <div class="col">

@@ -7,9 +7,9 @@
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="#">Guru</a></div>
             </div>
-            </div>
+        </div>
 
-            <div class="section-body">
+        <div class="section-body">
             <div class="row">
                 <div class="col">
                     <div class="card">

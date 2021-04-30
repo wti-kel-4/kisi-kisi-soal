@@ -17,6 +17,7 @@ class CreateBasicCompetenciesTable extends Migration
             $table->id();
             $table->text('name');
             $table->foreignId('studies_id')->constrained('studies');
+            $table->foreignId('grade_specializations_id')->constrained('grade_specializations');
             $table->timestamps();
         });
     }

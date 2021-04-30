@@ -23,12 +23,12 @@
                             <input name="grade_name" type="text" class="form-control" required="">
                             </div>
                             <div class="form-group">
-                            <label>Guru</label>
-                            <select name="teacher" class="form-control select2">
-                                @foreach ($teachers as $teacher)
-                                    <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
-                                @endforeach
-                            </select>
+                                <label>Guru</label>
+                                <select name="teacher" class="form-control select2">
+                                    @foreach ($teachers as $teacher)
+                                        <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label>Kelas Spesialisasi</label>

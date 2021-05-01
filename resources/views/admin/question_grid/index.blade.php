@@ -31,10 +31,12 @@
                         <table class="table table-striped">
                         <tr>
                             <th>No</th>
-                            <th>Digunakan Untuk</th>
+                            <th>Guru</th>
                             <th>Untuk Ujian</th>
                             <th>Mata Pelajaran</th>
+                            <th>Durasi Pengerjaan</th>
                             <th>Total Soal</th>
+                            <th>Tahun Ajaran</th>
                             <th>Kompetensi Dasar</th>
                             <th>Indikator</th>
                             <th>Aksi</th>
@@ -48,10 +50,19 @@
                             <td>{{ $question_grid->teacher->name }}</td>
                             <td>{{ $question_grid->type }}</td>
                             <td>{{ $question_grid->study->name }}</td>
+                            <td>{{ $question_grid->time_allocation }}</td>
                             <td>{{ $question_grid->total }}</td>
+                            <td>{{ $question_grid->school_year }}</td>
                             <td>{{ $question_grid->basic_competency->name }}</td>
                             <td>{{ $question_grid->indicator }}</td>
-                            <td><a href="#" class="btn btn-secondary">Detail</a></td>
+                            <td>
+                            <a href="{{ route('question-grid.show', $question_grid->id) }}" class="btn btn-info mb-2">Detail</a>
+                            <form method="POST" action="{{ route('question-grid.destroy', $question_grid->id) }}">
+                                @csrf
+                                <input type="hidden" name="_method" value="DELETE" />
+                                <button type="submit" class="btn btn-danger">Hapus</button>
+                            </form>
+                            </td>
                         </tr>
                             @php
                                 $no++;

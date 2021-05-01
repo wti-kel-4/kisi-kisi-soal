@@ -31,11 +31,13 @@
                         <table class="table table-striped">
                         <tr>
                             <th>No</th>
+                            <th>Mata Pelajaran</th>
                             <th>Kompetensi Dasar</th>
                             <th>Indikator</th>
-                            <th>No Soal</th>
+                            <th>Nomor Soal</th>
                             <th>Buku Referensi</th>
                             <th>Pertanyaan</th>
+                            <th>Kunci</th>
                             <th>Aksi</th>
                         </tr>
                         @php
@@ -44,6 +46,7 @@
                         @foreach ($question_cards as $question_card)
                         <tr>
                             <td>{{ $no }}</td>
+                            <td>{{ $question_card->question_grid->study->name }}</td>
                             <td>{{ $question_card->question_grid->basic_competency->name }}</td>
                             <td>{{ $question_card->question_grid->indicator }}</td>
                             <td>{{ $question_card->number }}</td>
@@ -57,8 +60,17 @@
                                 @if ($question_card->reference_book_3 != null)
                                     , {{ $question_card->reference_book_3 }}
                                 @endif
+                            </td>
                             <td>{{ $question_card->question }}</td>
-                            <td><a href="#" class="btn btn-secondary">Detail</a></td>
+                            <td>{{ $question_card->key }}</td>
+                            <td>
+                            <a href="{{ route('question-card.show', $question_card->id) }}" class="btn btn-info mb-2">Detail</a>
+                            <form method="POST" action="{{ route('question-card.destroy', $question_card->id) }}">
+                                @csrf
+                                <input type="hidden" name="_method" value="DELETE" />
+                                <button type="submit" class="btn btn-danger">Hapus</button>
+                            </form>
+                            </td>
                         </tr>
                             @php
                                 $no++;

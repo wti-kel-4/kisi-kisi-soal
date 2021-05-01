@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->foreignId('teachers_id')->constrained('teachers'); // Grade umum untuk kisi - kisi soal
             $table->string('username');
             $table->string('password');
+            $table->text('url_photo')->nullable();
             $table->timestamps();
         });
     }

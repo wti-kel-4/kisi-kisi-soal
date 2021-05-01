@@ -48,7 +48,7 @@
                                 <option selected disabled>Anda tidak memiliki daftar mata pelajaran ajar</option>
                               @endif
                               @foreach ($studies as $study)
-                                @if ($mata_pelajaran == $study->name)
+                                @if ($mata_pelajaran == $study->id)
                                   <option value="{{ $study->id }}" selected>{{ $study->name }} ({{ $study->grade->name }})</option>
                                 @else
                                   <option value="{{ $study->id }}">{{ $study->name }} ({{ $study->grade->name }})</option>
@@ -59,14 +59,14 @@
                           <div class="form-group">
                             <label>Kelas (Pilihan dari daftar kelas yang Anda ajar)</label>
                             <select name="kelas" class="form-control" required>
-                              @if (count($teacher_grades) == 0)
+                              @if (count($teacher_grade_specializations) == 0)
                                 <option selected disabled>Anda tidak memiliki daftar kelas ajar</option>
                               @endif
-                              @foreach ($teacher_grades as $teacher_grade)
-                                @if ($kelas == $teacher_grade->name)
-                                <option value="{{ $teacher_grade->id }}" selected>{{ $teacher_grade->name }}</option>
+                              @foreach ($teacher_grade_specializations as $teacher_grade_specialization)
+                                @if ($kelas == $teacher_grade_specialization->id)
+                                <option value="{{ $teacher_grade_specialization->id }}" selected>{{ $teacher_grade_specialization->name }}</option>
                                 @else
-                                  <option value="{{ $teacher_grade->id }}">{{ $teacher_grade->name }}</option>
+                                  <option value="{{ $teacher_grade_specialization->id }}">{{ $teacher_grade_specialization->name }}</option>
                                 @endif
                               @endforeach
                             </select>

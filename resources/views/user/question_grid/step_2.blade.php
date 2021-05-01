@@ -3,6 +3,11 @@
   use Illuminate\Support\Facades\Auth;
   $user = Auth::guard('user')->user();
   $question_grid_step_2 = session('teachers_id_'.$user->id.'_question_grid_step_2');
+  if(session()->has('teachers_id_'.$user->id.'_temp')){
+    $qty_question_grid = session('teachers_id_'.$user->id.'_temp');
+  }else{
+    $qty_question_grid = 0;
+  }
 @endphp
 @section('body')
      <!-- Main Content -->
@@ -13,7 +18,9 @@
           </div>
           <div class="section-body">
             @include('user.master.alert_success')
-            <h2 class="section-title">Lengkapi Data Kisi - Kisi Soal (0/{{ $total_question_grid }})</h2>
+            @include('user.master.alert_error')
+            @include('user.master.alert_info')
+            <h2 class="section-title">Lengkapi Data Kisi - Kisi Soal ({{ $qty_question_grid }} Kisi - Kisi)</h2>
             <p class="section-lead">Tuliskan No urut, KD, Materi, Indikator Soal, Bentuk Soal, No Soal secara urut</p>
             <div class="row">
               <div class="col-12">
@@ -22,16 +29,35 @@
                     <form action="{{ route('question_grid_step_2.save') }}" method="POST">
                       @csrf
                       <div class="row">
-                        <div class="col-lg-1 col-md-1">
+                        <div class="col-lg-2 col-md-2">
                           <div class="form-group">
                             <label>No Urut</label>
                             <input name="no_urut" type="number" class="form-control">
                           </div>
                         </div>
-                        <div class="col-lg-8 col-md-8">
+                        <div class="col-lg-7 col-md-8">
                           <div class="form-group">
-                            <label>Kompetensi Dasar</label>
-                            <select name="kompetensi_dasar" class="form-control select2">
+                            <label>Kompetensi Dasar 1</label>
+                            <select name="kompetensi_dasar_1" class="form-control select2">
+                                <option selected disabled>Pilih Kompetensi Dasar yang berkaitan</option>
+                                @foreach ($basic_competencies as $basic_competency)
+                                    <option value="{{ $basic_competency->id }}">{{ $basic_competency->name }}</option>
+                                @endforeach
+                            </select>
+                          </div>
+                          <div class="form-group">
+                            <label>Kompetensi Dasar 2</label>
+                            <select name="kompetensi_dasar_2" class="form-control select2">
+                                <option selected disabled>[Opsional] Pilih Kompetensi Dasar yang berkaitan</option>
+                                @foreach ($basic_competencies as $basic_competency)
+                                    <option value="{{ $basic_competency->id }}">{{ $basic_competency->name }}</option>
+                                @endforeach
+                            </select>
+                          </div>
+                          <div class="form-group">
+                            <label>Kompetensi Dasar 3</label>
+                            <select name="kompetensi_dasar_3" class="form-control select2">
+                                <option selected disabled>[Opsional] Pilih Kompetensi Dasar yang berkaitan</option>
                                 @foreach ($basic_competencies as $basic_competency)
                                     <option value="{{ $basic_competency->id }}">{{ $basic_competency->name }}</option>
                                 @endforeach
@@ -84,7 +110,7 @@
                         <a href="{{ route('question_grid_step_1') }}" class="btn btn-icon icon-right btn-primary"><i class="fas fa-arrow-left"></i>Kembali Ke Step Sebelumnya</a>
                       </div>
                       <div class="col text-right">
-                        <a href="{{ route('question_grid_step_2') }}" class="btn btn-icon icon-right btn-primary">Selanjutnya <i class="fas fa-arrow-right"></i></a>
+                        <a href="{{ route('question_grid_step_3') }}" class="btn btn-icon icon-right btn-primary">Simpan & Validasi <i class="fas fa-arrow-right"></i></a>
                       </div>
                     </div>
                   </div>
@@ -98,21 +124,40 @@
             <h6>Kisi - Kisi Soal Yang Dibuat</h6>
           </div>
           <div class="section-body">
-          @if ($question_grid_step_2 != null)
-            @for($i = 0; $i < count($question_grid_step_2); $i++)
+            <div class="row">
+            @if ($question_grid_step_2 != null)
+              @for($i = (count($question_grid_step_2) - 1); $i >= 0; $i--)
+                @if (!empty($question_grid_step_2[$i]))
+                <div class="col-lg-4 col-sm-12">
+                  <div class="card card-primary">
+                    <div class="card-header">
+                      <h4>No Urut : {{ $question_grid_step_2[$i]->no_urut }}</h4>
+                    </div>
+                    <div class="card-body">
+                      <h6>Indikator (No. Soal : {{ $question_grid_step_2[$i]->dari_no }} s/d {{ $question_grid_step_2[$i]->sampai_no }})</h6>
+                      {{ $question_grid_step_2[$i]->indikator }}
+                    </div>
+                    <div class="card-footer text-right row">
+                      <form action="{{ route('question_grid_step_2.delete', $i)}}" class="w-100" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="col-lg-4 col-md-4 col-sm-4 btn btn-danger">Hapus</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                @endif()
+              @endfor
+            @else
+            <div class="col">
               <div class="card">
-                <div class="card-body">
-                  {{ $question_grid_step_2[$i]->no_urut }}
-                </div>
+                  <div class="card-body">
+                    Mash belum ada kisi - kisi soal di mata pelajaran ini yang pernah Anda buat
+                  </div>
               </div>
-            @endfor
-          @else
-            <div class="card">
-                <div class="card-body">
-                  Mash belum ada kisi - kisi soal di mata pelajaran ini yang pernah Anda buat
-                </div>
-              </div>
-          @endif
+            </div>
+            @endif
+            </div>
           </div>
         </section>
       </div>

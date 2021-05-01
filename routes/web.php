@@ -14,8 +14,8 @@ use App\Http\Controllers\QuestionGridController;
 use App\Http\Controllers\StudyController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\UserController;
-use Auth;
-use Session;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 Route::get('login', [AuthController::class, 'index']);
 Route::post('login', [AuthController::class, 'login'])->name('login');
@@ -55,6 +55,10 @@ Route::group(['prefix' => 'user', 'middleware' => ['user']], function(){
         return view('user.dashboard');
     })->name('user.dashboard');
 
+    Route::get('dashboard-2', function () {
+        return view('user.dashboard-2');
+    });
+
     Route::group(['prefix' => 'question-grid'], function(){
         Route::get('step-0', [QuestionGridController::class, 'get_step_0'])->name('question_grid_step_0');
         Route::get('step-0/{type}', [QuestionGridController::class, 'get_step_0_store'])->name('question_grid_step_0_store');
@@ -71,4 +75,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['user']], function(){
         Route::get('/', [QuestionCardController::class, 'index'])->name('user.question_card');
         Route::get('check-question-grid', [QuestionCardController::class, 'get_question_grid'])->name('get_question_grid');
     });
+
+
+    
 });

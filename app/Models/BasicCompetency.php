@@ -13,9 +13,14 @@ class BasicCompetency extends Model
     protected $fillable = [
         'name',
         'studies_id',
+        'grade_specializations_id'
     ];
 
     public function study() {
 		  return $this->belongsTo('App\Models\Study', 'studies_id', 'id');
-	  }
+	}
+
+    public function grade_specialization() {
+        return $this->belongsTo('App\Models\GradeSpecialization', 'grade_specializations_id', 'id');
+  }
 }

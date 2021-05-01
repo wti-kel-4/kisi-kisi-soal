@@ -15,6 +15,7 @@ class CreateLessonsTable extends Migration
     {
         Schema::create('lessons', function (Blueprint $table) {
             $table->foreignId('studies_id')->constrained('studies');
+            $table->foreignId('grade_specializations_id')->constrained('grade_specializations');
             $table->text('name');
             $table->timestamps();
         });

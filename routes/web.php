@@ -47,5 +47,6 @@ Route::group(['prefix' => 'user', 'middleware' => ['user']], function(){
     Route::get('step-1', [QuestionGridController::class, 'get_step_1'])->name('question_grid_step_1');
     Route::post('step-1', [QuestionGridController::class, 'get_step_1_store'])->name('question_grid_step_1.store');
     Route::get('step-2', [QuestionGridController::class, 'get_step_2'])->name('question_grid_step_2');
-    Route::get('step-3', [QuestionGridController::class, 'get_step_3'])->name('question_grid_step_3');;
+    Route::post('step-2-save', [QuestionGridController::class, 'get_step_2_save'])->name('question_grid_step_2.save');
+    Route::get('step-3', [QuestionGridController::class, 'get_step_3'])->name('question_grid_step_3');
 });

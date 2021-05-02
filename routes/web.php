@@ -68,7 +68,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['user']], function(){
     });
 
     Route::group(['prefix' => 'question-card'], function(){
-        Route::get('/', [QuestionCardController::class, 'index'])->name('user.question_card');
+        Route::get('step-0', [QuestionCardController::class, 'get_step_0'])->name('user.question_card');
         Route::get('check-question-grid', [QuestionCardController::class, 'get_question_grid'])->name('get_question_grid');
     });
 });

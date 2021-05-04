@@ -196,11 +196,6 @@ class QuestionGridController extends Controller
         return view('user.question_grid.step_3');
     }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-  
-=======
-=======
     public function get_step_finish()
     {
         $user = Auth::guard('user')->user();
@@ -248,20 +243,15 @@ class QuestionGridController extends Controller
         return redirect()->route('user.dashboard')->with('success', 'Kisi - kisi soal berhasil dibuat!');
     }
 
->>>>>>> 0da95f70a2e04a764c0b620df25537e5ac2efec6
     protected function get_session($question_grid_step_number)
     {
         $user = Auth::guard('user')->user();
         return Session::get('teachers_id_'.$user->id.$question_grid_step_number);
     }
-<<<<<<< HEAD
->>>>>>> db207fee8116fe24d4d120e3f2bd824560f10853
-=======
 
     protected function put_session($question_grid_step_number, $session)
     {
         $user = Auth::guard('user')->user();
         Session::put('teachers_id_'.$user->id.$question_grid_step_number, $session);
     }
->>>>>>> 0da95f70a2e04a764c0b620df25537e5ac2efec6
 }

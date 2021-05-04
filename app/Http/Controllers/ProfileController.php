@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\LogActivity;
 
 class ProfileController extends Controller
 {
@@ -14,6 +15,12 @@ class ProfileController extends Controller
     public function index()
     {
         //
+    }
+
+    public function view_log()
+    {
+        $log_activities = LogActivity::all();
+        return view('admin.log_activity.index', compact('log_activities'))->with('question_grid', 'question_card','user');
     }
 
     /**

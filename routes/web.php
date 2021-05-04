@@ -35,6 +35,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function(){
     Route::resource('study', StudyController::class);
     Route::resource('teacher', TeacherController::class);
     Route::resource('user', UserController::class);
+    Route::get('log-activity', [ProfileController::class, 'view_log'])->name('view_log_activity');
 });
 
 Route::group(['prefix' => 'user', 'middleware' => ['user']], function(){

@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use App\Models\LogActivity;
 
 class LogActivitySeeder extends Seeder
 {
@@ -14,7 +14,7 @@ class LogActivitySeeder extends Seeder
      */
     public function run()
     {
-        DB::table('log_activity_users')->insert([
+        LogActivity::create([
         	'question_grids_id' => '1',
         	'question_cards_id' => '1',
         	'action' => 'make',

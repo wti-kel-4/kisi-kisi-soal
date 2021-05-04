@@ -17,6 +17,7 @@ class QuestionGridSeeder extends Seeder
         QuestionGrid::create([
             'id' => 1,
             'teachers_id' => 6,
+            'grade_specializations_id' => 1,
             'type' => 'PTS',
             'studies_id' => 1,
             'time_allocation' => 90,
@@ -24,6 +25,7 @@ class QuestionGridSeeder extends Seeder
             'school_year' => '2020-2021',
             'basic_competencies_id' => 1,
             'indicator' => 'Menentukan Nilai limit fungsi trigonometri dengan - cara subtitusi langsung. - menggunakan rumus-rumus pada limit. -teknik D’Hospital',
+            'sorting_number' => 1,
             'start_number' => 1,
             'end_number' => 10,
         ]);

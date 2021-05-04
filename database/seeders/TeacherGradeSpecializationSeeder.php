@@ -3,9 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\TeacherGrade;
+use App\Models\TeacherGradeSpecialization;
 
-class TeacherGradeSeeder extends Seeder
+class TeacherGradeSpecializationSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,22 +14,22 @@ class TeacherGradeSeeder extends Seeder
      */
     public function run()
     {
-        TeacherGrade::create([
+        TeacherGradeSpecialization::create([
             'id' => '1',
             'teachers_id' => '1',
-            'grades_id' => '1',
+            'grade_specializations_id' => '1',
         ]);
 
-        TeacherGrade::create([
+        TeacherGradeSpecialization::create([
             'id' => '2',
             'teachers_id' => '1',
-            'grades_id' => '2',
+            'grade_specializations_id' => '2',
         ]);
 
-        TeacherGrade::create([
+        TeacherGradeSpecialization::create([
             'id' => '3',
             'teachers_id' => '1',
-            'grades_id' => '3',
+            'grade_specializations_id' => '3',
         ]);
     }
 }

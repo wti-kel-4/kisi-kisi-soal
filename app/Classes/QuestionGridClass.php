@@ -13,7 +13,9 @@ class QuestionGridClass{
 
     // For Step 2
     public $no_urut;
-    public $kompetensi_dasar;
+    public $kompetensi_dasar_1;
+    public $kompetensi_dasar_2;
+    public $kompetensi_dasar_3;
     public $materi;
     public $indikator;
     public $bentuk;

@@ -20,4 +20,8 @@ class QuestionGrid extends Model
     public function basic_competency() {
 		return $this->belongsTo('App\Models\BasicCompetency', 'basic_competencies_id', 'id');
 	}
+
+	public function grade_specialization() {
+		return $this->belongsTo('App\Models\GradeSpecialization', 'grade_specializations_id', 'id');
+	}
 }

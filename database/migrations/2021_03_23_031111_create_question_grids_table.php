@@ -22,7 +22,9 @@ class CreateQuestionGridsTable extends Migration
             $table->integer('total');
             $table->string('school_year', 100);
             $table->foreignId('basic_competencies_id')->constrained('basic_competencies');
+            $table->foreignId('grade_specializations_id')->constrained('grade_specializations');
             $table->text('indicator');
+            $table->integer('sorting_number');
             $table->integer('start_number');
             $table->integer('end_number');
             $table->timestamps();

@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -13,7 +17,7 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        //
+        return view('user.profile.index');
     }
 
     /**
@@ -56,7 +60,10 @@ class ProfileController extends Controller
      */
     public function edit($id)
     {
-        //
+        $users = User::findorfail($id);
+        // $study = Study::all();
+        // return view('admin.basic_competency.edit', compact('basic_competencies', 'study'));
+        return view('user.profile.edit', compact('users'));
     }
 
     /**
@@ -68,7 +75,29 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+        'username' => 'required',
+        'password' => 'required|confirmed',
+        ]);
+        $user = User::findorfail($id);   
+        
+        if($request->url_photo){
+            $imagesName = time().'.'.$request->url_photo->extension();
+            Storage::putFileAs(
+                'public/images',
+                $request->file('url_photo'),
+                $imagesName,
+            );
+        }
+
+        $user->update([
+            'username' => $request->username,
+            'password' => Hash::make($request->password),
+            'url_photo' => $imagesName,
+            // 'url_photo' => fopen($resorce, 'r'),
+        ]);
+        return redirect()->route('profile.index')
+                            ->with('success', 'Berhasil mengedit data.');
     }
 
     /**

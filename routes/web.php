@@ -60,6 +60,8 @@ Route::group(['prefix' => 'user', 'middleware' => ['user']], function(){
         return view('user.dashboard-2');
     });
 
+    Route::resource('profile', ProfileController::class);
+
     Route::group(['prefix' => 'question-grid'], function(){
         Route::get('step-0', [QuestionGridController::class, 'get_step_0'])->name('question_grid_step_0');
         Route::get('step-0/{type}', [QuestionGridController::class, 'get_step_0_store'])->name('question_grid_step_0_store');

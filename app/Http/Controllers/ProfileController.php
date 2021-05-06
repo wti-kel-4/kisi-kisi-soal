@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\LogActivity;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -18,6 +19,12 @@ class ProfileController extends Controller
     public function index()
     {
         return view('user.profile.index');
+    }
+
+    public function view_log()
+    {
+        $log_activities = LogActivity::all();
+        return view('admin.log_activity.index', compact('log_activities'))->with('question_grid', 'question_card','user');
     }
 
     /**

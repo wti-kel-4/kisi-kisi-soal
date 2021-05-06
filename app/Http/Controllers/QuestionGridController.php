@@ -218,6 +218,7 @@ class QuestionGridController extends Controller
                 if(array_key_exists('kompetensi_dasar_'.$j, $session_2[$i])){
                     if($session_2[$i]->{'kompetensi_dasar_'.$j } != null){
                         $basic_competency = BasicCompetency::where('name', 'LIKE', $session_2[$i]->{'kompetensi_dasar_'.$j })->first();
+                        $lesson = Lesson::where('name', 'LIKE', $session_2[$i]->materi)->first();
                         $question_grid = new QuestionGrid;
                         $question_grid->teachers_id = $user->teachers_id;
                         $question_grid->type = $type;
@@ -227,6 +228,7 @@ class QuestionGridController extends Controller
                         $question_grid->total = $session_1->jumlah_soal;
                         $question_grid->basic_competencies_id = $basic_competency->id;
                         $question_grid->indicator = $session_2[$i]->indikator;
+                        $question_grid->lessons_id = $lesson->id;
                         $question_grid->sorting_number = $session_2[$i]->no_urut;
                         $question_grid->start_number = $session_2[$i]->dari_no;
                         $question_grid->end_number = $session_2[$i]->sampai_no;

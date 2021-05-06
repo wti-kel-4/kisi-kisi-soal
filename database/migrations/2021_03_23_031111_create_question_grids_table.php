@@ -25,6 +25,7 @@ class CreateQuestionGridsTable extends Migration
             $table->foreignId('basic_competencies_id')->constrained('basic_competencies');
             $table->foreignId('grade_specializations_id')->constrained('grade_specializations');
             $table->text('indicator');
+            $table->foreignId('lessons_id')->constrained('lessons');
             $table->integer('sorting_number');
             $table->integer('start_number');
             $table->integer('end_number');

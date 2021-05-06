@@ -13,6 +13,10 @@ class QuestionGrid extends Model
 		return $this->belongsTo('App\Models\Teacher', 'teachers_id', 'id');
 	}
 
+	public function lesson() {
+		return $this->belongsTo('App\Models\Lesson', 'lessons_id', 'id');
+	}
+
     public function study() {
 		return $this->belongsTo('App\Models\Study', 'studies_id', 'id');
 	}
@@ -36,9 +40,12 @@ class QuestionGrid extends Model
 							]);
 	}
 
-	public function scopeSelectAndGroupBy($query){
-		return $query->select('form', 'teachers_id', 'studies_id', 'type', 'school_year', 'grade_specializations_id')
-						->groupBy('teachers_id')
+	public function scopeAdvancedSelect($query){
+		return $query->select('form', 'teachers_id', 'studies_id', 'type', 'school_year', 'grade_specializations_id');
+	}
+
+	public function scopeAdvancedGroupBy($query){
+		return $query->groupBy('teachers_id')
 						->groupBy('type')
 						->groupBy('form')
 						->groupBy('studies_id')

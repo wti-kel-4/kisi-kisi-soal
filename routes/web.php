@@ -41,9 +41,12 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function(){
 Route::group(['prefix' => 'user', 'middleware' => ['user']], function(){
     Route::get('dashboard', function () {
         $user = Auth::guard('user')->user();
+        // For general
         if(Session::has('teachers_id_'.$user->id.'_temp')){
             Session::forget('teachers_id_'.$user->id.'_temp');
         }
+        
+        // For step question grid
         if(Session::has('teachers_id_'.$user->id.'_question_grid_step_0')){
             Session::forget('teachers_id_'.$user->id.'_question_grid_step_0');
         }
@@ -52,6 +55,20 @@ Route::group(['prefix' => 'user', 'middleware' => ['user']], function(){
         }
         if(Session::has('teachers_id_'.$user->id.'_question_grid_step_2')){
             Session::forget('teachers_id_'.$user->id.'_question_grid_step_2');
+        }
+
+        // For step question card
+        if(Session::has('teachers_id_'.$user->id.'_question_card_step_1_all')){
+            Session::forget('teachers_id_'.$user->id.'_question_card_step_1_all');
+        }
+        if(Session::has('teachers_id_'.$user->id.'_question_card_step_1_one')){
+            Session::forget('teachers_id_'.$user->id.'_question_card_step_1_one');
+        }
+        if(Session::has('teachers_id_'.$user->id.'_question_card_step_1_distinct')){
+            Session::forget('teachers_id_'.$user->id.'_question_card_step_1_distinct');
+        }
+        if(Session::has('teachers_id_'.$user->id.'_profile')){
+            Session::forget('teachers_id_'.$user->id.'_profile');
         }
         return view('user.dashboard');
     })->name('user.dashboard');
@@ -75,8 +92,10 @@ Route::group(['prefix' => 'user', 'middleware' => ['user']], function(){
     });
 
     Route::group(['prefix' => 'question-card'], function(){
-        Route::get('step-0', [QuestionCardController::class, 'get_step_0'])->name('user.question_card_step_0');
-        Route::get('step-1/{type}/{school_year}/{form}/{studies_id}/{grade_specializations_id}/{teachers_id}', [QuestionCardController::class, 'get_step_1'])->name('user.question_card_step_1');
+        Route::get('step-0', [QuestionCardController::class, 'get_step_0'])->name('question_card_step_0');
+        Route::get('step-1/{type}/{school_year}/{form}/{studies_id}/{grade_specializations_id}/{teachers_id}', [QuestionCardController::class, 'get_step_1'])->name('question_card_step_1');
+        Route::get('step-2', [QuestionCardController::class, 'get_step_2'])->name('question_card_step_2');
+        Route::get('step-2-save', [QuestionCardController::class, 'get_step_2_save'])->name('question_card_step_2.save');
     });
 
 

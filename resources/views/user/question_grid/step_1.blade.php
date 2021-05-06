@@ -1,23 +1,4 @@
 @extends('user.master.main')
-@php
-  use Illuminate\Support\Facades\Auth;
-  $user = Auth::guard('user')->user();
-  $mata_pelajaran = '';
-  $kelas = '';
-  $alokasi_waktu = '';
-  $jumlah_soal = '';
-  $jenis_soal = '';
-  $tahun_ajaran = '';
-  $question_grid_step_1 = session('teachers_id_'.$user->id.'_question_grid_step_1');
-  if($question_grid_step_1){
-    $mata_pelajaran = $question_grid_step_1->mata_pelajaran;
-    $kelas = $question_grid_step_1->kelas;
-    $alokasi_waktu = $question_grid_step_1->alokasi_waktu;
-    $jumlah_soal = $question_grid_step_1->jumlah_soal;
-    $jenis_soal = $question_grid_step_1->jenis_soal;
-    $tahun_ajaran = $question_grid_step_1->tahun_ajaran;
-  }
-@endphp
 @section('body')
      <!-- Main Content -->
      <div class="main-content">
@@ -27,7 +8,7 @@
           </div>
           <div class="section-body">
             @include('user.master.alert_error')
-            <h2 class="section-title">Lengkapi Identitas Kisi - Kisi Soal</h2>
+            <h2 class="section-title"></h2>
             <p class="section-lead">Lengkapi bagian header kisi - kisi soal</p>
             <div class="row">
               <div class="col-12">

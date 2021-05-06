@@ -111,52 +111,55 @@
                           </tr>
                         </thead>
                         <tbody>
-                          {{-- @if ($question_grid_step_2 != null)
-                            @for($i = 0; $i < count($question_grid_step_2); $i++)
-                              @if (!empty($question_grid_step_2[$i]))
+                          @if ($question_grids != null)
+                            @php
+                                $i = 0;
+                            @endphp
+                            @foreach($question_grids as $question_grid)
+                              @if (!empty($question_grid))
                               <tr>
-                                <th scope="row">{{ $i+1 }}</th>
+                                <th scope="row">{{ $question_grid->no_urut }}</th>
                                 <td>
-                                  {{ $question_grid_step_2[$i]->kompetensi_dasar_1 }}
-                                  <br /><br /> {{ $question_grid_step_2[$i]->kompetensi_dasar_2 }}
-                                  <br /><br /> {{ $question_grid_step_2[$i]->kompetensi_dasar_3 }}
+                                  {{ $question_grid->kompetensi_dasar_1 }}
+                                  <br /><br /> {{ $question_grid->kompetensi_dasar_2 }}
+                                  <br /><br /> {{ $question_grid->kompetensi_dasar_3 }}
                                   <br />
                                 </td>
-                                <td>{{ $question_grid_step_2[$i]->materi }}</td>
-                                <td>{{ $question_grid_step_2[$i]->indikator }}</td>
+                                <td>{{ $question_grid->materi }}</td>
+                                <td>{{ $question_grid->indikator }}</td>
                                 <td>
-                                  @if ($question_grid_step_2[$i]->bentuk == 'pg')
+                                  @if ($question_grid->bentuk == 'pg')
                                     Pilihan Ganda                                      
                                   @endif
-                                  @if ($question_grid_step_2[$i]->bentuk == 'isian')
+                                  @if ($question_grid->bentuk == 'isian')
                                     Isian
                                   @endif
-                                  @if ($question_grid_step_2[$i]->bentuk == 'jumble')
+                                  @if ($question_grid->bentuk == 'jumble')
                                     Menjodohkan
                                   @endif
-                                  @if ($question_grid_step_2[$i]->bentuk == 'uraian')
+                                  @if ($question_grid->bentuk == 'uraian')
                                     Uraian
                                   @endif
                                 </td>
-                                <td>{{ $question_grid_step_2[$i]->dari_no }} s/d {{ $question_grid_step_2[$i]->sampai_no }}</td>
+                                <td>{{ $question_grid->dari_no }} s/d {{ $question_grid->sampai_no }}</td>
                               </tr>
                               @endif
-                            @endfor
+                            @endforeach
                           @else
                             <tr class="text-center">
                               <th scope="row" colspan="6">Masih Belum Ada Data</th>
                             </tr>
-                          @endif --}}
+                          @endif
                         </tbody>
                       </table>
                     </div>
                   </div>
                   <div class="card-footer row">
                     <div class="col-lg-4 col-sm-12 my-1">
-                      {{-- <a href="{{ route('question_card_step_2') }}" class="btn btn-icon icon-right btn-primary w-100"><i class="fas fa-arrow-left"></i> Kembali ke halaman sebelumnya</a> --}}
+                      <a href="{{ route('user.dashboard') }}" class="btn btn-icon icon-right btn-danger w-100"><i class="fas fa-arrow-left"></i> Kembali ke beranda</a>
                     </div>
                     <div class="col-lg-8 col-sm-12 my-1">
-                      {{-- <a class="btn btn-icon icon-right {{ ($question_grid_step_2 != null) ? 'btn-success' : 'btn-secondary' }} w-100" {{ ($question_grid_step_2 != null) ? "href=".route('question_grid_step_finish') : "href=# disabled"}}>Oke, sudah benar. Simpan Data Keseluruhan</a> --}}
+                      <a class="btn btn-icon btn-success icon-right w-100" href={{ route('question_card_step_2') }}>Oke, sudah benar. Gunakan data kisi - kisi ini</a>
                     </div>
                   </div>
                 </div>

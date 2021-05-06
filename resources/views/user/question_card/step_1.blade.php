@@ -1,33 +1,14 @@
 @extends('user.master.main')
-@php
-  use Illuminate\Support\Facades\Auth;
-  use App\Models\Study;
-  use App\Models\GradeSpecialization;
-  $user = Auth::guard('user')->user();
-  $question_grid_step_1 = session('teachers_id_'.$user->id.'_question_grid_step_1');
-  $type = '-';
-  if(session()->has('teachers_id_'.$user->id.'_question_grid_step_0')){
-    $type = session('teachers_id_'.$user->id.'_question_grid_step_0');
-  }
-  $question_grid_step_2 = null;
-  if(session()->has('teachers_id_'.$user->id.'_question_grid_step_2')){
-    $question_grid_step_2 = session('teachers_id_'.$user->id.'_question_grid_step_2');
-  }
-  $study = Study::find($question_grid_step_1->mata_pelajaran);
-  $mata_pelajaran = $study->name;
-  $grade_specialization = GradeSpecialization::find($question_grid_step_1->kelas);
-  $kelas = $grade_specialization->name;
-@endphp
 @section('body')
      <!-- Main Content -->
      <div class="main-content">
         <section class="section">
           <div class="section-header">
-            <h1>Langkah Ketiga</h1>
+            <h1>Langkah Pertama</h1>
           </div>
           <div class="section-body">
             <h2 class="section-title">Verifikasi Data Kisi - Kisi Soal</h2>
-            <p class="section-lead">Lihat Ulang Data, Apakah sudah valid?</p>
+            <p class="section-lead">Lihat Ulang Data, Apakah data ini yang dimaksud?</p>
             <div class="row">
               <div class="col-12">
                 <div class="card">
@@ -38,7 +19,7 @@
                           <h5>Kisi - Kisi Soal</h5>
                         </div>
                         <div class="col-12 col-sm-12 text-center">
-                          <h4>{{ $type }} {{ $question_grid_step_1->tahun_ajaran }} - {{ intval($question_grid_step_1->tahun_ajaran) + 1 }}</h4>
+                          <h4>{{ $question_grid->type }} {{ $question_grid->school_year }}</h4>
                         </div>
                       </div>
                       <div class="row w-100 mt-3">
@@ -49,7 +30,7 @@
                                 Satuan Pendidikan
                               </div>
                               <div class="col">
-                                : {{ $question_grid_step_1->satuan_pendidikan }}
+                                : {{ $profile->name }}
                               </div>
                             </div>
                             <div class="row">
@@ -57,7 +38,7 @@
                                 Mata Pelajaran
                               </div>
                               <div class="col">
-                                : {{ $mata_pelajaran }}
+                                : {{ $question_grid->study->name }}
                               </div>
                             </div>
                             <div class="row">
@@ -65,7 +46,7 @@
                                 Kelas / Semester
                               </div>
                               <div class="col">
-                                : {{ $kelas }}
+                                : {{ $question_grid->grade_specialization->name }}
                               </div>
                             </div>
                           </div>
@@ -77,7 +58,7 @@
                                 Alokasi Waktu
                               </div>
                               <div class="col">
-                                : {{ $question_grid_step_1->alokasi_waktu }} menit
+                                : {{ $question_grid->time_allocation }} menit
                               </div>
                             </div>
                             <div class="row">
@@ -85,17 +66,17 @@
                                 Jumlah Soal
                               </div>
                               <div class="col">
-                                : {{ $question_grid_step_1->jumlah_soal }} 
-                                @if ($question_grid_step_1->jenis_soal == 'pg')
+                                : {{ $question_grid->total }} 
+                                @if ($question_grid->form == 'pg')
                                     PG
                                 @endif
-                                @if ($question_grid_step_1->jenis_soal == 'isian')
+                                @if ($question_grid->form == 'isian')
                                     Isian
                                 @endif
-                                @if ($question_grid_step_1->jenis_soal == 'uraian')
+                                @if ($question_grid->form == 'uraian')
                                     Uraian
                                 @endif
-                                @if ($question_grid_step_1->jenis_soal == 'jumble')
+                                @if ($question_grid->form == 'jumble')
                                     Menjodohkan
                                 @endif
                               </div>
@@ -105,7 +86,7 @@
                                 Tahun Pelajaran
                               </div>
                               <div class="col">
-                                : {{ $question_grid_step_1->tahun_ajaran }} - {{ intval($question_grid_step_1->tahun_ajaran) + 1 }}
+                                : {{ $question_grid->school_year }}
                               </div>
                             </div>
                           </div>
@@ -130,7 +111,7 @@
                           </tr>
                         </thead>
                         <tbody>
-                          @if ($question_grid_step_2 != null)
+                          {{-- @if ($question_grid_step_2 != null)
                             @for($i = 0; $i < count($question_grid_step_2); $i++)
                               @if (!empty($question_grid_step_2[$i]))
                               <tr>
@@ -165,17 +146,17 @@
                             <tr class="text-center">
                               <th scope="row" colspan="6">Masih Belum Ada Data</th>
                             </tr>
-                          @endif
+                          @endif --}}
                         </tbody>
                       </table>
                     </div>
                   </div>
                   <div class="card-footer row">
                     <div class="col-lg-4 col-sm-12 my-1">
-                      <a href="{{ route('question_grid_step_2') }}" class="btn btn-icon icon-right btn-primary w-100"><i class="fas fa-arrow-left"></i> Kembali ke halaman sebelumnya</a>
+                      {{-- <a href="{{ route('question_card_step_2') }}" class="btn btn-icon icon-right btn-primary w-100"><i class="fas fa-arrow-left"></i> Kembali ke halaman sebelumnya</a> --}}
                     </div>
                     <div class="col-lg-8 col-sm-12 my-1">
-                      <a class="btn btn-icon icon-right {{ ($question_grid_step_2 != null) ? 'btn-success' : 'btn-secondary' }} w-100" {{ ($question_grid_step_2 != null) ? "href=".route('question_grid_step_finish') : "href=# disabled"}}>Oke, sudah benar. Simpan Data Keseluruhan</a>
+                      {{-- <a class="btn btn-icon icon-right {{ ($question_grid_step_2 != null) ? 'btn-success' : 'btn-secondary' }} w-100" {{ ($question_grid_step_2 != null) ? "href=".route('question_grid_step_finish') : "href=# disabled"}}>Oke, sudah benar. Simpan Data Keseluruhan</a> --}}
                     </div>
                   </div>
                 </div>

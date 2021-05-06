@@ -21,6 +21,7 @@ class CreateQuestionGridsTable extends Migration
             $table->integer('time_allocation');
             $table->integer('total');
             $table->string('school_year', 100);
+            $table->string('form');
             $table->foreignId('basic_competencies_id')->constrained('basic_competencies');
             $table->foreignId('grade_specializations_id')->constrained('grade_specializations');
             $table->text('indicator');

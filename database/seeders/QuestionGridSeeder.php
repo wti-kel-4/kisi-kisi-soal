@@ -23,6 +23,7 @@ class QuestionGridSeeder extends Seeder
             'time_allocation' => 90,
             'total' => 25,
             'school_year' => '2020-2021',
+            'form' => 'pg',
             'basic_competencies_id' => 1,
             'indicator' => 'Menentukan Nilai limit fungsi trigonometri dengan - cara subtitusi langsung. - menggunakan rumus-rumus pada limit. -teknik D’Hospital',
             'sorting_number' => 1,

@@ -72,8 +72,8 @@ Route::group(['prefix' => 'user', 'middleware' => ['user']], function(){
     });
 
     Route::group(['prefix' => 'question-card'], function(){
-        Route::get('step-0', [QuestionCardController::class, 'get_step_0'])->name('user.question_card');
-        Route::get('check-question-grid', [QuestionCardController::class, 'get_question_grid'])->name('get_question_grid');
+        Route::get('step-0', [QuestionCardController::class, 'get_step_0'])->name('user.question_card_step_0');
+        Route::get('step-1/{type}/{school_year}/{form}/{studies_id}/{grade_specializations_id}/{teachers_id}', [QuestionCardController::class, 'get_step_1'])->name('user.question_card_step_1');
     });
 
 

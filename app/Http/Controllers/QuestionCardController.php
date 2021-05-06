@@ -5,10 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\QuestionCard;
 use App\Models\QuestionGrid;
+use App\Models\Profile;
 
 class QuestionCardController extends Controller
 {
 
+    public function index()
+    {
+        $question_cards = QuestionCard::orderBy('number', 'ASC')->get();
+        return view('admin.question_card.index', compact('question_cards'))->with('question_grid');
+    }
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -84,14 +91,18 @@ class QuestionCardController extends Controller
 
     public function get_step_0()
     {
-        $question_grids = QuestionGrid::select('teachers_id', 'studies_id', 'type', 'school_year', 'grade_specializations_id')
-                                        ->groupBy('teachers_id')
-                                        ->groupBy('type')
-                                        ->groupBy('studies_id')
-                                        ->groupBy('school_year')
-                                        ->groupBy('grade_specializations_id')
-                                        ->orderBy('sorting_number')
-                                        ->get();
-        return view('user.question_card.index', compact('question_grids'));
+        $question_grids = QuestionGrid::SelectAndGroupBy()->get();
+        return view('user.question_card.step_0', compact('question_grids'));
+    }
+
+    public function get_step_1($type, $school_year, $form, $studies_id, $grade_specializations_id, $teachers_id)
+    {
+        // Ambil semua question_grids untuk semua data dalam tablenya
+        $question_grids = QuestionGrid::WhereCardParam($type, $school_year, $form, $studies_id, $grade_specializations_id, $teachers_id)->get();
+        // Ambil satu question_grids untuk headernya
+        $question_grid = QuestionGrid::WhereCardParam($type, $school_year, $form, $studies_id, $grade_specializations_id, $teachers_id)->first();
+        // Ambil profile object
+        $profile = Profile::first();
+        return view('user.question_card.step_1', compact('profile', 'question_grid', 'question_grids'));
     }
 }

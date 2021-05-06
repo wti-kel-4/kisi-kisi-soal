@@ -24,4 +24,26 @@ class QuestionGrid extends Model
 	public function grade_specialization() {
 		return $this->belongsTo('App\Models\GradeSpecialization', 'grade_specializations_id', 'id');
 	}
+
+	public function scopeWhereCardParam($query, $type, $school_year, $form, $studies_id, $grade_specializations_id, $teachers_id) {
+		return $query->where([
+								['type', $type],
+								['form', $form],
+								['school_year', 'LIKE', $school_year],
+								['studies_id', $studies_id],
+								['grade_specializations_id', $grade_specializations_id],
+								['teachers_id', $teachers_id]
+							]);
+	}
+
+	public function scopeSelectAndGroupBy($query){
+		return $query->select('form', 'teachers_id', 'studies_id', 'type', 'school_year', 'grade_specializations_id')
+						->groupBy('teachers_id')
+						->groupBy('type')
+						->groupBy('form')
+						->groupBy('studies_id')
+						->groupBy('school_year')
+						->groupBy('grade_specializations_id')
+						->orderBy('sorting_number');
+	}
 }

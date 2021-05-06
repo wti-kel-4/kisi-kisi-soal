@@ -82,11 +82,19 @@
                         <div class="col-lg-3 col-md-3">
                           <div class="form-group">
                             <label>Bentuk Soal</label>
-                            <select name="bentuk" class="form-control" required>
-                              <option value="pg">Pilihan Ganda (PG)</option>
-                              <option value="isian" >Isian</option>
-                              <option value="jumble" >Menjodohkan</option>
-                              <option value="uraian" >Uraian</option>
+                            <select name="bentuk" class="form-control" disabled>
+                              @if ($jenis_soal_question_grid == 'pg')
+                                  <option selected>Pilihan Ganda (PG)</option>
+                              @endif
+                              @if ($jenis_soal_question_grid == 'isian')
+                                  <option selected >Isian</option>
+                              @endif
+                              @if ($jenis_soal_question_grid == 'jumble')
+                                  <option selected>Menjodohkan</option>
+                              @endif
+                              @if ($jenis_soal_question_grid == 'uraian')
+                                  <option selected>Uraian</option>
+                              @endif
                             </select>
                           </div>
                           <div class="form-group">

@@ -109,7 +109,8 @@ class QuestionGridController extends Controller
         $lessons = Lesson::where('studies_id', $studies_id)->where('grade_specializations_id', $teacher_grade_specialization->grade_specialization->id)->get();
         $basic_competencies = BasicCompetency::where('studies_id', $studies_id)->where('grade_specializations_id', $teacher_grade_specialization->grade_specialization->id)->get();
         $total_question_grid = $session->jumlah_soal;
-        return view('user.question_grid.step_2', compact('lessons', 'basic_competencies', 'total_question_grid'));
+        $jenis_soal_question_grid = $session->jenis_soal;
+        return view('user.question_grid.step_2', compact('jenis_soal_question_grid', 'lessons', 'basic_competencies', 'total_question_grid'));
     }
 
     public function get_step_2_save(Request $request)
@@ -123,7 +124,6 @@ class QuestionGridController extends Controller
         $kompetensi_dasar_3 = $request->kompetensi_dasar_3;
         $materi = $request->materi;
         $indikator = $request->indikator;
-        $bentuk = $request->bentuk;
         $dari_no = $request->dari_no;
         $sampai_no = $request->sampai_no;
 
@@ -155,7 +155,6 @@ class QuestionGridController extends Controller
         $materi = Lesson::find($materi);
         $question_grid->materi = $materi->name;
         $question_grid->indikator = $indikator;
-        $question_grid->bentuk = $bentuk;
         $question_grid->dari_no = $dari_no;
         $question_grid->sampai_no = $sampai_no;
         
@@ -234,6 +233,7 @@ class QuestionGridController extends Controller
                         $tahun_ajaran_akhir = (intval($session_1->tahun_ajaran) + 1);
                         $question_grid->school_year = $session_1->tahun_ajaran.'-'.$tahun_ajaran_akhir;
                         $question_grid->time_allocation = $session_1->alokasi_waktu;
+                        $question_grid->form = $session_1->jenis_soal;
                         $question_grid->save();
                     }
                 }  

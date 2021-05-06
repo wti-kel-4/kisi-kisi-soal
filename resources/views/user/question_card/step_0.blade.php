@@ -16,16 +16,30 @@
                       @foreach ($question_grids as $question_grid)
                         @if ($question_grid->type == 'PTS')
                         <div class="row">
-                          <a class="col-12 col-md-6 col-lg-4" href="{{ route('get_question_grid', $question_grid->type, $question_grid->studies_id, $question_grid->grade_specializations_id, $question_grid->teachers_id, $question_grid->school_year) }}">
+                          <a class="col-12 col-md-6 col-lg-4" href="{{ route('user.question_card_step_1', [$question_grid->type, $question_grid->school_year, $question_grid->form, $question_grid->studies_id, $question_grid->grade_specializations_id, $question_grid->teachers_id]) }}">
                             <div class="card card-info">
                             <div class="card-header container">
                               <div class="row">
                                 <h4 class="col-12">{{ $question_grid->type }} {{ $question_grid->school_year }}</h4>
                                 <p class="col-12">{{ $question_grid->study->name }} ({{ $question_grid->grade_specialization->name }})</p>
+                                <p class="col-12 text-success">
+                                  @if ($question_grid->form == 'pg')
+                                      Pilihan Ganda
+                                  @endif
+                                  @if ($question_grid->form == 'jumble')
+                                      Menjodohkan
+                                  @endif
+                                  @if ($question_grid->form == 'isian')
+                                      Isian
+                                  @endif
+                                  @if ($question_grid->form == 'uraian')
+                                      Uraian
+                                  @endif
+                                </p>
                               </div>
                             </div>
                             <div class="card-body">
-                                <p>Dibuat Oleh : {{ $question_grid->teacher->name }}</p>
+                                <p class="text-dark">Dibuat Oleh : {{ $question_grid->teacher->name }}</p>
                             </div>
                             </div>
                           </a>
@@ -42,7 +56,7 @@
                       @foreach ($question_grids as $question_grid)
                         @if ($question_grid->type == 'PAT')
                         <div class="row">
-                          <a class="col-12 col-md-6 col-lg-4" href="{{ route('get_question_grid', $question_grid->type, $question_grid->studies_id, $question_grid->grade_specializations_id, $question_grid->teachers_id, $question_grid->school_year) }}">
+                          <a class="col-12 col-md-6 col-lg-4" href="{{ route('user.question_card_step_1', [$question_grid->type, $question_grid->school_year, $question_grid->form, $question_grid->studies_id, $question_grid->grade_specializations_id, $question_grid->teachers_id]) }}">
                             <div class="card card-success">
                             <div class="card-header">
                               <div class="row">
@@ -69,7 +83,7 @@
                       @foreach ($question_grids as $question_grid)
                         @if ($question_grid->type == 'PKK')
                         <div class="row">
-                          <a class="col-12 col-md-6 col-lg-4" href="{{ route('get_question_grid', $question_grid->type, $question_grid->studies_id, $question_grid->grade_specializations_id, $question_grid->teachers_id, $question_grid->school_year) }}">
+                          <a class="col-12 col-md-6 col-lg-4" href="{{ route('user.question_card_step_1', [$question_grid->type, $question_grid->school_year, $question_grid->form, $question_grid->studies_id, $question_grid->grade_specializations_id, $question_grid->teachers_id]) }}">
                             <div class="card card-dark">
                             <div class="card-header">
                               <div class="row">

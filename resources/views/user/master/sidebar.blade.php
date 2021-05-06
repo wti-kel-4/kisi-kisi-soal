@@ -12,7 +12,7 @@
             </a>
         </div>
         <div class="mt-2 p-3 hide-sidebar-mini">
-            <a href="{{ route('user.question_card') }}" class="btn btn-primary btn-lg btn-block btn-icon-split">
+            <a href="{{ route('user.question_card_step_0') }}" class="btn btn-primary btn-lg btn-block btn-icon-split">
             <i class="fas fa-rocket"></i> Buat Kartu Soal
             </a>
         </div>

@@ -35,6 +35,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function(){
     Route::resource('study', StudyController::class);
     Route::resource('teacher', TeacherController::class);
     Route::resource('user', UserController::class);
+    Route::get('log-activity', [ProfileController::class, 'view_log'])->name('view_log_activity');
 });
 
 Route::group(['prefix' => 'user', 'middleware' => ['user']], function(){
@@ -58,6 +59,8 @@ Route::group(['prefix' => 'user', 'middleware' => ['user']], function(){
     Route::get('dashboard-2', function () {
         return view('user.dashboard-2');
     });
+
+    Route::resource('profile', ProfileController::class);
 
     Route::group(['prefix' => 'question-grid'], function(){
         Route::get('step-0', [QuestionGridController::class, 'get_step_0'])->name('question_grid_step_0');

@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
+
+    public $imagesName = '';
+    public $userName;
     /**
      * Display a listing of the resource.
      *
@@ -68,8 +71,7 @@ class ProfileController extends Controller
     public function edit($id)
     {
         $users = User::findorfail($id);
-        // $study = Study::all();
-        // return view('admin.basic_competency.edit', compact('basic_competencies', 'study'));
+        
         return view('user.profile.edit', compact('users'));
     }
 
@@ -82,11 +84,15 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-        'username' => 'required',
+        $validateData = $request->validate([
         'password' => 'required|confirmed',
         ]);
+
         $user = User::findorfail($id);   
+
+        $this->imagesName = $user->url_photo;
+        $this->userName = $user->username;
+
         
         if($request->url_photo){
             $imagesName = time().'.'.$request->url_photo->extension();
@@ -95,16 +101,26 @@ class ProfileController extends Controller
                 $request->file('url_photo'),
                 $imagesName,
             );
+        }else{
+            $imagesName = $this->imagesName;
         }
 
-        $user->update([
-            'username' => $request->username,
-            'password' => Hash::make($request->password),
-            'url_photo' => $imagesName,
-            // 'url_photo' => fopen($resorce, 'r'),
-        ]);
-        return redirect()->route('profile.index')
-                            ->with('success', 'Berhasil mengedit data.');
+        if($request->username){
+            $this->userName = $request->username;
+        }
+
+        if($validateData){
+            $user->update([
+                'username' => $this->userName,
+                'password' => Hash::make($request->password),
+                'url_photo' => $imagesName,
+            ]);
+            return redirect()->route('profile.index')
+                                ->with('success', 'Berhasil mengedit data.');
+        }else{
+            return redirect()->route('profile.edit')
+                                ->with('error', 'Password Tidak Sesuai.');
+        }
     }
 
     /**

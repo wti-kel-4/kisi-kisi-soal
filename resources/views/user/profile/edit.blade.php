@@ -9,18 +9,9 @@
         <div class="section-header">
           <h1>User</h1>
         </div>
+        @include('user.master.alert_error')
+        @include('user.master.alert_success')
         <div class="section-body">
-            {{-- <div class="row">
-                <div class="col-12">
-                    <h2 class="section-title">Edit Profile</h2>
-                    <p class="section-lead">
-                        Selamat Datang
-                    </p>
-                </div>
-            </div> --}}
-            {{-- <form action="{{ route('profile.update', Auth::guard('user')->user()->id) }}" method="POST" enctype="multipart/form-data">
-                {{ method_field('PUT') }}
-                {{ csrf_field()}} --}}
             <div class="row mt-sm-4">
                 <div class="col-12 col-md-12 col-lg-12">
                     <div class="card">
@@ -35,14 +26,11 @@
                                     <div class="form-group col-md-4 col-12">
                                         <label>Foto profile</label>
                                         <br>
-                                        {{-- <figure class="avatar mr-2 avatar-xl"> --}}
                                             <img alt="Foto User" src="{{ asset('storage/images/'.$users->url_photo) }}" class="rounded-circle profile-widget-picture" style="max-height: 150px ; min-height:100px; min-width:100px">
-                                        {{-- </figure> --}}
                                     </div>
                                     <div class="form-group col-md-8 col-12">
                                         <label>File</label>
                                         <input name="url_photo" type="file" class="form-control-file">
-                                        {{-- <input type="submit" value="Upload"/> --}}
                                     </div>
                                 </div>
                                 <div class="row">                               

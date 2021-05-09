@@ -8,15 +8,20 @@
             <a href="{{ route('basic-competency.create') }}" class="btn btn-icon icon-left btn-success"><i class="fas fa-plus"></i> Tambah Data</a>
         </div>
         </div>
-        @if ($message = Session::get('success'))
-        <div id="alert" class="alert alert-success alert-dismissible fade show" role="alert" name="alert">
-          <span class="alert-icon"><i class="ni ni-like-2"></i></span>
-          <span class="alert-text"><strong>Success!  </strong>{{$message}}</span>
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+        
+        @if (Session::get('success'))
+        <div class="alert alert-success alert-has-icon alert-dismissible show fade">
+            <div class="alert-icon"><i class="far fa-lightbulb"></i></div>
+            <div class="alert-body">
+                <button class="close" data-dismiss="alert">
+                    <span>×</span>
+                </button>
+            <div class="alert-title">Berhasil</div>
+            {{ Session::get('success') }}
+            </div>
         </div>
         @endif
+
         <div class="section-body">
             <div class="row">
                 <div class="col-12">

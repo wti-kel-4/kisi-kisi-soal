@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBasicCompetenciesTable extends Migration
+class CreateStudyLessonScopeLessonTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateBasicCompetenciesTable extends Migration
      */
     public function up()
     {
-        Schema::create('basic_competencies', function (Blueprint $table) {
+        Schema::create('study_lesson_scope_lesson', function (Blueprint $table) {
             $table->id();
-            $table->text('name');
             $table->foreignId('studies_id')->constrained('studies');
-            $table->foreignId('grade_generalizations_id')->constrained('grade_generalizations');
+            $table->foreignId('lessons_id')->constrained('lessons');
+            $table->foreignId('lesson_scopes_id')->constrained('scope_lessons');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateBasicCompetenciesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('basic_competencies');
+        Schema::dropIfExists('study_lesson_scope_lesson');
     }
 }

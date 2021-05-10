@@ -26,5 +26,11 @@ class StudySeeder extends Seeder
             'teachers_id' => 6,
             'grades_id' => 2
         ]);
+        Study::create([
+            'id' => 3,
+            'name' => 'Bahasa dan Sastra Jepang',
+            'teachers_id' => 72,
+            'grades_id' => 36
+        ]);
     }
 }

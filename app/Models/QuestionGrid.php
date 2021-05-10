@@ -8,7 +8,26 @@ use Illuminate\Database\Eloquent\Model;
 class QuestionGrid extends Model
 {
     use HasFactory;
-    
+
+	protected $table = 'question_grids';
+    protected $primaryKey = 'id';
+    protected $fillable = [
+        'teachers_id',
+        'type',
+        'studies_id',
+        'time_allocation',
+        'total',
+        'school_year',
+        'form',
+        'basic_competencies_id',
+        'grade_specializations_id',
+        'indicator',
+        'lessons_id',
+        'sorting_number',
+        'start_number',
+        'end_number',
+    ];
+
     public function teacher() {
 		return $this->belongsTo('App\Models\Teacher', 'teachers_id', 'id');
 	}

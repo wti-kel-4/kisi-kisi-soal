@@ -15,20 +15,27 @@ class CreateQuestionGridsTable extends Migration
     {
         Schema::create('question_grids', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('teachers_id')->constrained('teachers');
-            $table->enum('type', ['PTS', 'PAT', 'PKK']);
+            $table->string('question_grid_rows');
+            $table->foreignId('profiles_id')->constrained('profiles');
             $table->foreignId('studies_id')->constrained('studies');
-            $table->integer('time_allocation');
-            $table->integer('total');
+            $table->foreignId('grades_id')->constrained('grades');
             $table->string('school_year', 100);
-            $table->string('form');
-            $table->foreignId('basic_competencies_id')->constrained('basic_competencies');
-            $table->foreignId('grade_specializations_id')->constrained('grade_specializations');
-            $table->text('indicator');
-            $table->foreignId('lessons_id')->constrained('lessons');
-            $table->integer('sorting_number');
-            $table->integer('start_number');
-            $table->integer('end_number');
+            $table->enum('semesters', ['Ganjil', 'Genap']);
+            $table->string('curriculum');
+
+            // $table->foreignId('teachers_id')->constrained('teachers');
+            // $table->enum('type', ['PTS', 'PAT', 'PKK']);
+            // $table->foreignId('studies_id')->constrained('studies');
+            // $table->integer('time_allocation');
+            // $table->integer('total');
+            // $table->string('form');
+            // $table->foreignId('basic_competencies_id')->constrained('basic_competencies');
+            // $table->foreignId('grade_specializations_id')->constrained('grade_specializations');
+            // $table->text('indicator');
+            // $table->foreignId('lessons_id')->constrained('lessons');
+            // $table->integer('sorting_number');
+            // $table->integer('start_number');
+            // $table->integer('end_number');
             $table->timestamps();
         });
     }

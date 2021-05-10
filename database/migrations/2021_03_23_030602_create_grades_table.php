@@ -17,7 +17,7 @@ class CreateGradesTable extends Migration
             $table->id();
             $table->string('name', 100);
             $table->foreignId('teachers_id')->constrained('teachers'); // Wali Kelas
-            $table->foreignId('grade_specializations_id')->constrained('grade_specializations'); // Grade umum untuk kisi - kisi soal
+            $table->foreignId('grade_generalizations_id')->constrained('grade_generalizations'); // Grade umum untuk kisi - kisi soal
             $table->timestamps();
         });
     }

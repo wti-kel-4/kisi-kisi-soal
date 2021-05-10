@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
 use Illuminate\Http\Request;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Admin;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {

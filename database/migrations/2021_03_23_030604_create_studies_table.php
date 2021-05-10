@@ -16,7 +16,6 @@ class CreateStudiesTable extends Migration
         Schema::create('studies', function (Blueprint $table) {
             $table->id();
             $table->string('name', 100);
-            $table->foreignId('teachers_id')->constrained('teachers');
             $table->foreignId('grades_id')->constrained('grades');
             $table->timestamps();
         });

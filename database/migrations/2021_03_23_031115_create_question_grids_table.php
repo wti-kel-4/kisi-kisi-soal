@@ -35,6 +35,6 @@ class CreateQuestionGridsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('question_grid_rows');
+        Schema::dropIfExists('question_grids');
     }
 }

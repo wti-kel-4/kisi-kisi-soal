@@ -5,7 +5,7 @@
         <div class="section-header">
         <h1>Data User</h1>
         <div class="section-header-breadcrumb">
-            <a href="{{route('teacher.create')}}" class="btn btn-icon icon-left btn-success"><i class="fas fa-plus"></i> Tambah Data</a>
+            <a href="{{route('admin.user.create')}}" class="btn btn-icon icon-left btn-success"><i class="fas fa-plus"></i> Tambah Data</a>
         </div>
         </div>
 
@@ -31,6 +31,7 @@
                         <table class="table table-striped">
                         <tr>
                             <th>No</th>
+                            <th>Foto</th>
                             <th>Nama</th>
                             <th>Username</th>
                             <th>Aksi</th>
@@ -41,7 +42,10 @@
                         @foreach ($users as $user)
                         <tr>
                             <td>{{ $no }}</td>
-                            <td>{{ $user->name }}</td>
+                            <td>
+                                <img alt="image" src="{{ asset('/user/photo/'.$user->url_photo) }}" class="rounded-circle" width="35" data-toggle="tooltip" title="{{ $user->teacher->name }}">
+                            </td>
+                            <td>{{ $user->teacher->name }}</td>
                             <td>{{ $user->username }}</td>
                             <td><a href="#" class="btn btn-secondary">Delete</a>
                                 <a href="#" class="btn btn-secondary">Detail</a></td>

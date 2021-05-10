@@ -5,7 +5,7 @@
         <div class="section-header">
         <h1>Data Kompetensi Dasar</h1>
         <div class="section-header-breadcrumb">
-            <a href="{{ route('basic-competency.create') }}" class="btn btn-icon icon-left btn-success"><i class="fas fa-plus"></i> Tambah Data</a>
+            <a href="{{ route('admin.basic-competency.create') }}" class="btn btn-icon icon-left btn-success"><i class="fas fa-plus"></i> Tambah Data</a>
         </div>
         </div>
         

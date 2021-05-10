@@ -38,6 +38,6 @@ class CreateQuestionCardsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('question_card_rows');
+        Schema::dropIfExists('question_cards');
     }
 }

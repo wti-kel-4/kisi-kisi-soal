@@ -46,6 +46,6 @@ class CreateQuestionGridHeadersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('question_grids');
+        Schema::dropIfExists('question_grid_headers');
     }
 }

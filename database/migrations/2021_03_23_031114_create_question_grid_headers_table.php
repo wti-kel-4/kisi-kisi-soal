@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateQuestionGridsTable extends Migration
+class CreateQuestionGridHeadersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class CreateQuestionGridsTable extends Migration
      */
     public function up()
     {
-        Schema::create('question_grids', function (Blueprint $table) {
+        Schema::create('question_grid_headers', function (Blueprint $table) {
             $table->id();
-            $table->string('question_grid_rows');
             $table->foreignId('profiles_id')->constrained('profiles');
             $table->foreignId('studies_id')->constrained('studies');
             $table->foreignId('grades_id')->constrained('grades');

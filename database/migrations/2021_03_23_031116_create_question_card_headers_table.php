@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateQuestionCardsTable extends Migration
+class CreateQuestionCardHeadersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,8 @@ class CreateQuestionCardsTable extends Migration
      */
     public function up()
     {
-        Schema::create('question_cards', function (Blueprint $table) {
+        Schema::create('question_card_headers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('question_grids_id')->constrained('question_grids');
-            $table->foreignId('question_card_rows_id')->constrained('question_card_rows');
             $table->foreignId('teachers_id')->constrained('teachers');
             $table->foreignId('grade_generalizations_id')->constrained('grade_generalizations');
             $table->string('question_form');

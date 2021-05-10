@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateQuestionCardRowsTable extends Migration
+class CreateQuestionCardsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateQuestionCardRowsTable extends Migration
      */
     public function up()
     {
-        Schema::create('question_card_rows', function (Blueprint $table) {
+        Schema::create('question_cards', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('question_card_headers_id')->constrained('question_card_headers');
             $table->foreignId('question_grids_id')->constrained('question_grids');
             $table->string('indicator');
-            $table->enum('rate', ['Easy', 'Medium', 'Hard']);
+            $table->enum('rate', ['easy', 'medium', 'hard']);
             $table->string('question');
             $table->text('answer_a');
             $table->text('answer_b');
@@ -25,6 +26,7 @@ class CreateQuestionCardRowsTable extends Migration
             $table->text('answer_d');
             $table->text('answer_e');
             $table->string('answer_key');
+            $table->boolean('temp');
             $table->timestamps();
         });
     }

@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Study;
 use App\Models\Teacher;
 use App\Models\Grade;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
+use Exception;
 
 class StudyController extends Controller
 {
@@ -16,8 +19,8 @@ class StudyController extends Controller
      */
     public function index()
     {
-        $studies = Study::orderBy('name', 'ASC')->get();
-        return view('admin.study.index', compact('studies'))->with('teacher','grade');
+        $studies = Study::orderBy('created_at', 'DESC')->get();
+        return view('admin.study.index', compact('studies'));
     }
 
     /**
@@ -27,9 +30,8 @@ class StudyController extends Controller
      */
     public function create()
     {
-        $teacher = Teacher::orderBy('name', 'ASC')->get();
-        $grade = Grade::orderBy('name', 'ASC')->get();
-        return view('admin.study.create', compact('teacher','grade'));
+        $grades = Grade::orderBy('name', 'ASC')->get();
+        return view('admin.study.create', compact('grades'));
     }
 
     /**
@@ -40,15 +42,30 @@ class StudyController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'teachers_id' => 'required',
-            'grades_id' => 'required',
+        $validator = Validator::make($request->all(), [
+            'grades_id' => ['required', 'exists:grades,id'],
+            'name' => ['required'],
         ]);
 
-        Study::create($request->all());
-        return redirect()->route('study.index')
-                            ->with('success', 'Berhasil menambahkan data.');
+        if($validator->fails()){
+            return back()->with('error', 'Form ada yang belum terisi!');
+        }
+
+        $name = $request->name;
+        $grades_id = $request->grades_id;
+
+        DB::beginTransaction();
+        try{
+            $study_new = new Study;
+            $study_new->name = $name;
+            $study_new->grades_id = $grades_id;
+            $study_new->save();
+            DB::commit();
+            return redirect()->route('admin.study.index')->with('success', 'Berhasil mendaftarkan mata pelajaran '.$name);
+        }catch(Exception $ex){
+            DB::rollback();
+            return back()->with('error', 'Gagal mendaftarkan mata pelajaran');
+        }
     }
 
     /**
@@ -59,7 +76,9 @@ class StudyController extends Controller
      */
     public function show($id)
     {
-        //
+        $study = Study::find($id);
+        $grades = Grade::all();
+        return view('admin.study.show', compact('study', 'grades'));
     }
 
     /**
@@ -74,7 +93,6 @@ class StudyController extends Controller
         $teacher = Teacher::all();
         $grade = Grade::all();
         return view('admin.study.edit', compact('study','teacher','grade'));
-        // return redirect()->route('study.edit', compact('study','teacher','grade'));
     }
 
     /**
@@ -86,10 +104,32 @@ class StudyController extends Controller
      */
     public function update(Request $request, $id)
     {
-            $study = Study::findorfail($id);
-            $study->update($request->all());
-            return redirect()->route('study.index')
-                                ->with('success', 'Berhasil mengedit data.');
+        $validator = Validator::make($request->all(), [
+            'id' => ['required', 'exists:studies,id'],
+            'grades_id' => ['required', 'exists:grades,id'],
+            'name' => ['required'],
+        ]);
+
+        if($validator->fails()){
+            return back()->with('error', 'Form ada yang belum terisi!');
+        }
+
+        $id = $request->id;
+        $name = $request->name;
+        $grades_id = $request->grades_id;
+
+        DB::beginTransaction();
+        try{
+            $study = Study::find($id);
+            $study->name = $name;
+            $study->grades_id = $grades_id;
+            $study->save();
+            DB::commit();
+            return redirect()->route('admin.study.index')->with('success', 'Berhasil mengubah data mata pelajaran');
+        }catch(Exception $ex){
+            DB::rollback();
+            return back()->with('error', 'Gagal mendaftarkan mata pelajaran');
+        }
     }
 
     /**

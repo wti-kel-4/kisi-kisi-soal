@@ -8,36 +8,35 @@
                 <div class="breadcrumb-item active"><a href="#"></a></div>
             </div>
             </div>
-
+            @include('admin.master.aler_error')
+            @include('admin.master.aler_info')
             <div class="section-body">
             <div class="row">
                 <div class="col">
                     <div class="card">
-                        <form action="{{ route('study.store') }}" method="post">
+                        <form action="{{ route('admin.study.store') }}" method="POST">
                             @csrf
                         <div class="card-header">
-                            <h4>Default Validation</h4>
+                            <h4>Masukkan data mata pelajaran baru</h4>
                         </div>
                         <div class="card-body">
-                            <div class="form-group mb-0">
-                            <label>Nama Mata Pelajaran</label>
-                            <input name="name" type="text" class="form-control" required="">
-                            </div>
-                            <div class="form-group">
-                                <label for="">Guru</label>
-                                <select name="teachers_id" id="name" class="form-control">
-                                    @foreach ($teacher as $teacher)
-                                    <option selected value="{{$teacher->id}}">{{$teacher->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="">Kelas</label>
-                                <select name="grades_id" id="name" class="form-control">
-                                    @foreach ($grade as $grade)
-                                    <option selected value="{{$grade->id}}">{{$grade->name}}</option>
-                                    @endforeach
-                                </select>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label>Nama Mata Pelajaran</label>
+                                        <input name="name" type="text" class="form-control" required="">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="">Kelas</label>
+                                        <select name="grades_id" id="name" class="form-control select2">
+                                            @foreach ($grades as $grade)
+                                            <option value="{{$grade->id}}">{{$grade->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="card-footer text-right">

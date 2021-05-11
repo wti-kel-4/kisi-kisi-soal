@@ -13,7 +13,7 @@ class Grade extends Model
 		return $this->belongsTo('App\Models\Teacher', 'teachers_id', 'id');
 	}
 
-    public function grade_specialization() {
-		return $this->belongsTo('App\Models\GradeSpecialization', 'grade_specializations_id', 'id');
+    public function grade_generalization() {
+		return $this->belongsTo('App\Models\GradeGeneralization', 'grade_generalizations_id', 'id');
 	}
 }

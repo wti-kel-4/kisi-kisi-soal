@@ -5,10 +5,10 @@
         <div class="section-header">
         <h1>Data Mata Pelajaran</h1>
         <div class="section-header-breadcrumb">
-            <a href="{{ route('study.create') }}" class="btn btn-icon icon-left btn-success"><i class="fas fa-plus"></i> Tambah Data</a>
+            <a href="{{ route('admin.study.create') }}" class="btn btn-icon icon-left btn-success"><i class="fas fa-plus"></i> Tambah Data</a>
         </div>
         </div>
-
+        @include('admin.master.alert_success')
         <div class="section-body">
             @if (Session::get('error'))
             <div class="alert alert-warning alert-has-icon alert-dismissible show fade">
@@ -44,7 +44,6 @@
                         <tr>
                             <th>No</th>
                             <th>Nama</th>
-                            <th>Guru Mata Pelajaran</th>
                             <th>Kelas</th>
                             <th>Aksi</th>
                         </tr>
@@ -55,14 +54,15 @@
                         <tr>
                             <td>{{ $no }}</td>
                             <td>{{ $study->name }}</td>
-                            <td>{{ $study->teacher->name }}</td>
                             <td>{{ $study->grade->name }}</td>
                             <td>
-                            <form method="POST" action="{{ route('study.destroy', $study->id) }}">
+                            <form method="POST" action="{{ route('admin.study.destroy', $study->id) }}">
                                 @csrf
-                                <a href="{{ route('study.edit', $study->id) }}" class="btn btn-primary">Edit</a>
-                                <input type="hidden" name="_method" value="DELETE" />
-                                <button type="submit" class="btn btn-danger">Hapus</button>
+                                <a href="{{ route('admin.study.edit', $study->id) }}" class="btn btn-primary">Edit</a>
+                                <a href="{{ route('admin.study.show', $study->id) }}" class="btn btn-secondary">Detail</a>
+                                @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger">Hapus</button>
                             </form>
                             </td>
                         </tr>

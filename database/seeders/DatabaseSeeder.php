@@ -14,11 +14,10 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            // DepartmentSeeder::class,
             TeacherSeeder::class,
-            // GradeSpecializationSeeder::class,
-            // GradeSeeder::class,
-            // StudySeeder::class,
+            GradeGeneralizationSeeder::class,
+            GradeSeeder::class,
+            StudySeeder::class,
             // LessonSeeder::class,
             ProfileSeeder::class,
             // BasicCompetencySeeder::class,
@@ -26,7 +25,7 @@ class DatabaseSeeder extends Seeder
             // QuestionCardSeeder::class,            
             UserSeeder::class,
             AdminSeeder::class,
-            // TeacherGradeSpecializationSeeder::class,
+            // TeacherGradeGeneralizationSeeder::class,
         ]);
     }
 }

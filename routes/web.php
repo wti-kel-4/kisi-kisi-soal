@@ -4,9 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BasicCompetencyController;
 use App\Http\Controllers\DepartmentController;
-use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GradeController;
-use App\Http\Controllers\JobController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuestionCardController;
@@ -19,12 +18,10 @@ use Illuminate\Support\Facades\Session;
 
 Route::get('login', [AuthController::class, 'index']);
 Route::post('login', [AuthController::class, 'login'])->name('login');
-Route::post('/logout', [AuthController::class, 'logout']);
+Route::post('logout', [AuthController::class, 'logout']);
 
 Route::prefix('admin')->name('admin.')->middleware(['admin'])->group(function(){
-    Route::get('dashboard', function () {
-        return view('admin.dashboard');
-    })->name('dashboard.index');
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::resource('basic-competency', BasicCompetencyController::class);
     Route::resource('department', DepartmentController::class);
     Route::resource('grade', GradeController::class);

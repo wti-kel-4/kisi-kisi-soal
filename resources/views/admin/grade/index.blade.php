@@ -5,10 +5,10 @@
         <div class="section-header">
         <h1>Data Kelas</h1>
         <div class="section-header-breadcrumb">
-            <a href="{{ route('grade.create') }}" class="btn btn-icon icon-left btn-success"><i class="fas fa-plus"></i> Tambah Data</a>
+            <a href="{{ route('admin.grade.create') }}" class="btn btn-icon icon-left btn-success"><i class="fas fa-plus"></i> Tambah Data</a>
         </div>
         </div>
-
+        @include('admin.master.alert_success')
         <div class="section-body">
             <div class="row">
                 <div class="col-12">
@@ -18,9 +18,8 @@
                     <div class="card-header-form">
                         <form>
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search">
                             <div class="input-group-btn">
-                            <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+                                {{ $grades->links() }}
                             </div>
                         </div>
                         </form>
@@ -28,7 +27,7 @@
                     </div>
                     <div class="card-body p-0">
                     <div class="table-responsive">
-                        <table class="table table-striped">
+                    <table class="table table-striped">
                         <tr>
                             <th>No</th>
                             <th>Nama</th>
@@ -37,22 +36,29 @@
                             <th>Aksi</th>
                         </tr>
                         @php
-                            $no = 1;  
+                            $no = ($grades->currentpage() -1 ) * $grades->perpage() + 1;
                         @endphp
                         @foreach ($grades as $grade)
                         <tr>
                             <td>{{ $no }}</td>
                             <td>{{ $grade->name }}</td>
                             <td>{{ $grade->teacher->name }}</td>
-                            <td>{{ $grade->grade_specialization->name }}</td>
-                            <td><a href="#" class="btn btn-secondary">Detail</a></td>
+                            <td>{{ $grade->grade_generalization->name }}</td>
+                            <td>
+                                <form action="{{ route('admin.grade.destroy', ['grade' => $grade->id])}}" method="POST">
+                                    <a href="{{ route('admin.grade.edit', $grade->id) }}" class="btn btn-primary">Edit</a>
+                                    <a href="{{ route('admin.grade.show', $grade->id) }}" class="btn btn-secondary">Detail</a>
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger">Hapus</button>
+                                </form>
+                            </td>
                         </tr>
                             @php
                                 $no++;
                             @endphp
                         @endforeach
                       </table>
-                    </div>
                     </div>
                 </div>
                 </div>

@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Grade;
-use App\Models\GradeSpecialization;
+use App\Models\GradeGeneralization;
 use App\Models\Teacher;
+use Exception;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class GradeController extends Controller
 {
@@ -16,7 +19,7 @@ class GradeController extends Controller
      */
     public function index()
     {
-        $grades = Grade::orderBy('name', 'ASC')->get();
+        $grades = Grade::orderBy('name', 'ASC')->simplePaginate(10);
         return view('admin.grade.index', compact('grades'));
     }
 
@@ -27,9 +30,9 @@ class GradeController extends Controller
      */
     public function create()
     {
-        $teachers = Teacher::all();
-        $grade_specializations = GradeSpecialization::all();
-        return view('admin.grade.create', compact('teachers', 'grade_specializations'));
+        $teachers = Teacher::orderBy('name', 'ASC')->get();
+        $grade_generalizations = GradeGeneralization::orderBy('name', 'DESC')->get();
+        return view('admin.grade.create', compact('teachers', 'grade_generalizations'));
     }
 
     /**
@@ -40,7 +43,33 @@ class GradeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'teachers_id' => ['required', 'exists:teachers,id'],
+            'grade_generalizations_id' => ['required'],
+            'name' => ['required'],
+        ]);
+
+        if($validator->fails()){
+            return back()->with('error', 'Form ada yang belum terisi!');
+        }
+
+        $name = $request->name;
+        $teachers_id = $request->teachers_id;
+        $grade_generalizations_id = $request->grade_generalizations_id;
+
+        DB::beginTransaction();
+        try{
+            $grade_new = new Grade;
+            $grade_new->name = $name;
+            $grade_new->grade_generalizations_id = $grade_generalizations_id;
+            $grade_new->teachers_id = $teachers_id;
+            $grade_new->save();
+            DB::commit();
+            return redirect()->route('admin.grade.index')->with('success', 'Berhasil menambahkan data kelas baru');
+        }catch(Exception $ex){
+            DB::rollback();
+            return back()->with('error', 'Gagal menambahkan data kelas');
+        }
     }
 
     /**
@@ -51,7 +80,10 @@ class GradeController extends Controller
      */
     public function show($id)
     {
-        //
+        $grade = Grade::find($id);
+        $teachers = Teacher::orderBy('name', 'ASC')->get();
+        $grade_generalizations = GradeGeneralization::all();
+        return view('admin.grade.show', compact('grade_generalizations', 'grade', 'teachers'));
     }
 
     /**
@@ -62,7 +94,10 @@ class GradeController extends Controller
      */
     public function edit($id)
     {
-        //
+        $grade = Grade::find($id);
+        $teachers = Teacher::orderBy('name', 'ASC')->get();
+        $grade_generalizations = GradeGeneralization::all();
+        return view('admin.grade.edit', compact('grade_generalizations', 'grade', 'teachers'));
     }
 
     /**
@@ -74,7 +109,35 @@ class GradeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'id' => ['required'],
+            'teachers_id' => ['required', 'exists:teachers,id'],
+            'grade_generalizations_id' => ['required', 'exists:grade_generalizations,id'],
+            'name' => ['required'],
+        ]);
+
+        if($validator->fails()){
+            return back()->with('error', 'Form ada yang belum terisi!');
+        }
+
+        $id = $request->id;
+        $teachers_id = $request->teachers_id;
+        $grade_generalizations_id = $request->grade_generalizations_id;
+        $name = $request->name;
+
+        DB::beginTransaction();
+        try{
+            $grade = Grade::find($id);
+            $grade->teachers_id = $teachers_id;
+            $grade->name = $name;
+            $grade->grade_generalizations_id = $grade_generalizations_id;
+            $grade->save();
+            DB::commit();
+            return redirect()->route('admin.grade.index')->with('success', 'Berhasil mengubah data kelas '.$name);
+        }catch(Exception $ex){
+            DB::rollback();
+            return back()->with('error', 'Gagal mengubah data kelas');
+        }
     }
 
     /**
@@ -85,6 +148,18 @@ class GradeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DB::beginTransaction();
+        try{
+            $grade = Grade::find($id);
+            if($grade == null){
+                return back()->with('error', 'ID kelas tidak ditemukan');    
+            }
+            $grade->delete();
+            DB::commit();
+            return back()->with('success', 'Berhasil menghapus data kelas');
+        }catch(Exception $ex){
+            DB::rollback();
+            return back()->with('error', 'Gagal menghapus data kelas');
+        }
     }
 }

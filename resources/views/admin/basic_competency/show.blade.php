@@ -27,9 +27,7 @@
                             <div class="form-group">
                                 <label for="">Mata Pelajaran</label>
                                 <select disabled name="studies_id" id="name" class="form-control">
-                                    
                                     <option selected value="{{$basic_competencies->study->id}}">{{$basic_competencies->study->name}}</option>
-                                    
                                 </select>
                             </div>
                         </div>

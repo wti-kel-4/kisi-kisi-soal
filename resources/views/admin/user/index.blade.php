@@ -3,12 +3,13 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-        <h1>Data User</h1>
-        <div class="section-header-breadcrumb">
-            <a href="{{route('admin.user.create')}}" class="btn btn-icon icon-left btn-success"><i class="fas fa-plus"></i> Tambah Data</a>
+            <h1>Data User</h1>
+            <div class="section-header-breadcrumb">
+                <a href="{{route('admin.user.create')}}" class="btn btn-icon icon-left btn-success"><i class="fas fa-plus"></i> Tambah Data</a>
+            </div>
         </div>
-        </div>
-
+        @include('admin.master.alert_success')
+        @include('admin.master.alert_error')
         <div class="section-body">
             <div class="row">
                 <div class="col-12">
@@ -43,12 +44,24 @@
                         <tr>
                             <td>{{ $no }}</td>
                             <td>
-                                <img alt="image" src="{{ asset('/user/photo/'.$user->url_photo) }}" class="rounded-circle" width="35" data-toggle="tooltip" title="{{ $user->teacher->name }}">
+                                @if ($user->url_photo == null)
+                                    <img alt="image" src="{{ asset('/assets/img/avatar/avatar-1.png') }}" class="rounded-circle" width="35" data-toggle="tooltip" title="{{ $user->teacher->name }}">
+                                @else
+                                    <img alt="image" src="{{ asset($user->url_photo) }}" class="rounded-circle" width="35" data-toggle="tooltip" title="{{ $user->teacher->name }}">
+                                @endif
+                                    
                             </td>
                             <td>{{ $user->teacher->name }}</td>
                             <td>{{ $user->username }}</td>
-                            <td><a href="#" class="btn btn-secondary">Delete</a>
-                                <a href="#" class="btn btn-secondary">Detail</a></td>
+                            <td>
+                                <form action="{{ route('admin.user.destroy', ['user' => $user->id])}}" method="POST">
+                                <a href="{{ route('admin.user.edit', $user->id) }}" class="btn btn-primary">Edit</a>
+                                <a href="{{ route('admin.user.show', $user->id) }}" class="btn btn-secondary">Detail</a>
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger">Hapus</button>
+                                </form>
+                            </td>
                         </tr>
                             @php
                                 $no++;

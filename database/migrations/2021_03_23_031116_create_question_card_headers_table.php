@@ -32,6 +32,7 @@ class CreateQuestionCardHeadersTable extends Migration
             // $table->text('answer_d');
             // $table->text('answer_e');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

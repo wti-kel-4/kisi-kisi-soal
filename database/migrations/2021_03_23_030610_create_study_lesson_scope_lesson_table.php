@@ -19,6 +19,7 @@ class CreateStudyLessonScopeLessonTable extends Migration
             $table->foreignId('lessons_id')->constrained('lessons');
             $table->foreignId('lesson_scopes_id')->constrained('scope_lessons');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

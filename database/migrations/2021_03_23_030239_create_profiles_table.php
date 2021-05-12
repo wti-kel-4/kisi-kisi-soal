@@ -20,6 +20,7 @@ class CreateProfilesTable extends Migration
             $table->text('address');
             $table->text('email');
             $table->text('url_logo');
+            $table->softDeletes();
         });
     }
 

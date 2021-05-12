@@ -18,6 +18,7 @@ class CreateTeacherStudyTable extends Migration
             $table->foreignId('teachers_id')->constrained('teachers');
             $table->foreignId('studies_id')->constrained('studies');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

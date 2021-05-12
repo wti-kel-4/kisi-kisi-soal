@@ -36,6 +36,7 @@ class CreateQuestionGridHeadersTable extends Migration
             // $table->integer('start_number');
             // $table->integer('end_number');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

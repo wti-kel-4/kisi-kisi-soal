@@ -21,6 +21,7 @@ class CreateLogActivityUsers extends Migration
             $table->foreignId('users_id')->constrained('users');
             $table->foreignId('used_for_users_id')->constrained('users')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

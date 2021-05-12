@@ -186,7 +186,8 @@ class UserController extends Controller
             return back()->with('success', 'Berhasil menghapus data user');
         }catch(Exception $ex){
             DB::rollback();
-            return back()->with('error', 'Gagal menghapus data user');
+            echo $ex->getMessage();
+            // return back()->with('error', 'Gagal menghapus data user');
         }
     }
 }

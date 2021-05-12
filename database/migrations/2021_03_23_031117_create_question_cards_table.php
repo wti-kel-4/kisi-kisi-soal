@@ -28,6 +28,7 @@ class CreateQuestionCardsTable extends Migration
             $table->string('answer_key');
             $table->boolean('temp');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

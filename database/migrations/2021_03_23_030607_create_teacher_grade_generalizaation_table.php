@@ -18,6 +18,7 @@ class CreateTeacherGradeGeneralizaationTable extends Migration
             $table->foreignId('teachers_id')->constrained('teachers');
             $table->foreignId('grade_generalizations_id')->constrained('grade_generalizations');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

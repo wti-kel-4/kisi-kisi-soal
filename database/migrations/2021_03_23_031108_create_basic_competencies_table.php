@@ -19,6 +19,7 @@ class CreateBasicCompetenciesTable extends Migration
             $table->foreignId('studies_id')->constrained('studies');
             $table->foreignId('grade_generalizations_id')->constrained('grade_generalizations');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

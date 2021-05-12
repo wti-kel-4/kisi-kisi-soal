@@ -6,21 +6,27 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class QuestionCard extends Model
+class StudyLessonScopeLesson extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected static $relations_to_cascade = ['question_card_header', 'question_grid', 'log_activity_user']; 
-    public function question_grid() {
-        return $this->belongsTo('App\Models\QuestionGrid', 'question_grids_id', 'id');
+    protected $table = 'study_lesson_scope_lesson';
+    protected static $relations_to_cascade = ['question_grid_header'];
+
+    public function lesson(){
+        return $this->belongsTo('App\Models\Lesson', 'lessons_id', 'id');
     }
 
-    public function question_card_header(){
-        return $this->belongsTo('App\Models\QuestionCardHeader', 'question_card_headers_id', 'id');
+    public function scope_lesson(){
+        return $this->belongsTo('App\Models\ScopeLesson', 'scope_lessons_id', 'id');
     }
 
-    public function log_activity_user(){
-        return $this->hasMany('App\Models\LogActivity', 'id', 'question_cards_id');
+    public function study(){
+        return $this->belongsTo('App\Models\Study', 'studies_id', 'id');
+    }
+
+    public function question_grid(){
+        return $this->hasMany('App\Models\QuestionGrid', 'id', 'study_lesson_scope_lessons_id');
     }
 
     protected static function boot()

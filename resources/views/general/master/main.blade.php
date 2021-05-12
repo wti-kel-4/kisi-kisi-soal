@@ -7,7 +7,7 @@
     @include('general.master.style')
 </head>
 
-<body style="background-image: url({{ asset('assets/img/bg.jpg') }})">
+<body>
   @yield('content')
 
   @include('general.master.script')

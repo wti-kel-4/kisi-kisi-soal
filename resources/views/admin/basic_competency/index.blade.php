@@ -53,16 +53,16 @@
                         @endphp
                         @foreach ($basic_competencies as $basic_competency)
                         <tr>
-                            <td>{{ $no }}</td>
-                            <td>{{ $basic_competency->name }}</td>
-                            <td>{{ $basic_competency->study->name }}</td>
-                            <td><form action="{{ route('basic-competency.destroy', $basic_competency->id)}}" method="POST">
-                                <a href="{{ route('basic-competency.show', $basic_competency->id) }}" class="btn btn-info">Detail</a>
-                                <a href="{{ route('basic-competency.edit', $basic_competency->id) }}" class="btn btn-primary">Edit</a>
+                            <td>{{ $no }}<br><br></td>
+                            <td>{{ $basic_competency->name }} <br><br></td>
+                            <td>{{ $basic_competency->study->name }} <br><br></td>
+                            <td><form action="{{ route('admin.basic-competency.destroy', $basic_competency->id)}}" method="POST">
+                                <a href="{{ route('admin.basic-competency.show', $basic_competency->id) }}" class="btn btn-info">Detail</a>
+                                <a href="{{ route('admin.basic-competency.edit', $basic_competency->id) }}" class="btn btn-primary">Edit</a>
                                 
                                 @csrf
                                 @method('DELETE')
-                                <button href="{{ route('basic-competency.destroy', $basic_competency->id) }}" type="submit" class="btn btn-danger">Hapus</button>
+                                <button type="submit" class="btn btn-danger">Hapus</button>
                                 </form>
                             </td>
                         </tr>

@@ -26,11 +26,11 @@ class User extends Model
     }
 
     public function log_activity_user() {
-        return $this->hasMany('App\Models\LogActivity', 'id', 'users_id');
+        return $this->hasMany('App\Models\LogActivity', 'users_id', 'id');
     }
 
     public function log_activity_user_used() {
-        return $this->hasMany('App\Models\LogActivity', 'id', 'used_for_user_users_id');
+        return $this->hasMany('App\Models\LogActivity', 'used_for_users_id', 'id');
     }
 
     protected static $relations_to_cascade = ['teacher', 'log_activity_user', 'log_activity_user_used']; 
@@ -38,19 +38,15 @@ class User extends Model
     {
         parent::boot();
 
-        static::deleting(function($resource) {
-            foreach (static::$relations_to_cascade as $relation) {
-                foreach ($resource->{$relation}()->get() as $item) {
-                    $item->delete();
-                }
+        static::deleting(function($resource){
+            foreach(static::$relations_to_cascade as $relation){
+                $resource->{$relation}()->delete();
             }
         });
 
         static::restoring(function($resource) {
             foreach (static::$relations_to_cascade as $relation) {
-                foreach ($resource->{$relation}()->get() as $item) {
-                    $item->withTrashed()->restore();
-                }
+                $resource->{$relation}()->withTrashed()->restore();
             }
         });
     }

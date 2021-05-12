@@ -13,42 +13,38 @@ class Teacher extends Model
     protected static $relations_to_cascade = ['grade', 'user', 'teacher_study', 'question_card_header', 'teacher_grade_generalization']; 
     
     public function grade() {
-        return $this->hasMany('App\Models\Grade', 'id', 'teachers_id');
+        return $this->hasMany('App\Models\Grade', 'teachers_id', 'id');
     }
 
     public function user() {
-        return $this->hasMany('App\Models\User', 'id', 'teachers_id');
+        return $this->hasMany('App\Models\User', 'teachers_id', 'id');
     }
 
     public function teacher_study() {
-        return $this->hasMany('App\Models\TeacherStudy', 'id', 'teachers_id');
+        return $this->hasMany('App\Models\TeacherStudy', 'teachers_id', 'id');
     }
 
     public function question_card_header() {
-        return $this->hasMany('App\Models\QuestionCardHeader', 'id', 'teachers_id');
+        return $this->hasMany('App\Models\QuestionCardHeader', 'teachers_id', 'id');
     }
 
     public function teacher_grade_generalization(){
-        return $this->hasMany('App\Models\TeacherGradeGeneralization', 'id', 'teachers_id');
+        return $this->hasMany('App\Models\TeacherGradeGeneralization', 'teachers_id', 'id');
     }
     
     protected static function boot()
     {
         parent::boot();
 
-        static::deleting(function($resource) {
-            foreach (static::$relations_to_cascade as $relation) {
-                foreach ($resource->{$relation}()->get() as $item) {
-                    $item->delete();
-                }
+        static::deleting(function($resource){
+            foreach(static::$relations_to_cascade as $relation){
+                $resource->{$relation}()->delete();
             }
         });
 
         static::restoring(function($resource) {
             foreach (static::$relations_to_cascade as $relation) {
-                foreach ($resource->{$relation}()->get() as $item) {
-                    $item->withTrashed()->restore();
-                }
+                $resource->{$relation}()->withTrashed()->restore();
             }
         });
     }

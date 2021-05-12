@@ -5,7 +5,7 @@
         <div class="section-header">
             <h1>Edit Data Kompetensi Dasar</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="#">Kompetensi Dasar</a></div>
+                <div class="breadcrumb-item active"><a href="{{ route('admin.basic-competency.index') }}">Kompetensi Dasar</a></div>
             </div>
             </div>
 
@@ -13,16 +13,16 @@
             <div class="row">
                 <div class="col">
                     <div class="card">
-                        <form action="{{ route('basic-competency.update', $basic_competencies->id) }}" method="POST">
+                        <form action="{{ route('admin.basic-competency.update', $basic_competencies->id) }}" method="POST">
                             {{ method_field('PUT') }}
                             {{ csrf_field()}}
                         <div class="card-header">
-                            <h4>Default Validation</h4>
+                            <h4>Ubah Data Kompetensi Dasar</h4>
                         </div>
                         <div class="card-body">
-                            <div class="form-group mb-0">
+                            <div class="form-group mb">
                             <label>Nama Kompetensi Dasar</label>
-                            <textarea name="name" class="form-control" required="">{{$basic_competencies->name}}</textarea>
+                            <textarea style="resize: none; height: 10em;" name="name" class="form-control" required="">{{$basic_competencies->name}}</textarea>
                             </div>
                             <div class="form-group">
                                 <label for="">Mata Pelajaran</label>
@@ -35,7 +35,7 @@
                             </div>
                         </div>
                         <div class="card-footer text-right">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary">Ubah Data</button>
                         </div>
                         </form>
                     </div>

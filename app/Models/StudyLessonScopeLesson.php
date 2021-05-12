@@ -26,26 +26,22 @@ class StudyLessonScopeLesson extends Model
     }
 
     public function question_grid(){
-        return $this->hasMany('App\Models\QuestionGrid', 'id', 'study_lesson_scope_lessons_id');
+        return $this->hasMany('App\Models\QuestionGrid', 'study_lesson_scope_lessons_id', 'id');
     }
 
     protected static function boot()
     {
         parent::boot();
 
-        static::deleting(function($resource) {
-            foreach (static::$relations_to_cascade as $relation) {
-                foreach ($resource->{$relation}()->get() as $item) {
-                    $item->delete();
-                }
+        static::deleting(function($resource){
+            foreach(static::$relations_to_cascade as $relation){
+                $resource->{$relation}()->delete();
             }
         });
 
         static::restoring(function($resource) {
             foreach (static::$relations_to_cascade as $relation) {
-                foreach ($resource->{$relation}()->get() as $item) {
-                    $item->withTrashed()->restore();
-                }
+                $resource->{$relation}()->withTrashed()->restore();
             }
         });
     }

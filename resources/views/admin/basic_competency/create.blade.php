@@ -5,7 +5,7 @@
         <div class="section-header">
             <h1>Data Kompetensi Dasar</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="#">Kompetensi Dasar</a></div>
+                <div class="breadcrumb-item active"><a href="{{ route('admin.basic-competency.index') }}">Kompetensi Dasar</a></div>
             </div>
             </div>
 
@@ -13,7 +13,7 @@
             <div class="row">
                 <div class="col">
                     <div class="card">
-                        <form action="{{ route('basic-competency.store') }}" method="post">
+                        <form action="{{ route('admin.basic-competency.store') }}" method="post">
                             @csrf
                         <div class="card-header">
                             <h4>Default Validation</h4>

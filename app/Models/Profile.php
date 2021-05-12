@@ -14,26 +14,22 @@ class Profile extends Model
     public $timestamps = false;
 
     public function question_grid_header(){
-        return $this->hasMany('App\Models\QuestionGridHeader');
+        return $this->hasMany('App\Models\QuestionGridHeader', 'profiles_id', 'id');
     }
 
     protected static function boot()
     {
         parent::boot();
 
-        static::deleting(function($resource) {
-            foreach (static::$relations_to_cascade as $relation) {
-                foreach ($resource->{$relation}()->get() as $item) {
-                    $item->delete();
-                }
+        static::deleting(function($resource){
+            foreach(static::$relations_to_cascade as $relation){
+                $resource->{$relation}()->delete();
             }
         });
 
         static::restoring(function($resource) {
             foreach (static::$relations_to_cascade as $relation) {
-                foreach ($resource->{$relation}()->get() as $item) {
-                    $item->withTrashed()->restore();
-                }
+                $resource->{$relation}()->withTrashed()->restore();
             }
         });
     }

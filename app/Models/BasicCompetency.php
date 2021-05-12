@@ -16,7 +16,9 @@ class BasicCompetency extends Model
         'studies_id',
         'grade_specializations_id'
     ];
-    protected static $relations_to_cascade = ['grade_generalization', 'study', 'question_grid']; 
+
+    // Jangan menghapus relasi yang lain karena akan berpengaruh dengan kisi - kisi lainnya
+    protected static $relations_to_cascade = ['question_grid']; 
 
     public function grade_generalization(){
         return $this->belongsTo('App\Models\GradeGeneralization', 'grade_generalizations_id', 'id');
@@ -27,26 +29,22 @@ class BasicCompetency extends Model
     }
 
     public function question_grid(){
-        return $this->hasMany('App\Models\QuestionGrid', 'id', 'question_grids_id');
+        return $this->hasMany('App\Models\QuestionGrid', 'basic_competencies_id', 'id');
     }
 
     protected static function boot()
     {
         parent::boot();
 
-        static::deleting(function($resource) {
-            foreach (static::$relations_to_cascade as $relation) {
-                foreach ($resource->{$relation}()->get() as $item) {
-                    $item->delete();
-                }
+        static::deleting(function($resource){
+            foreach(static::$relations_to_cascade as $relation){
+                $resource->{$relation}()->delete();
             }
         });
 
         static::restoring(function($resource) {
             foreach (static::$relations_to_cascade as $relation) {
-                foreach ($resource->{$relation}()->get() as $item) {
-                    $item->withTrashed()->restore();
-                }
+                $resource->{$relation}()->withTrashed()->restore();
             }
         });
     }

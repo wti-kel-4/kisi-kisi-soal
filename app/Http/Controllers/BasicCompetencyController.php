@@ -28,7 +28,6 @@ class BasicCompetencyController extends Controller
     {
         $study = Study::all();
         return view('admin.basic_competency.create', compact('study'));
-        // return view('admin.basic_competency.create');
     }
 
     /**
@@ -59,8 +58,9 @@ class BasicCompetencyController extends Controller
      */
     public function show($id)
     {
-        $basic_competencies = BasicCompetency::find($id);
-        return view('admin.basic_competency.show', compact('basic_competencies'));
+        $basic_competency = BasicCompetency::find($id);
+        $studies = Study::all();
+        return view('admin.basic_competency.show', compact('basic_competency', 'studies'));
     }
 
     /**
@@ -74,7 +74,6 @@ class BasicCompetencyController extends Controller
         $basic_competencies = BasicCompetency::findorfail($id);
         $study = Study::all();
         return view('admin.basic_competency.edit', compact('basic_competencies', 'study'));
-        // return redirect()->route('basic-competency.edit', compact('basic_competency'));
     }
 
     /**
@@ -93,7 +92,7 @@ class BasicCompetencyController extends Controller
 
         $basic_competency = BasicCompetency::findorfail($id);
         $basic_competency->update($request->all());
-        return redirect()->route('basic-competency.index')
+        return redirect()->route('admin.basic-competency.index')
                             ->with('success', 'Berhasil mengedit data.');
     }
 
@@ -106,8 +105,11 @@ class BasicCompetencyController extends Controller
     public function destroy($id)
     {
         $basic_competency = BasicCompetency::findorfail($id);
+        // Hapus yang lain
+        // BasicCompetency::where('id', '!=', $id)->where('studies_id', $basic_competency->studies_id)->orWhere('grade_generalizations_id', $basic_competency->grade_generalizations_id)->delete();
+        // Hapus yang terpilih
         $basic_competency->delete();
-        return redirect()->route('basic-competency.index')
+        return redirect()->route('admin.basic-competency.index')
                             ->with('success', 'Berhasil menghapus data.');
     }
 }

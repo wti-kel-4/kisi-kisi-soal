@@ -24,34 +24,30 @@ class Study extends Model
     }
 
     public function teacher_study(){
-      return $this->hasMany('App\Models\TeacherStudy', 'id', 'studies_id');
+      return $this->hasMany('App\Models\TeacherStudy', 'studies_id', 'id');
     }
 
     public function study_lesson_scope_lesson(){
-      return $this->hasMany('App\Models\StudyLessonScopeLesson', 'id', 'studies_id');
+      return $this->hasMany('App\Models\StudyLessonScopeLesson', 'studies_id', 'id');
     }
 
     public function question_grid_header() {
-      return $this->hasMany('App\Models\QuestionGridHeader', 'id', 'studies_id');
+      return $this->hasMany('App\Models\QuestionGridHeader', 'studies_id', 'id');
     }
 
     protected static function boot()
     {
         parent::boot();
 
-        static::deleting(function($resource) {
-            foreach (static::$relations_to_cascade as $relation) {
-                foreach ($resource->{$relation}()->get() as $item) {
-                    $item->delete();
-                }
+        static::deleting(function($resource){
+            foreach(static::$relations_to_cascade as $relation){
+                $resource->{$relation}()->delete();
             }
         });
 
         static::restoring(function($resource) {
             foreach (static::$relations_to_cascade as $relation) {
-                foreach ($resource->{$relation}()->get() as $item) {
-                    $item->withTrashed()->restore();
-                }
+                $resource->{$relation}()->withTrashed()->restore();
             }
         });
     }

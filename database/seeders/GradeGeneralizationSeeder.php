@@ -50,5 +50,9 @@ class GradeGeneralizationSeeder extends Seeder
             'id' => 9,
             'name' => 'X IPS' 
         ]);
+        GradeGeneralization::create([
+            'id' => 10,
+            'name' => 'XI'
+        ]);
     }
 }

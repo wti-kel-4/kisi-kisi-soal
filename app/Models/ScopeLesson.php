@@ -10,6 +10,7 @@ class ScopeLesson extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $fillable = ['id', 'name'];
     protected static $relations_to_cascade = ['study_lesson_scope_lesson'];
     public function study_lesson_scope_lesson(){
         return $this->hasMany('App\Models\StudyLessonScopeLesson', 'scope_lessons_id', 'id');

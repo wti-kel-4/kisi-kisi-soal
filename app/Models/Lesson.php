@@ -12,6 +12,8 @@ class Lesson extends Model
 
     protected $primaryKey = 'id';
 
+    protected $fillable = ['id', 'name'];
+    
     protected static $relations_to_cascade = ['study_lesson_scope_lesson'];
     public function study_lesson_scope_lesson(){
         return $this->hasMany('App\Models\StudyLessonScopeLesson', 'lessons_id', 'id');

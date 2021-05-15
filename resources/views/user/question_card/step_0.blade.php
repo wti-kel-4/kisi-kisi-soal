@@ -18,7 +18,7 @@
                         @foreach ($question_grids as $question_grid)
                         @if ($question_grid->type == 'PTS')
                           <div class="col-sm-12 col-md-4 col-lg-4">
-                            <a href="{{ route('question_card_step_1', [$question_grid->type, $question_grid->school_year, $question_grid->form, $question_grid->studies_id, $question_grid->grade_specializations_id, $question_grid->teachers_id]) }}">
+                            <a href="{{ route('user.question_card_step_1', [$question_grid->type, $question_grid->school_year, $question_grid->form, $question_grid->studies_id, $question_grid->grade_specializations_id, $question_grid->teachers_id]) }}">
                               <div class="card card-info">
                               <div class="card-header container">
                                 <div class="row">
@@ -64,7 +64,7 @@
                           @foreach ($question_grids as $question_grid)
                           @if ($question_grid->type == 'PAT')
                             <div class="col-sm-12 col-md-4 col-lg-4">
-                              <a href="{{ route('question_card_step_1', [$question_grid->type, $question_grid->school_year, $question_grid->form, $question_grid->studies_id, $question_grid->grade_specializations_id, $question_grid->teachers_id]) }}">
+                              <a href="{{ route('user.question_card_step_1', [$question_grid->type, $question_grid->school_year, $question_grid->form, $question_grid->studies_id, $question_grid->grade_specializations_id, $question_grid->teachers_id]) }}">
                                 <div class="card card-info">
                                 <div class="card-header container">
                                   <div class="row">
@@ -110,7 +110,7 @@
                           @foreach ($question_grids as $question_grid)
                           @if ($question_grid->type == 'PKK')
                             <div class="col-sm-12 col-md-4 col-lg-4">
-                              <a href="{{ route('question_card_step_1', [$question_grid->type, $question_grid->school_year, $question_grid->form, $question_grid->studies_id, $question_grid->grade_specializations_id, $question_grid->teachers_id]) }}">
+                              <a href="{{ route('user.question_card_step_1', [$question_grid->type, $question_grid->school_year, $question_grid->form, $question_grid->studies_id, $question_grid->grade_specializations_id, $question_grid->teachers_id]) }}">
                                 <div class="card card-info">
                                 <div class="card-header container">
                                   <div class="row">

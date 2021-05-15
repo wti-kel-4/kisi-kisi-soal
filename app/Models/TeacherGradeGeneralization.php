@@ -12,6 +12,8 @@ class TeacherGradeGeneralization extends Model
 
     protected static $relations_to_cascade = ['teacher', 'grade_generalization'];
     protected $table = 'teacher_grade_generalization';
+    protected $fillable = ['id', 'teachers_id', 'grade_generalizations_id'];
+    
     public $timestamps = false;
 
     public function teacher() {

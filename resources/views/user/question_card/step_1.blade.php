@@ -156,7 +156,7 @@
                   </div>
                   <div class="card-footer row">
                     <div class="col-lg-4 col-sm-12 my-1">
-                      <a href="{{ route('user.dashboard') }}" class="btn btn-icon icon-right btn-danger w-100"><i class="fas fa-arrow-left"></i> Kembali ke beranda</a>
+                      <a href="{{ route('user.dashboard.index') }}" class="btn btn-icon icon-right btn-danger w-100"><i class="fas fa-arrow-left"></i> Kembali ke beranda</a>
                     </div>
                     <div class="col-lg-8 col-sm-12 my-1">
                       <a class="btn btn-icon btn-success icon-right w-100" href={{ route('question_card_step_2') }}>Oke, sudah benar. Gunakan data kisi - kisi ini</a>

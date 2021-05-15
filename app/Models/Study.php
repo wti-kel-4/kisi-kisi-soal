@@ -8,19 +8,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Study extends Model
 {
+  use HasFactory, SoftDeletes;
+
 	  protected $table = 'studies';
     protected $primaryKey = 'id';
-    use HasFactory, SoftDeletes;
-    protected $fillable = [
-        'name',
-        'teachers_id',
-		    'grades_id',
-    ];
+    protected $fillable = ['id', 'name', 'grade_generalizations_id'];
 
-    protected static $relations_to_cascade = ['grade', 'teacher_study', 'study_lesson_scope_lesson', 'question_grid_header']; 
+    protected static $relations_to_cascade = ['grade_generalization', 'teacher_study', 'study_lesson_scope_lesson', 'question_grid_header']; 
 
-    public function grade() {
-      return $this->belongsTo('App\Models\Grade', 'grades_id', 'id');
+    public function grade_generalization() {
+      return $this->belongsTo('App\Models\GradeGeneralization', 'grade_generalizations_id', 'id');
     }
 
     public function teacher_study(){

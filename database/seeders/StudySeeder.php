@@ -17,17 +17,22 @@ class StudySeeder extends Seeder
         Study::create([
             'id' => 1,
             'name' => 'Bahasa Indonesia',
-            'grades_id' => 2
+            'grade_generalizations_id' => 2
         ]);
         Study::create([
             'id' => 2,
             'name' => 'Matematika (P)',
-            'grades_id' => 2
+            'grade_generalizations_id' => 2
         ]);
         Study::create([
             'id' => 3,
             'name' => 'Bahasa dan Sastra Jepang',
-            'grades_id' => 36
+            'grade_generalizations_id' => 1
+        ]);
+        Study::create([
+            'id' => 4,
+            'name' => 'Kimia',
+            'grade_generalizations_id' => 10
         ]);
     }
 }

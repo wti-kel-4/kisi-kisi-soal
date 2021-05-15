@@ -11,7 +11,8 @@ class TeacherStudy extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'teacher_study';
-
+    protected $fillable = ['id', 'teachers_id', 'studies_id'];
+    
     protected static $relations_to_cascade = ['study', 'teacher']; 
     public function study(){
         return $this->belongsTo('App\Models\Study', 'studies_id', 'id');

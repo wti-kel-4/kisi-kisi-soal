@@ -15,7 +15,7 @@
                 <div class="card">
                     <div class="card-body">
                       <div class="row">
-                        <a class="col-12 col-md-6 col-lg-4" href="{{ route('question_grid_step_0_store', $type = 'PTS') }}">
+                        <a class="col-12 col-md-6 col-lg-4" href="{{ route('user.question_grid_step_0_store', $type = 'PTS') }}">
                           {{-- <div class="col-12 col-md-6 col-lg-4"> --}}
                             <div class="card card-info">
                               <div class="card-header">
@@ -27,7 +27,7 @@
                             </div>
                           {{-- </div> --}}
                         </a>
-                        <a class="col-12 col-md-6 col-lg-4" href="{{ route('question_grid_step_0_store', $type = 'PAT') }}">
+                        <a class="col-12 col-md-6 col-lg-4" href="{{ route('user.question_grid_step_0_store', $type = 'PAT') }}">
                           {{-- <div class="col-12 col-md-6 col-lg-4"> --}}
                             <div class="card card-success">
                               <div class="card-header">
@@ -39,7 +39,7 @@
                             </div>
                           {{-- </div> --}}
                         </a>
-                        <a class="col-12 col-md-6 col-lg-4" href="{{ route('question_grid_step_0_store', $type = 'PKK') }}">
+                        <a class="col-12 col-md-6 col-lg-4" href="{{ route('user.question_grid_step_0_store', $type = 'PKK') }}">
                           {{-- <div class="col-12 col-md-6 col-lg-4"> --}}
                             <div class="card card-dark">
                               <div class="card-header">
@@ -55,7 +55,7 @@
                     </div>
                     <div class="row card-footer">
                       <div class="col text-left">
-                        <a href="{{ route('user.dashboard') }}" class="btn btn-icon icon-right btn-danger"><i class="fas fa-arrow-left"></i> Kembali Ke Beranda</a>
+                        <a href="{{ route('user.dashboard.index') }}" class="btn btn-icon icon-right btn-danger"><i class="fas fa-arrow-left"></i> Kembali Ke Beranda</a>
                       </div>
                     </div>
                 </div>

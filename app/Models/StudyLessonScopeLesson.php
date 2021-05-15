@@ -11,6 +11,7 @@ class StudyLessonScopeLesson extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'study_lesson_scope_lesson';
+    protected $fillable = ['id', 'studies_id', 'lessons_id', 'scope_lessons_id'];
     protected static $relations_to_cascade = ['question_grid_header'];
 
     public function lesson(){

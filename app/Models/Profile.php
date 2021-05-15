@@ -10,6 +10,7 @@ class Profile extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $fillable = ['id', 'name', 'phone', 'address', 'email', 'url_logo'];
     protected static $relations_to_cascade = ['question_grid_header']; 
     public $timestamps = false;
 

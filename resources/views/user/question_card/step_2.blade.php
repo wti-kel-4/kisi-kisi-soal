@@ -33,7 +33,7 @@
               <div class="col-12">
                 <div class="card">
                   <div class="card-body pb-0">
-                    <form action="{{ route('question_card_step_2.save') }}" method="POST">
+                    <form action="{{ route('user.question_card_step_2.save') }}" method="POST">
                       @csrf
                       <div class="row">
                         {{-- <div class="col-lg-2 col-md-2">
@@ -128,10 +128,10 @@
                   <div class="card-footer">
                     <div class="row card-footer">
                       <div class="col text-left">
-                        <a href="{{ route('question_card_step_1', [$question_card_step_1_one->type, $question_card_step_1_one->school_year, $question_card_step_1_one->form, $question_card_step_1_one->studies_id, $question_card_step_1_one->grade_specializations_id, $question_card_step_1_one->teachers_id]) }}" class="btn btn-icon icon-right btn-primary"><i class="fas fa-arrow-left"></i>Kembali Ke Step Sebelumnya</a>
+                        <a href="{{ route('user.question_card_step_1', [$question_card_step_1_one->type, $question_card_step_1_one->school_year, $question_card_step_1_one->form, $question_card_step_1_one->studies_id, $question_card_step_1_one->grade_specializations_id, $question_card_step_1_one->teachers_id]) }}" class="btn btn-icon icon-right btn-primary"><i class="fas fa-arrow-left"></i>Kembali Ke Step Sebelumnya</a>
                       </div>
                       <div class="col text-right">
-                        <a href="{{ route('question_card_step_2') }}" class="btn btn-icon icon-right btn-primary">Simpan & Validasi <i class="fas fa-arrow-right"></i></a>
+                        <a href="{{ route('user.question_card_step_2') }}" class="btn btn-icon icon-right btn-primary">Simpan & Validasi <i class="fas fa-arrow-right"></i></a>
                       </div>
                     </div>
                   </div>

@@ -26,7 +26,7 @@
               <div class="col-12">
                 <div class="card">
                   <div class="card-body">
-                    <form action="{{ route('question_grid_step_2.save') }}" method="POST">
+                    <form action="{{ route('user.question_grid_step_2.save') }}" method="POST">
                       @csrf
                       <div class="row">
                         <div class="col-lg-2 col-md-2">
@@ -37,8 +37,8 @@
                         </div>
                         <div class="col-lg-7 col-md-8">
                           <div class="form-group">
-                            <label>Kompetensi Dasar 1</label>
-                            <select name="kompetensi_dasar_1" class="form-control select2">
+                            <label>Kompetensi Dasar</label>
+                            <select name="kompetensi_dasar" class="form-control select2">
                                 <option selected disabled>Pilih Kompetensi Dasar yang berkaitan</option>
                                 @foreach ($basic_competencies as $basic_competency)
                                     <option value="{{ $basic_competency->id }}">{{ $basic_competency->name }}</option>
@@ -46,31 +46,24 @@
                             </select>
                           </div>
                           <div class="form-group">
-                            <label>Kompetensi Dasar 2</label>
-                            <select name="kompetensi_dasar_2" class="form-control select2">
-                                <option selected disabled>[Opsional] Pilih Kompetensi Dasar yang berkaitan</option>
-                                @foreach ($basic_competencies as $basic_competency)
-                                    <option value="{{ $basic_competency->id }}">{{ $basic_competency->name }}</option>
-                                @endforeach
-                            </select>
-                          </div>
-                          <div class="form-group">
-                            <label>Kompetensi Dasar 3</label>
-                            <select name="kompetensi_dasar_3" class="form-control select2">
-                                <option selected disabled>[Opsional] Pilih Kompetensi Dasar yang berkaitan</option>
-                                @foreach ($basic_competencies as $basic_competency)
-                                    <option value="{{ $basic_competency->id }}">{{ $basic_competency->name }}</option>
-                                @endforeach
+                            <label>Lingkup Materi</label>
+                            <select name="materi" class="form-control">
+                              @if (count($study_lesson_scope_lessons) == 0)
+                                  <option selected disabled>Anda tidak memiliki materi dari kelas yang Anda pilih</option>
+                                @endif
+                              @foreach ($study_lesson_scope_lessons as $study_lesson_scope_lesson)
+                                  <option value="{{ $study_lesson_scope_lesson->scope_lesson->id }}">{{ $study_lesson_scope_lesson->scope_lesson->name }}</option>
+                              @endforeach
                             </select>
                           </div>
                           <div class="form-group">
                             <label>Materi</label>
                             <select name="materi" class="form-control">
-                              @if (count($lessons) == 0)
+                              @if (count($study_lesson_scope_lessons) == 0)
                                   <option selected disabled>Anda tidak memiliki materi dari kelas yang Anda pilih</option>
                                 @endif
-                              @foreach ($lessons as $lesson)
-                                  <option value="{{ $lesson->id }}">{{ $lesson->name }}</option>
+                              @foreach ($study_lesson_scope_lessons as $study_lesson_scope_lesson)
+                                  <option value="{{ $study_lesson_scope_lesson->lesson->id }}">{{ $study_lesson_scope_lesson->lesson->name }} ({{ $study_lesson_scope_lesson->scope_lesson->name }})</option>
                               @endforeach
                             </select>
                           </div>
@@ -83,18 +76,10 @@
                           <div class="form-group">
                             <label>Bentuk Soal</label>
                             <select name="bentuk" class="form-control" disabled>
-                              @if ($jenis_soal_question_grid == 'pg')
-                                  <option selected>Pilihan Ganda (PG)</option>
-                              @endif
-                              @if ($jenis_soal_question_grid == 'isian')
-                                  <option selected >Isian</option>
-                              @endif
-                              @if ($jenis_soal_question_grid == 'jumble')
-                                  <option selected>Menjodohkan</option>
-                              @endif
-                              @if ($jenis_soal_question_grid == 'uraian')
-                                  <option selected>Uraian</option>
-                              @endif
+                                  <option value="pg">Pilihan Ganda (PG)</option>
+                                  <option value="isian">Isian</option>
+                                  <option value="jumble">Menjodohkan</option>
+                                  <option value="uraian">Uraian</option>
                             </select>
                           </div>
                           <div class="form-group">
@@ -115,10 +100,10 @@
                   <div class="card-footer">
                     <div class="row card-footer">
                       <div class="col text-left">
-                        <a href="{{ route('question_grid_step_1') }}" class="btn btn-icon icon-right btn-primary"><i class="fas fa-arrow-left"></i>Kembali Ke Step Sebelumnya</a>
+                        <a href="{{ route('user.question_grid_step_1') }}" class="btn btn-icon icon-right btn-primary"><i class="fas fa-arrow-left"></i>Kembali Ke Step Sebelumnya</a>
                       </div>
                       <div class="col text-right">
-                        <a href="{{ route('question_grid_step_3') }}" class="btn btn-icon icon-right btn-primary">Simpan & Validasi <i class="fas fa-arrow-right"></i></a>
+                        <a href="{{ route('user.question_grid_step_3') }}" class="btn btn-icon icon-right btn-primary">Simpan & Validasi <i class="fas fa-arrow-right"></i></a>
                       </div>
                     </div>
                   </div>

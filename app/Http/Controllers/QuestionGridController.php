@@ -6,12 +6,16 @@ use Illuminate\Http\Request;
 use App\Models\QuestionGrid;
 use App\Models\Profile;
 use App\Models\Study;
+use App\Models\TeacherStudy;
 use App\Models\TeacherGradeSpecialization;
-use Auth;
-use Session;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use App\Classes\QuestionGridClass;
+use App\Classes\QuestionGridHeaderClass;
 use App\Models\BasicCompetency;
 use App\Models\Lesson;
+use App\Models\StudyLessonScopeLesson;
+use App\Models\TeacherGradeGeneralization;
 
 class QuestionGridController extends Controller
 {
@@ -57,60 +61,43 @@ class QuestionGridController extends Controller
     public function get_step_1()
     {
         $profile = Profile::first();
-        $teachers_id = Auth::guard('user')->user()->teacher->id;
-        $studies = Study::where('teachers_id', $teachers_id)->get();
-        $teacher_grade_specializations = TeacherGradeSpecialization::select('grade_specializations.id', 'grade_specializations.name')
-                                        ->leftJoin('grade_specializations', 'teacher_grade_specializations.grade_specializations_id', 'grade_specializations.id')
-                                        ->where('teacher_grade_specializations.teachers_id', $teachers_id)
-                                        ->get();
-        return view('user.question_grid.step_1', compact('profile', 'studies', 'teacher_grade_specializations'));
+        $user = Auth::guard('user')->user();
+        $teacher_studies = TeacherStudy::where('teachers_id', $user->teacher->id)->orderBy('created_at', 'DESC')->get();
+        $teacher_grade_generalizations = TeacherGradeGeneralization::where('teachers_id', $user->teacher->id)->orderBy('created_at', 'DESC')->get();
+        return view('user.question_grid.step_1', compact('profile', 'teacher_studies', 'teacher_grade_generalizations'));
     }
 
     public function get_step_1_store(Request $request)
     {
-        $teachers_id = Auth::guard('user')->user()->teacher->id;
-        $profile = Profile::first();
-        $satuan_pendidikan = $profile->name;
+        $user = Auth::guard('user')->user();
+        $satuan_pendidikan = $request->satuan_pendidikan;
         $mata_pelajaran = $request->mata_pelajaran;
         $kelas = $request->kelas;
-        $alokasi_waktu = $request->alokasi_waktu;
-        $jumlah_soal = $request->jumlah_soal;
-        $jenis_soal = $request->jenis_soal;
         $tahun_ajaran = $request->tahun_ajaran;
+        $semester = $request->semester;
+        $kurikulum = $request->kurikulum;
 
-        $studies = Study::leftJoin('grades', 'studies.grades_id', 'grades.id')
-                    ->leftJoin('grade_specializations','grades.grade_specializations_id', 'grade_specializations.id')
-                    ->where('grade_specializations.id', $kelas)
-                    ->where('studies.teachers_id', $teachers_id)
-                    ->get();
-        if($studies->count() == 0){
-            return back()->with('error', 'Mata Pelajaran dan Kelas yang Anda ajar tidak sesuai. Coba ulang kembali');
-        }
+        $question_grid_header_step_1 = new QuestionGridHeaderClass; // Berbentuk Object
+        $question_grid_header_step_1->satuan_pendidikan = $satuan_pendidikan;
+        $question_grid_header_step_1->mata_pelajaran = $mata_pelajaran;
+        $question_grid_header_step_1->kelas = $kelas;
+        $question_grid_header_step_1->tahun_ajaran = $tahun_ajaran;
+        $question_grid_header_step_1->semester = $semester;
+        $question_grid_header_step_1->kurikulum = $kurikulum;
 
-        $user = Auth::guard('user')->user();
-        $question_grid_step_1 = new QuestionGridClass; // Berbentuk Object
-        $question_grid_step_1->satuan_pendidikan = $satuan_pendidikan;
-        $question_grid_step_1->mata_pelajaran = $mata_pelajaran;
-        $question_grid_step_1->kelas = $kelas;
-        $question_grid_step_1->alokasi_waktu = $alokasi_waktu;
-        $question_grid_step_1->jumlah_soal = $jumlah_soal;
-        $question_grid_step_1->jenis_soal = $jenis_soal;
-        $question_grid_step_1->tahun_ajaran = $tahun_ajaran;
-        Session::put('teachers_id_'.$user->id.'_question_grid_step_1', $question_grid_step_1);
-        return redirect()->route('question_grid_step_2');
+        Session::put('teachers_id_'.$user->id.'_question_grid_header_step_1', $question_grid_header_step_1);
+        return redirect()->route('user.question_grid_step_2');
     }
 
     public function get_step_2()
     {
-        $session = $this->get_session('_question_grid_step_1');
+        $user = Auth::guard('user')->user();
+        $session = $this->get_session('_question_grid_header_step_1');
         $studies_id = $session->mata_pelajaran;
-        $teacher_grade_specialization = TeacherGradeSpecialization::find($session->kelas);
+        $study_lesson_scope_lessons = StudyLessonScopeLesson::where('studies_id', $studies_id)->get();
 
-        $lessons = Lesson::where('studies_id', $studies_id)->where('grade_specializations_id', $teacher_grade_specialization->grade_specialization->id)->get();
-        $basic_competencies = BasicCompetency::where('studies_id', $studies_id)->where('grade_specializations_id', $teacher_grade_specialization->grade_specialization->id)->get();
-        $total_question_grid = $session->jumlah_soal;
-        $jenis_soal_question_grid = $session->jenis_soal;
-        return view('user.question_grid.step_2', compact('jenis_soal_question_grid', 'lessons', 'basic_competencies', 'total_question_grid'));
+        $basic_competencies = BasicCompetency::where('studies_id', $studies_id)->where('grade_generalizations_id', $session->kelas)->get();
+        return view('user.question_grid.step_2', compact('study_lesson_scope_lessons', 'basic_competencies'));
     }
 
     public function get_step_2_save(Request $request)
@@ -120,8 +107,6 @@ class QuestionGridController extends Controller
         $teachers_id = $user->teacher->id;
         $no_urut = $request->no_urut;
         $kompetensi_dasar_1 = $request->kompetensi_dasar_1;
-        $kompetensi_dasar_2 = $request->kompetensi_dasar_2;
-        $kompetensi_dasar_3 = $request->kompetensi_dasar_3;
         $materi = $request->materi;
         $indikator = $request->indikator;
         $dari_no = $request->dari_no;
@@ -242,7 +227,7 @@ class QuestionGridController extends Controller
             }
         }
 
-        return redirect()->route('user.dashboard')->with('success', 'Kisi - kisi soal berhasil dibuat!');
+        return redirect()->route('user.dashboard.index')->with('success', 'Kisi - kisi soal berhasil dibuat!');
     }
 
     protected function get_session($question_grid_step_number)

@@ -6,10 +6,9 @@ class QuestionGridClass{
     public $satuan_pendidikan;
     public $mata_pelajaran;
     public $kelas;
-    public $alokasi_waktu;
-    public $jumlah_soal;
-    public $jenis_soal;
     public $tahun_ajaran;
+    public $semester;
+    public $kurikulum;
 
     // For Step 2
     public $no_urut;

@@ -8,14 +8,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class BasicCompetency extends Model
 {
-    protected $table = 'basic_competencies';
-    protected $primaryKey = 'id';
     use HasFactory, SoftDeletes;
-    protected $fillable = [
-        'name',
-        'studies_id',
-        'grade_specializations_id'
-    ];
+    protected $table = 'basic_competencies';
+    protected $fillable = ['id', 'name', 'studies_id', 'grade_generalizations_id'];
+    protected $primaryKey = 'id';
 
     // Jangan menghapus relasi yang lain karena akan berpengaruh dengan kisi - kisi lainnya
     protected static $relations_to_cascade = ['question_grid']; 

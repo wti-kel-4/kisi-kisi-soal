@@ -11,14 +11,9 @@ class User extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'users';
+    protected $fillable = [ 'id', 'username', 'password', 'url_photo', 'teachers_id'];
+
     protected $primaryKey = 'id';
-    use HasFactory;
-    protected $fillable = [
-        'username',
-        'password',
-        'url_photo',
-        'teachers_id',
-    ];
 
 
     public function teacher() {

@@ -10,6 +10,8 @@ class GradeGeneralization extends Model
 {
     use HasFactory, SoftDeletes;
     
+    protected $fillable = ['id', 'name'];
+
     protected static $relations_to_cascade = ['grade', 'basic_competency', 'question_card_header', 'teacher_grade_generalization']; 
 
     public function grade() {

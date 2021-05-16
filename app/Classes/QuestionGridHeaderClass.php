@@ -9,5 +9,6 @@ class QuestionGridHeaderClass{
     public $tahun_ajaran;
     public $semester;
     public $kurikulum;
+    public $teachers_id;
 }
 ?>

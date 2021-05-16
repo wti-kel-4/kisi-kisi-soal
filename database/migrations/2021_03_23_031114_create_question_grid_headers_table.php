@@ -15,26 +15,15 @@ class CreateQuestionGridHeadersTable extends Migration
     {
         Schema::create('question_grid_headers', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('teachers_id')->constrained('teachers'); // Who is the owner
             $table->foreignId('profiles_id')->constrained('profiles');
             $table->foreignId('studies_id')->constrained('studies');
-            $table->foreignId('grades_id')->constrained('grades');
+            $table->foreignId('grade_generalizations_id')->constrained('grade_generalizations');
+            $table->string('type');
             $table->string('school_year', 100);
             $table->enum('semesters', ['Ganjil', 'Genap']);
             $table->string('curriculum');
-
-            // $table->foreignId('teachers_id')->constrained('teachers');
-            // $table->enum('type', ['PTS', 'PAT', 'PKK']);
-            // $table->foreignId('studies_id')->constrained('studies');
-            // $table->integer('time_allocation');
-            // $table->integer('total');
-            // $table->string('form');
-            // $table->foreignId('basic_competencies_id')->constrained('basic_competencies');
-            // $table->foreignId('grade_specializations_id')->constrained('grade_specializations');
-            // $table->text('indicator');
-            // $table->foreignId('lessons_id')->constrained('lessons');
-            // $table->integer('sorting_number');
-            // $table->integer('start_number');
-            // $table->integer('end_number');
+            $table->boolean('temp');
             $table->timestamps();
             $table->softDeletes();
         });

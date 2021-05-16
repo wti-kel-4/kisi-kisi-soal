@@ -16,18 +16,23 @@ class TeacherStudySeeder extends Seeder
     {
         $datas = [[
             'id' => '1',
-            'teachers_id' => '1',
+            'teachers_id' => '16',
             'studies_id' => '2',
         ],
         [
             'id' => '2',
-            'teachers_id' => '1',
+            'teachers_id' => '16',
             'studies_id' => '3',
         ],
         [
             'id' => '3',
-            'teachers_id' => '2',
+            'teachers_id' => '16',
             'studies_id' => '1',
+        ],
+        [
+            'id' => '4',
+            'teachers_id' => '16',
+            'studies_id' => '4',
         ]];
 
         foreach($datas as $data){

@@ -2,9 +2,9 @@
 @php
   use Illuminate\Support\Facades\Auth;
   $user = Auth::guard('user')->user();
-  $question_grid_step_2 = session('teachers_id_'.$user->id.'_question_grid_step_2');
-  if(session()->has('teachers_id_'.$user->id.'_temp')){
-    $qty_question_grid = session('teachers_id_'.$user->id.'_temp');
+  $question_grid_step_2 = session('users_id_'.$user->id.'_question_grid_step_2');
+  if(session()->has('users_id_'.$user->id.'_temp')){
+    $qty_question_grid = session('users_id_'.$user->id.'_temp');
   }else{
     $qty_question_grid = 0;
   }
@@ -29,13 +29,7 @@
                     <form action="{{ route('user.question_grid_step_2.save') }}" method="POST">
                       @csrf
                       <div class="row">
-                        <div class="col-lg-2 col-md-2">
-                          <div class="form-group">
-                            <label>No Urut</label>
-                            <input name="no_urut" type="number" class="form-control">
-                          </div>
-                        </div>
-                        <div class="col-lg-7 col-md-8">
+                        <div class="col-lg-5 col-md-5">
                           <div class="form-group">
                             <label>Kompetensi Dasar</label>
                             <select name="kompetensi_dasar" class="form-control select2">
@@ -47,48 +41,73 @@
                           </div>
                           <div class="form-group">
                             <label>Lingkup Materi</label>
-                            <select name="materi" class="form-control">
-                              @if (count($study_lesson_scope_lessons) == 0)
+                            <select name="lingkup_materi" class="form-control select2">
+                              @if (count($scope_lessons) == 0)
                                   <option selected disabled>Anda tidak memiliki materi dari kelas yang Anda pilih</option>
-                                @endif
-                              @foreach ($study_lesson_scope_lessons as $study_lesson_scope_lesson)
-                                  <option value="{{ $study_lesson_scope_lesson->scope_lesson->id }}">{{ $study_lesson_scope_lesson->scope_lesson->name }}</option>
+                              @endif
+                              @foreach ($scope_lessons as $scope_lesson)
+                                  <option value="{{ $scope_lesson->scope_lesson->id }}">{{ $scope_lesson->scope_lesson->name }}</option>
                               @endforeach
                             </select>
                           </div>
                           <div class="form-group">
                             <label>Materi</label>
-                            <select name="materi" class="form-control">
-                              @if (count($study_lesson_scope_lessons) == 0)
+                            <select name="materi" class="form-control select2">
+                              @if (count($lessons) == 0)
                                   <option selected disabled>Anda tidak memiliki materi dari kelas yang Anda pilih</option>
                                 @endif
-                              @foreach ($study_lesson_scope_lessons as $study_lesson_scope_lesson)
-                                  <option value="{{ $study_lesson_scope_lesson->lesson->id }}">{{ $study_lesson_scope_lesson->lesson->name }} ({{ $study_lesson_scope_lesson->scope_lesson->name }})</option>
+                              @foreach ($lessons as $lesson)
+                                  <option value="{{ $lesson->lesson->id }}">{{ $lesson->lesson->name }}</option>
                               @endforeach
                             </select>
+                          </div>
+                        </div>
+                        <div class="col-lg-7 col-md-7">
+                          <div class="row">
+                            <div class="col">
+                              <div class="form-group">
+                                <label>No Soal</label>
+                                <input name="no_soal" type="number" class="form-control">
+                              </div>
+                            </div>
+                            <div class="col">
+                              <div class="form-group">
+                                <label>Level</label>
+                                <select name="level" class="form-control">
+                                      <option value="L1">L1 (Pengetahuan & Pemahaman)</option>
+                                      <option value="L2">L2 (Aplikasi)</option>
+                                      <option value="L3">L3 (Penalaran)</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col">
+                              <div class="form-group">
+                                <label>Kognitif</label>
+                                <select name="kognitif" class="form-control">
+                                      <option value="C1">C1 (Pengetahuan)</option>
+                                      <option value="C2">C2 (Pemahaman)</option>
+                                      <option value="C3">C3 (Penerapan)</option>
+                                      <option value="C4">C4 (Analisis)</option>
+                                      <option value="C5">C5 (Penilaian)</option>
+                                      <option value="C6">C6 (Kreasi)</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col">
+                              <div class="form-group">
+                                <label>Bentuk Soal</label>
+                                <select name="bentuk" class="form-control">
+                                      <option value="pg">Pilihan Ganda (PG)</option>
+                                      <option value="isian">Isian</option>
+                                      <option value="jumble">Menjodohkan</option>
+                                      <option value="uraian">Uraian</option>
+                                </select>
+                              </div>
+                            </div>
                           </div>
                           <div class="form-group">
                             <label>Indikator Soal</label>
                             <textarea name="indikator" class="form-control" style="min-width:10px; min-height:100px;" placeholder="Tuliskan indikator yang dibutuhkan di kisi - kisi soal ini"></textarea>
-                          </div>
-                        </div>
-                        <div class="col-lg-3 col-md-3">
-                          <div class="form-group">
-                            <label>Bentuk Soal</label>
-                            <select name="bentuk" class="form-control" disabled>
-                                  <option value="pg">Pilihan Ganda (PG)</option>
-                                  <option value="isian">Isian</option>
-                                  <option value="jumble">Menjodohkan</option>
-                                  <option value="uraian">Uraian</option>
-                            </select>
-                          </div>
-                          <div class="form-group">
-                            <label>No Soal Dari</label>
-                            <input name="dari_no" type="number" class="form-control">
-                          </div>
-                          <div class="form-group">
-                            <label>Sampai No Soal</label>
-                            <input name="sampai_no" type="number" class="form-control">
                           </div>
                           <div class="col p-0 m-0">
                             <button class="btn btn-icon icon-right btn-success w-100">Simpan Data <i class="fas fa-save"></i></button>
@@ -127,11 +146,11 @@
                       <h4>No Urut : {{ $question_grid_step_2[$i]->no_urut }}</h4>
                     </div>
                     <div class="card-body">
-                      <h6>Indikator (No. Soal : {{ $question_grid_step_2[$i]->dari_no }} s/d {{ $question_grid_step_2[$i]->sampai_no }})</h6>
+                      <h6>Level Kognitif : {{ $question_grid_step_2[$i]->level }}/{{ $question_grid_step_2[$i]->kognitif }}</h6>
                       {{ $question_grid_step_2[$i]->indikator }}
                     </div>
                     <div class="card-footer text-right row">
-                      <form action="{{ route('question_grid_step_2.delete', $i)}}" class="w-100" method="POST">
+                      <form action="{{ route('user.question_grid_step_2.delete', $i)}}" class="w-100" method="POST">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="col-lg-4 col-md-4 col-sm-4 btn btn-danger">Hapus</button>

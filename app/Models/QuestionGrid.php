@@ -27,9 +27,10 @@ class QuestionGrid extends Model
         'sorting_number',
         'start_number',
         'end_number',
+		'teachers_id',
     ];
 
-	protected static $relations_to_cascade = ['question_grid_header', 'study_lesson_scope_lesson', 'basic_competency', 'question_card', 'log_activity_user'];
+	protected static $relations_to_cascade = ['question_card', 'log_activity_user'];
 
 	public function question_grid_header(){
 		return $this->belongsTo('App\Models\QuestionGridHeader', 'question_grid_headers_id', 'id');

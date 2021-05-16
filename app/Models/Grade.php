@@ -22,10 +22,6 @@ class Grade extends Model
 		return $this->belongsTo('App\Models\GradeGeneralization', 'grade_generalizations_id', 'id');
 	}
 
-	public function question_grid_header() {
-		return $this->hasMany('App\Models\QuestionGridHeader', 'grades_id', 'id');
-	}
-
 	public function study() {
 		return $this->hasMany('App\Models\Study', 'grades_id', 'id');
 	}

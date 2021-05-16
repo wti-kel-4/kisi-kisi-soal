@@ -23,7 +23,6 @@ class CreateQuestionGridsTable extends Migration
             $table->string('indicator');
             $table->string('question_form');
             $table->string('question_number');
-            $table->boolean('temp');
             $table->timestamps();
             $table->softDeletes();
         });

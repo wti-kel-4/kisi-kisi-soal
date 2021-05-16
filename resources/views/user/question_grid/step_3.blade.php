@@ -1,23 +1,4 @@
 @extends('user.master.main')
-{{-- @php
-  use Illuminate\Support\Facades\Auth;
-  use App\Models\Study;
-  use App\Models\GradeGeneralization;
-  $user = Auth::guard('user')->user();
-  $question_grid->question_grid_header = session('users_id_'.$user->id.'_question_grid_header_step_1');
-  $type = '-';
-  if(session()->has('users_id_'.$user->id.'_question_grid_step_0')){
-    $type = session('users_id_'.$user->id.'_question_grid_step_0');
-  }
-  $question_grids = null;
-  if(session()->has('users_id_'.$user->id.'_question_grid_step_2')){
-    $question_grids = session('users_id_'.$user->id.'_question_grid_step_2');
-  }
-  $study = Study::find($question_grid->question_grid_header->mata_pelajaran);
-  $mata_pelajaran = $study->name;
-  $grade_generalization = GradeGeneralization::find($question_grid->question_grid_header->kelas);
-  $kelas = $grade_generalization->name;
-@endphp --}}
 @section('body')
      <!-- Main Content -->
      <div class="main-content">
@@ -39,16 +20,16 @@
                         </div>
                         <div class="col-12 col-sm-12 text-center">
                           <h4>
-                            @if ($question_grid->question_grid_header->type == 'PAT')
+                            @if ($question_grid_header->type == 'PAT')
                                 Penilaian Akhir Tahun
                             @endif
-                            @if ($question_grid->question_grid_header->type == 'PKK')
+                            @if ($question_grid_header->type == 'PKK')
                                 Penilaian Kenaikan Kelas
                             @endif
-                            @if ($question_grid->question_grid_header->type == 'PTS')
+                            @if ($question_grid_header->type == 'PTS')
                                 Penilaian Tengah Semester
                             @endif
-                             {{ $question_grid->question_grid_header->school_year }}</h4>
+                             {{ $question_grid_header->school_year }}</h4>
                         </div>
                       </div>
                       <div class="row w-100 mt-3">
@@ -59,7 +40,7 @@
                                 Satuan Pendidikan
                               </div>
                               <div class="col">
-                                : {{ $question_grid->question_grid_header->profile->name }}
+                                : {{ $question_grid_header->profile->name }}
                               </div>
                             </div>
                             <div class="row">
@@ -67,7 +48,7 @@
                                 Mata Pelajaran
                               </div>
                               <div class="col">
-                                : {{ $question_grid->question_grid_header->study->name }}
+                                : {{ $question_grid_header->study->name }}
                               </div>
                             </div>
                             <div class="row">
@@ -75,7 +56,7 @@
                                 Kelas
                               </div>
                               <div class="col">
-                                : {{ $question_grid->question_grid_header->grade_generalization->name }}
+                                : {{ $question_grid_header->grade_generalization->name }}
                               </div>
                             </div>
                           </div>
@@ -87,7 +68,7 @@
                                 Tahun Pelajaran
                               </div>
                               <div class="col">
-                                : {{ $question_grid->question_grid_header->school_year }} - {{ intval($question_grid->question_grid_header->school_year) + 1 }}
+                                : {{ $question_grid_header->school_year }} - {{ intval($question_grid_header->school_year) + 1 }}
                               </div>
                             </div>
                             <div class="row">
@@ -95,7 +76,7 @@
                                 Semester
                               </div>
                               <div class="col">
-                                : {{ $question_grid->question_grid_header->semesters }}
+                                : {{ $question_grid_header->semesters }}
                               </div>
                             </div>
                             <div class="row">
@@ -103,7 +84,7 @@
                                 Kurikulum
                               </div>
                               <div class="col">
-                                : {{ $question_grid->question_grid_header->curriculum }}
+                                : {{ $question_grid_header->curriculum }}
                               </div>
                             </div>
                           </div>
@@ -163,7 +144,7 @@
                   <div class="card-footer row">
                     <div class="col text-center">
                       <p>Mengetahui</p>
-                      <b>Kepala {{ $question_grid->question_grid_header->satuan_pendidikan }}</b>
+                      <b>Kepala {{ $question_grid_header->satuan_pendidikan }}</b>
                       <br><br><br>
                       <b>Drs. Sukarno, M.Pd</b>
                       <p>NIP. 196112129893000</p>
@@ -172,8 +153,8 @@
                       <p>Sidoarjo, {{ date('d-m-Y') }}</p>
                       <b>Guru Mata Pelajaran</b>
                       <br><br><br>
-                      <b>{{ $question_grid->question_grid_header->teacher->name }}</b>
-                      <p>NIP. {{ $question_grid->question_grid_header->teacher->nip }}</p>
+                      <b>{{ $question_grid_header->teacher->name }}</b>
+                      <p>NIP. {{ $question_grid_header->teacher->nip }}</p>
                     </div>
                   </div>
                   <div class="card-footer row">
@@ -184,7 +165,7 @@
                       <a class="btn btn-icon icon-right {{ ($question_grids != null) ? 'btn-success' : 'btn-secondary' }} w-100" {{ ($question_grids != null) ? "href=".route('user.question_grid_step_finish') : "href=# disabled"}}>Oke, sudah benar. Simpan Data Keseluruhan</a>
                     </div>
                     <div class="col-lg-2 col-sm-12 my-1">
-                      <a class="btn btn-icon icon-right {{ ($question_grids != null) ? 'btn-warning' : 'btn-secondary' }} w-100" {{ ($question_grids != null) ? "href=".url('user/question-grid/preview/'.$question_grid->question_grid_header->id) : "href=# disabled"}}><i class="fa fa-file-word"></i> Preview</a>
+                      <a class="btn btn-icon icon-right {{ ($question_grids != null) ? 'btn-warning' : 'btn-secondary' }} w-100" {{ ($question_grids != null) ? "href=".url('user/question-grid/preview/'.$question_grid_header->id) : "href=# disabled"}}><i class="fa fa-file-word"></i> Preview</a>
                     </div>
                   </div>
                 </div>

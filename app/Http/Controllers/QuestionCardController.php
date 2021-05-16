@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\QuestionCard;
 use App\Models\QuestionGrid;
+use App\Models\QuestionCardHeader;
+use App\Models\QuestionGridHeader;
 use App\Models\Profile;
 use Auth;
 use Session;
@@ -93,66 +95,25 @@ class QuestionCardController extends Controller
 
     public function get_step_0()
     {
-        $question_grids = QuestionGrid::AdvancedSelect()->AdvancedGroupBy()->get();
-        return view('user.question_card.step_0', compact('question_grids'));
+        $question_grid_headers_pts = QuestionGridHeader::where('temp', false)->where('type', 'PTS')->get();
+        $question_grid_headers_pat = QuestionGridHeader::where('temp', false)->where('type', 'PAT')->get();
+        $question_grid_headers_pkk = QuestionGridHeader::where('temp', false)->where('type', 'PKK')->get();
+        return view('user.question_card.step_0', compact('question_grid_headers_pts', 'question_grid_headers_pat', 'question_grid_headers_pkk'));
     }
 
-    public function get_step_1($type, $school_year, $form, $studies_id, $grade_specializations_id, $teachers_id)
+    public function get_step_1($id)
     {
         // Ambil semua question_grids untuk semua data dalam tablenya
-        $question_grids_all = QuestionGrid::WhereCardParam($type, $school_year, $form, $studies_id, $grade_specializations_id, $teachers_id)
-                                            ->get();
-        $question_grids = QuestionGrid::select('indicator AS indikator', 'sorting_number AS no_urut')
-                                        ->WhereCardParam($type, $school_year, $form, $studies_id, $grade_specializations_id, $teachers_id)
-                                        ->groupBy('indicator', 'sorting_number')
-                                        ->orderBy('sorting_number')
-                                        ->get();
-        $question_grids_basic_competencies = QuestionGrid::select('basic_competencies_id')
-                                                ->WhereCardParam($type, $school_year, $form, $studies_id, $grade_specializations_id, $teachers_id)
-                                                ->orderBy('created_at', 'DESC')
-                                                ->distinct()
-                                                ->get();
-        
-        $question_grids_lessons = QuestionGrid::select('lessons_id')
-                                                ->WhereCardParam($type, $school_year, $form, $studies_id, $grade_specializations_id, $teachers_id)
-                                                ->orderBy('created_at', 'DESC')
-                                                ->distinct()
-                                                ->get();
-        
-        foreach($question_grids as $question_grid){
-            $i = 1;
-            foreach($question_grids_all as $question_grids_one){
-                if($question_grid->indikator == $question_grids_one->indicator){
-                    $question_grid->{'kompetensi_dasar_'.$i} = $question_grids_one->basic_competency->name;
-                    $question_grid->materi = $question_grids_one->lesson->name;
-                    $question_grid->bentuk = $question_grids_one->form;
-                    $question_grid->dari_no= $question_grids_one->start_number;
-                    $question_grid->sampai_no = $question_grids_one->end_number;
-                    $i++;
-                }
-            }
-        }
+        $question_grid_header = QuestionGridHeader::find($id);
 
-        // Ambil satu question_grids untuk headernya
-        $question_grid = QuestionGrid::WhereCardParam($type, $school_year, $form, $studies_id, $grade_specializations_id, $teachers_id)->first();
-        // Ambil profile object
-        $profile = Profile::first();
-
-        $this->put_session('_question_card_step_1_all', $question_grids_all); // untuk looping kisi - kisi soal
-        $this->put_session('_question_card_step_1_basic_competencies', $question_grids_basic_competencies); // Untuk mengambil kd dan materi yang berbeda
-        $this->put_session('_question_card_step_1_lessons', $question_grids_lessons); // Untuk mengambil kd dan materi yang berbeda
-        $this->put_session('_question_card_step_1_one', $question_grid); // untuk header kartu soal
-        $this->put_session('_profile', $profile);
-        return view('user.question_card.step_1', compact('profile', 'question_grid', 'question_grids'));
+        $this->put_session('_question_card_step_1', $question_grid_header); // untuk looping kisi - kisi soal
+        return view('user.question_card.step_1', compact('question_grid_header'));
     }
 
     public function get_step_2()
     {
-        $question_card_step_1_all = $this->get_session('_question_card_step_1_all');
-        $question_card_step_1_one = $this->get_session('_question_card_step_1_one');
-        $question_card_step_1_basic_competencies = $this->get_session('_question_card_step_1_basic_competencies');
-        $question_card_step_1_lessons = $this->get_session('_question_card_step_1_lessons');
-        return view('user.question_card.step_2', compact('question_card_step_1_all', 'question_card_step_1_one', 'question_card_step_1_basic_competencies', 'question_card_step_1_lessons'));
+        $question_card_step_1 = $this->get_session('_question_card_step_1');
+        return view('user.question_card.step_2', compact('question_card_step_1'));
     }
 
     public function get_step_2_save()

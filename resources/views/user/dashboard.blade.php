@@ -12,15 +12,15 @@
         <div class="row">
             <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                 <div class="card card-statistic-1">
-                <div class="card-icon bg-primary">
+                <div class="card-icon bg-success">
                     <i class="far fa-newspaper"></i>
                 </div>
                 <div class="card-wrap">
                     <div class="card-header">
-                    <h4>Total question card</h4>
+                    <h4>Total Kisi Kisi Soal Anda</h4>
                     </div>
                     <div class="card-body">
-                    10
+                    {{ count($question_grid_header) }}
                     </div>
                 </div>
                 </div>
@@ -30,16 +30,16 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h2 class="section-title">Nama Kelas (grade spelization)</h2>
+                    <h2 class="section-title">Penilaian Kenaikan Kelas</h2>
                     <p class="section-lead">
-                      description (optional)
+                        PKK
                     </p>
                 </div>
             </div>
     
             <div class="row">
                 <div class="col-12 col-md-6 col-lg-3">
-                    <div class="card card-primary">
+                    <div class="card card-dark">
                         <div class="card-header">
                             <a href="#">
                                 <h4>(opsi1) Nama Mata Pelajaran</h4>
@@ -50,36 +50,58 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="section-title">Penilaian Akhir Tahun</h2>
+                    <p class="section-lead">
+                        PAT
+                    </p>
+                </div>
+            </div>
+    
+            <div class="row">
                 <div class="col-12 col-md-6 col-lg-3">
-                    <div class="card card-primary">
+                    <div class="card card-success">
                         <div class="card-header">
-                            <h4>(Opsi 2)Nama Mata Pelajaran</h4>
-                            <div class="card-header-action">
-                                <a href="#" class="btn btn-primary">
-                                  Lihat
-                                </a>
-                            </div>
+                            <a href="#">
+                                <h4>(opsi1) Nama Mata Pelajaran</h4>
+                            </a>
                         </div>
                         <div class="card-body">
                             <p>Body Card </p>
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 col-lg-3">
-                    <a href="#">
-                        <div class="card card-primary">
-                            <div class="card-header">
-                                <h4>(Opsi 3)Nama Mata Pelajaran</h4>
-                            </div>
-                            <div class="card-body">
-                                <p>Body Card </p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
             </div>
         </div>
-        
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="section-title">Penilaian Tengah Semester</h2>
+                    <p class="section-lead">
+                        PTS
+                    </p>
+                </div>
+            </div>
+    
+            <div class="row">
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="card card-info">
+                        <div class="card-header">
+                            <a href="#">
+                                <h4>(opsi1) Nama Mata Pelajaran</h4>
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <p>Body Card </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>        
     </section>
 </div>
 @endsection

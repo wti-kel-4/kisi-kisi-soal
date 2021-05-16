@@ -69,28 +69,28 @@ class QuestionGrid extends Model
         });
     }
 	
-	public function scopeWhereCardParam($query, $type, $school_year, $form, $studies_id, $grade_specializations_id, $teachers_id) {
-		return $query->where([
-								['type', $type],
-								['form', $form],
-								['school_year', 'LIKE', $school_year],
-								['studies_id', $studies_id],
-								['grade_specializations_id', $grade_specializations_id],
-								['teachers_id', $teachers_id]
-							]);
-	}
+	// public function scopeWhereCardParam($query, $type, $school_year, $form, $studies_id, $grade_specializations_id, $teachers_id) {
+	// 	return $query->where([
+	// 							['type', $type],
+	// 							['form', $form],
+	// 							['school_year', 'LIKE', $school_year],
+	// 							['studies_id', $studies_id],
+	// 							['grade_specializations_id', $grade_specializations_id],
+	// 							['teachers_id', $teachers_id]
+	// 						]);
+	// }
 
-	public function scopeAdvancedSelect($query){
-		return $query->select('form', 'teachers_id', 'studies_id', 'type', 'school_year', 'grade_specializations_id');
-	}
+	// public function scopeAdvancedSelect($query){
+	// 	return $query->select('form', 'teachers_id', 'studies_id', 'type', 'school_year', 'grade_specializations_id');
+	// }
 
-	public function scopeAdvancedGroupBy($query){
-		return $query->groupBy('teachers_id')
-						->groupBy('type')
-						->groupBy('form')
-						->groupBy('studies_id')
-						->groupBy('school_year')
-						->groupBy('grade_specializations_id')
-						->orderBy('sorting_number');
-	}
+	// public function scopeAdvancedGroupBy($query){
+	// 	return $query->groupBy('teachers_id')
+	// 					->groupBy('type')
+	// 					->groupBy('question_form')
+	// 					->groupBy('studies_id')
+	// 					->groupBy('school_year')
+	// 					->groupBy('grade_generalizations_id')
+	// 					->orderBy('sorting_number');
+	// }
 }

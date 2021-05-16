@@ -173,27 +173,25 @@ class QuestionGridController extends Controller
 
         DB::beginTransaction();
         try{
+            
             // Jika sebelumnya sudah ada dan pernah mengunjungi halaman ini maka hapus data sebelumnya dari tabel
-            QuestionGrid::join('question_grid_headers', 'question_grids.question_grid_headers_id', 'question_grid_headers.id')->where('question_grid_headers.teachers_id', $user->teacher->id)->where('question_grid_headers.temp', false)->forceDelete();
-            QuestionGridHeader::where('teachers_id', $user->teacher->id)->where('temp', false)->forceDelete();
-
+            QuestionGrid::join('question_grid_headers', 'question_grids.question_grid_headers_id', 'question_grid_headers.id')->where('question_grid_headers.teachers_id', $user->teacher->id)->where('question_grid_headers.temp', true)->forceDelete();
+            QuestionGridHeader::where('teachers_id', $user->teacher->id)->where('temp', true)->forceDelete();
+            
             // Buat ulang
-            $question_grid_header = null;
+            $question_grid_header = new QuestionGridHeader; // Buat headernya dulu
+            $question_grid_header->type = $session_0;
+            $question_grid_header->profiles_id = Profile::where('name', 'LIKE', $session_1->satuan_pendidikan)->first()->id;
+            $question_grid_header->studies_id = $session_1->mata_pelajaran;
+            $question_grid_header->grade_generalizations_id = $session_1->kelas;
+            $question_grid_header->school_year = $session_1->tahun_ajaran.'-'.(intval($session_1->tahun_ajaran) + 1);
+            $question_grid_header->semesters = $session_1->semester;
+            $question_grid_header->curriculum = $session_1->kurikulum;
+            $question_grid_header->teachers_id = $session_1->teachers_id;
+            $question_grid_header->temp = true; // (true) karena masih belum fix atau bisa diedit/diulang/dipreview
+            $question_grid_header->save();
+            
             for($i = 0; $i < count($session_2); $i++){
-                if($i == 0){
-                    $question_grid_header = new QuestionGridHeader; // Buat headernya dulu
-                    $question_grid_header->type = $session_0;
-                    $question_grid_header->profiles_id = Profile::where('name', 'LIKE', $session_1->satuan_pendidikan)->first()->id;
-                    $question_grid_header->studies_id = $session_1->mata_pelajaran;
-                    $question_grid_header->grade_generalizations_id = $session_1->kelas;
-                    $question_grid_header->school_year = $session_1->tahun_ajaran.'-'.(intval($session_1->tahun_ajaran) + 1);
-                    $question_grid_header->semesters = $session_1->semester;
-                    $question_grid_header->curriculum = $session_1->kurikulum;
-                    $question_grid_header->teachers_id = $session_1->teachers_id;
-                    $question_grid_header->temp = false; // (false) karena masih belum fix atau bisa diedit/diulang/dipreview
-                    $question_grid_header->save();
-                }
-
                 $question_grid = new QuestionGrid; // Buat rows nya
                 $question_grid->question_grid_headers_id = $question_grid_header->id;
                 $question_grid->basic_competencies_id = $session_2[$i]->kompetensi_dasar;
@@ -208,15 +206,24 @@ class QuestionGridController extends Controller
             DB::commit();
         }catch(Exception $ex){
             DB::rollback();
-            echo $ex->getMessage();
         }
-        $question_grid = QuestionGrid::where('question_grid_headers_id', $question_grid_header->id)->first(); // ambil dengan menggunakan id headernya karena header menandakan kepemilikan kepemilikan
-        $question_grids = QuestionGrid::where('question_grid_headers_id', $question_grid_header->id)->get(); // ambil rownya untuk looping
-        return view('user.question_grid.step_3', compact('question_grids', 'question_grid'));
+
+        $question_grids = QuestionGrid::where('question_grid_headers_id', $question_grid_header->id)->get(); // ambil rownya untuk looping    
+        return view('user.question_grid.step_3', compact('question_grids', 'question_grid_header'));
     }
 
-    public function get_step_finish()
+    public function get_step_finish($id)
     {
+        DB::beginTransaction();
+        try{
+            $question_grid_header = QuestionGridHeader::find($id);
+            $question_grid_header->temp = false; // Simpan permanen
+            $question_grid_header->save();
+            DB::commit();
+        }catch(Exception $ex){
+            DB::rollback();
+        }
+        
         return redirect()->route('user.dashboard.index')->with('success', 'Kisi - kisi soal berhasil dibuat!');
     }
 
@@ -225,9 +232,9 @@ class QuestionGridController extends Controller
 
         $tipe = '';
         switch($question_grid_header->type){
-            case 'PTS' : $tipe = 'Penilaian Tengah Semester'; break;
-            case 'PAT' : $tipe = 'Penilaian Akhir Tahun'; break;
-            case 'PKK' : $tipe = 'Penilaian Kenaikan Kelas'; break;
+            case 'PTS' : $tipe = 'PENILAIAN TENGAH SEMESTER (PTS)'; break;
+            case 'PAT' : $tipe = 'PENILAIAN AKHIR TAHUN (PAT)'; break;
+            case 'PKK' : $tipe = 'PENILAIAN KENAIKAN KELAS (PKK)'; break;
         }
 
         //Create table
@@ -258,9 +265,18 @@ class QuestionGridController extends Controller
             $table->addCell(3500, $cell_style)->addText($question_grid->basic_competency->name, $cell_text_style);
             $table->addCell(1750, $cell_style)->addText($question_grid->study_lesson_scope_lesson->scope_lesson->name, $cell_text_style);
             $table->addCell(3000, $cell_style)->addText($question_grid->study_lesson_scope_lesson->lesson->name, $cell_text_style);
-            $table->addCell(3000, $cell_style)->addText($question_grid->level.'/'.$question_grid->cognitive, $cell_text_style);
+            $table->addCell(3000, $cell_style)->addText($question_grid->level.' / '.$question_grid->cognitive, $cell_text_style);
             $table->addCell(3500, $cell_style)->addText($question_grid->indicator, $cell_text_style);
-            $table->addCell(1750, $cell_style)->addText($question_grid->question_form, $cell_text_style);
+            if($question_grid->question_form == 'pg'){
+                $form = 'Pilihan Ganda';
+            }else if($question_grid->question_form == 'jumble'){
+                $form = 'Menjodohkan';
+            }else if($question_grid->question_form == 'isian'){
+                $form = 'Isian';
+            }else if($question_grid->question_form == 'uraian'){
+                $form = 'Uraian';
+            }
+            $table->addCell(1750, $cell_style)->addText($form, $cell_text_style);
             $table->addCell(50, $cell_style)->addText($question_grid->question_number, $cell_text_style);
             $i++;
         }
@@ -276,6 +292,8 @@ class QuestionGridController extends Controller
 
         // Real Document
         $template_processor = new TemplateProcessor('template/question_grid.docx');
+
+        date_default_timezone_set('Asia\Jakarta');
 
         $template_processor->setValues([
             'tipe' => $tipe,
@@ -293,7 +311,7 @@ class QuestionGridController extends Controller
         // Replace mark by xml code of table
         $template_processor->setValue('table', $tablexml);
         
-        $filename = 'Preview-'.$question_grid_header->study->name;
+        $filename = 'Preview-Kisi-Kisi-Soal-'.$question_grid_header->study->name;
         $template_processor->saveAs($filename.'.docx');
         return response()->download($filename.'.docx')->deleteFileAfterSend(true);
     }

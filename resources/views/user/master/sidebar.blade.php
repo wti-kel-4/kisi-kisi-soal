@@ -8,7 +8,7 @@
         </div>
         <div class="mt-2 p-3 hide-sidebar-mini">
             <a href="{{ route('user.question_grid_step_0') }}" class="btn btn-success btn-lg btn-block btn-icon-split">
-            <i class="fas fa-rocket"></i> Buat Kisi - Kisi Soal
+            <i class="far fa-newspaper"></i> Buat Kisi - Kisi Soal
             </a>
         </div>
         <div class="mt-2 p-3 hide-sidebar-mini">

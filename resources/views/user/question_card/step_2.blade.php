@@ -36,75 +36,19 @@
                     <form action="{{ route('user.question_card_step_2.save') }}" method="POST">
                       @csrf
                       <div class="row">
-                        {{-- <div class="col-lg-2 col-md-2">
-
+                        <div class="col-lg-12 col-md-12">
                           <div class="form-group">
-                            <label>Kunci Jawaban</label>
-                            <select name="kunci_jawaban" class="form-control">
-                              <option selected disabled>Kunci</option>
-                              <option value="A">A</option>
-                              <option value="B">B</option>
-                              <option value="C">C</option>
-                              <option value="D">D</option>
-                              <option value="E">E</option>
-                            </select>
-                          </div>
-                        </div> --}}
-                        <div class="col-lg-3 col-md-3">
-                          <div class="form-group">
-                            <label>No Soal</label>
-                            <input name="no_soal" type="number" class="form-control">
-                          </div>
-                          <div class="form-group">
-                            <label>Bentuk Soal</label>
-                            <select name="bentuk" class="form-control" disabled>
-                              @if ($question_card_step_1_one->form == 'pg')
-                                  <option selected>Pilihan Ganda (PG)</option>
-                              @endif
-                              @if ($question_card_step_1_one->form == 'isian')
-                                  <option selected >Isian</option>
-                              @endif
-                              @if ($question_card_step_1_one->form == 'jumble')
-                                  <option selected>Menjodohkan</option>
-                              @endif
-                              @if ($question_card_step_1_one->form == 'uraian')
-                                  <option selected>Uraian</option>
-                              @endif
-                            </select>
-                          </div>
-                          <div class="form-group">
-                            <label>Buku Sumber 1</label>
-                            <input name="buku_sumber_1" type="text" class="form-control">
-                          </div>
-                          <div class="form-group">
-                            <label>Buku Sumber 2</label>
-                            <input name="buku_sumber_2" type="text" class="form-control">
-                          </div>
-                        </div>
-                        <div class="col-lg-9 col-md-9">
-                          <div class="form-group">
-                            <label>Kompetensi Dasar</label>
+                            <label>Indikator Soal</label>
                             <select name="kompetensi_dasar" class="form-control select2">
                                 <option selected disabled>Pilih Kompetensi Dasar yang akan digunakan</option>
-                                @foreach ($question_card_step_1_basic_competencies as $question_card)
-                                    <option value="{{ $question_card->basic_competency->id }}">{{ $question_card->basic_competency->name }}</option>
+                                @foreach ($question_card_step_1->question_grid as $question_grid)
+                                    <option value="{{ $question_grid->id }}">{{ $question_grid->indicator }}</option>
                                 @endforeach
                             </select>
                           </div>
                           <div class="form-group">
-                            <label>Materi</label>
-                            <select name="materi" class="form-control">
-                              @if ($question_card_step_1_all == null)
-                                  <option selected disabled>Anda tidak memiliki materi dari kelas yang Anda pilih</option>
-                                @endif
-                              @foreach ($question_card_step_1_lessons as $question_card)
-                                  <option value="{{ $question_card->lesson->id }}">{{ $question_card->lesson->name }}</option>
-                              @endforeach
-                            </select>
-                          </div>
-                          <div class="form-group">
-                            <label>Indikator</label>
-                            <textarea name="indikator" class="form-control" style="min-width:10px; min-height:140px;" placeholder="Tuliskan indikator yang dibutuhkan di kisi - kisi soal ini"></textarea>
+                            <label>Indikator Pencapaian Kompetensi</label>
+                            <textarea name="indikator" class="form-control" style="min-width:10px; min-height:150px;" placeholder="Tuliskan indikator yang dibutuhkan di kisi - kisi soal ini"></textarea>
                           </div>
                         </div>
                       </div>
@@ -115,10 +59,47 @@
                               <button class="btn btn-icon icon-right btn-success w-100">Simpan Data <i class="fas fa-save"></i></button>
                           </div>
                         </div>
-                        <div class="card-body my-0 py-0">
-                          <div class="form-group row">
-                            <div class="col-sm-12 col-md-12">
+                        <div class="card-body my-0 py-0 row">
+                          <div class="col-sm-12 col-md-9 col-lg-9 pt-2">
+                            <div class="form-group">
+                              <label>No Soal</label>
+                              <input name="no_soal" type="number" class="form-control">
+                            </div>
+                            <div class="form-group">
                               <textarea class="summernote"></textarea>
+                            </div>
+                          </div>
+                          <div class="col-sm-12 col-md-4 col-lg-3 pt-2">
+                            <div class="form-group">
+                              <label> Jawaban A</label>
+                              <input type="text" class="form-control" name="jawaban_a">
+                            </div>
+                            <div class="form-group">
+                              <label> Jawaban B</label>
+                              <input type="text" class="form-control" name="jawaban_b">
+                            </div>
+                            <div class="form-group">
+                              <label> Jawaban C</label>
+                              <input type="text" class="form-control" name="jawaban_c">
+                            </div>
+                            <div class="form-group">
+                              <label> Jawaban D</label>
+                              <input type="text" class="form-control" name="jawaban_d">
+                            </div>
+                            <div class="form-group">
+                              <label> Jawaban E</label>
+                              <input type="text" class="form-control" name="jawaban_e">
+                            </div>
+                            <div class="form-group">
+                              <label>Kunci Jawaban</label>
+                              <select name="kunci_jawaban" class="form-control">
+                                <option selected disabled>Kunci</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                                <option value="E">E</option>
+                              </select>
                             </div>
                           </div>
                         </div>
@@ -128,7 +109,7 @@
                   <div class="card-footer">
                     <div class="row card-footer">
                       <div class="col text-left">
-                        <a href="{{ route('user.question_card_step_1', [$question_card_step_1_one->type, $question_card_step_1_one->school_year, $question_card_step_1_one->form, $question_card_step_1_one->studies_id, $question_card_step_1_one->grade_specializations_id, $question_card_step_1_one->teachers_id]) }}" class="btn btn-icon icon-right btn-primary"><i class="fas fa-arrow-left"></i>Kembali Ke Step Sebelumnya</a>
+                        <a href="{{ route('user.question_card_step_1', [$question_card_step_1->id]) }}" class="btn btn-icon icon-right btn-primary"><i class="fas fa-arrow-left"></i>Kembali Ke Step Sebelumnya</a>
                       </div>
                       <div class="col text-right">
                         <a href="{{ route('user.question_card_step_2') }}" class="btn btn-icon icon-right btn-primary">Simpan & Validasi <i class="fas fa-arrow-right"></i></a>

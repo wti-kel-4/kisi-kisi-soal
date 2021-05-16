@@ -8,7 +8,7 @@
           </div>
           <div class="section-body">
             <h2 class="section-title">Verifikasi Data Kisi - Kisi Soal</h2>
-            <p class="section-lead">Lihat Ulang Data, Apakah data ini yang dimaksud?</p>
+            <p class="section-lead">Lihat Ulang Data, Apakah sudah valid?</p>
             <div class="row">
               <div class="col-12">
                 <div class="card">
@@ -19,7 +19,17 @@
                           <h5>Kisi - Kisi Soal</h5>
                         </div>
                         <div class="col-12 col-sm-12 text-center">
-                          <h4>{{ $question_grid->type }} {{ $question_grid->school_year }}</h4>
+                          <h4>
+                            @if ($question_grid_header->type == 'PAT')
+                                Penilaian Akhir Tahun
+                            @endif
+                            @if ($question_grid_header->type == 'PKK')
+                                Penilaian Kenaikan Kelas
+                            @endif
+                            @if ($question_grid_header->type == 'PTS')
+                                Penilaian Tengah Semester
+                            @endif
+                             {{ $question_grid_header->school_year }}</h4>
                         </div>
                       </div>
                       <div class="row w-100 mt-3">
@@ -30,7 +40,7 @@
                                 Satuan Pendidikan
                               </div>
                               <div class="col">
-                                : {{ $profile->name }}
+                                : {{ $question_grid_header->profile->name }}
                               </div>
                             </div>
                             <div class="row">
@@ -38,15 +48,15 @@
                                 Mata Pelajaran
                               </div>
                               <div class="col">
-                                : {{ $question_grid->study->name }}
+                                : {{ $question_grid_header->study->name }}
                               </div>
                             </div>
                             <div class="row">
                               <div class="col">
-                                Kelas / Semester
+                                Kelas
                               </div>
                               <div class="col">
-                                : {{ $question_grid->grade_specialization->name }}
+                                : {{ $question_grid_header->grade_generalization->name }}
                               </div>
                             </div>
                           </div>
@@ -55,44 +65,29 @@
                           <div class="container">
                             <div class="row">
                               <div class="col">
-                                Alokasi Waktu
-                              </div>
-                              <div class="col">
-                                : {{ $question_grid->time_allocation }} menit
-                              </div>
-                            </div>
-                            <div class="row">
-                              <div class="col">
-                                Jumlah Soal
-                              </div>
-                              <div class="col">
-                                : {{ $question_grid->total }} 
-                                @if ($question_grid->form == 'pg')
-                                    PG
-                                @endif
-                                @if ($question_grid->form == 'isian')
-                                    Isian
-                                @endif
-                                @if ($question_grid->form == 'uraian')
-                                    Uraian
-                                @endif
-                                @if ($question_grid->form == 'jumble')
-                                    Menjodohkan
-                                @endif
-                              </div>
-                            </div>
-                            <div class="row">
-                              <div class="col">
                                 Tahun Pelajaran
                               </div>
                               <div class="col">
-                                : {{ $question_grid->school_year }}
+                                : {{ $question_grid_header->school_year }} - {{ intval($question_grid_header->school_year) + 1 }}
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col">
+                                Semester
+                              </div>
+                              <div class="col">
+                                : {{ $question_grid_header->semesters }}
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col">
+                                Kurikulum
+                              </div>
+                              <div class="col">
+                                : {{ $question_grid_header->curriculum }}
                               </div>
                             </div>
                           </div>
-                        </div>
-                        <div class="col-md-6 col-sm-12">
-  
                         </div>
                       </div>
                     </div>
@@ -111,37 +106,29 @@
                           </tr>
                         </thead>
                         <tbody>
-                          @if ($question_grids != null)
-                            @php
-                                $i = 0;
-                            @endphp
-                            @foreach($question_grids as $question_grid)
+                          @if ($question_grid_header->question_grid != null || count($question_grid_header->question_grid) != 0)
+                            @foreach($question_grid_header->question_grid as $question_grid)
                               @if (!empty($question_grid))
                               <tr>
-                                <th scope="row">{{ $question_grid->no_urut }}</th>
+                                <th scope="row">{{ $question_grid->question_number }}</th>
+                                <td>{{ $question_grid->basic_competency->name }}</td>
+                                <td>{{ $question_grid->study_lesson_scope_lesson->study->name }}</td>
+                                <td>{{ $question_grid->indicator }}</td>
                                 <td>
-                                  {{ $question_grid->kompetensi_dasar_1 }}
-                                  <br /><br /> {{ $question_grid->kompetensi_dasar_2 }}
-                                  <br /><br /> {{ $question_grid->kompetensi_dasar_3 }}
-                                  <br />
-                                </td>
-                                <td>{{ $question_grid->materi }}</td>
-                                <td>{{ $question_grid->indikator }}</td>
-                                <td>
-                                  @if ($question_grid->bentuk == 'pg')
+                                  @if ($question_grid->question_form == 'pg')
                                     Pilihan Ganda                                      
                                   @endif
-                                  @if ($question_grid->bentuk == 'isian')
+                                  @if ($question_grid->question_form == 'isian')
                                     Isian
                                   @endif
-                                  @if ($question_grid->bentuk == 'jumble')
+                                  @if ($question_grid->question_form == 'jumble')
                                     Menjodohkan
                                   @endif
-                                  @if ($question_grid->bentuk == 'uraian')
+                                  @if ($question_grid->question_form == 'uraian')
                                     Uraian
                                   @endif
                                 </td>
-                                <td>{{ $question_grid->dari_no }} s/d {{ $question_grid->sampai_no }}</td>
+                                <td>{{ $question_grid->question_number }}</td>
                               </tr>
                               @endif
                             @endforeach
@@ -155,11 +142,27 @@
                     </div>
                   </div>
                   <div class="card-footer row">
+                    <div class="col text-center">
+                      <p>Mengetahui</p>
+                      <b>Kepala {{ $question_grid_header->satuan_pendidikan }}</b>
+                      <br><br><br>
+                      <b>Drs. Sukarno, M.Pd</b>
+                      <p>NIP. 196112129893000</p>
+                    </div>
+                    <div class="col text-center">
+                      <p>Sidoarjo, {{ date('d-m-Y') }}</p>
+                      <b>Guru Mata Pelajaran</b>
+                      <br><br><br>
+                      <b>{{ $question_grid_header->teacher->name }}</b>
+                      <p>NIP. {{ $question_grid_header->teacher->nip }}</p>
+                    </div>
+                  </div>
+                  <div class="card-footer row">
                     <div class="col-lg-4 col-sm-12 my-1">
-                      <a href="{{ route('user.dashboard.index') }}" class="btn btn-icon icon-right btn-danger w-100"><i class="fas fa-arrow-left"></i> Kembali ke beranda</a>
+                      <a href="{{ route('user.question_card_step_0') }}" class="btn btn-icon icon-right btn-primary w-100"><i class="fas fa-arrow-left"></i> Kembali ke halaman sebelumnya</a>
                     </div>
                     <div class="col-lg-8 col-sm-12 my-1">
-                      <a class="btn btn-icon btn-success icon-right w-100" href={{ route('question_card_step_2') }}>Oke, sudah benar. Gunakan data kisi - kisi ini</a>
+                      <a class="btn btn-icon icon-right {{ ($question_grid_header->question_grid != null) ? 'btn-success' : 'btn-secondary' }} w-100" {{ ($question_grid_header->question_grid != null) ? "href=".route('user.question_card_step_2') : "href=# disabled"}}>Oke, sudah benar. Gunakan Data Ini</a>
                     </div>
                   </div>
                 </div>

@@ -50,12 +50,18 @@ Route::prefix('user')->name('user.')->middleware(['user'])->group(function(){
         Route::get('step-3', [QuestionGridController::class, 'get_step_3'])->name('question_grid_step_3');
         Route::get('step-finish/{id}', [QuestionGridController::class, 'get_step_finish'])->name('question_grid_step_finish');
         Route::get('preview/{id}', [QuestionGridController::class, 'get_preview'])->name('question_grid_preview');
+        Route::get('download/{id}', [QuestionGridController::class, 'get_download'])->name('question_grid_download');
     });
 
     Route::group(['prefix' => 'question-card'], function(){
         Route::get('step-0', [QuestionCardController::class, 'get_step_0'])->name('question_card_step_0');
         Route::get('step-1/{id}', [QuestionCardController::class, 'get_step_1'])->name('question_card_step_1');
         Route::get('step-2', [QuestionCardController::class, 'get_step_2'])->name('question_card_step_2');
-        Route::get('step-2-save', [QuestionCardController::class, 'get_step_2_save'])->name('question_card_step_2.save');
+        Route::post('step-2-save', [QuestionCardController::class, 'get_step_2_save'])->name('question_card_step_2.save');
+        Route::delete('step-2-delete/{i}', [QuestionCardController::class, 'get_step_2_delete'])->name('question_card_step_2.delete');
+        Route::get('step-3', [QuestionCardController::class, 'get_step_3'])->name('question_card_step_3');
+        Route::get('step-finish/{id}', [QuestionCardController::class, 'get_step_finish'])->name('question_card_step_finish');
+        Route::get('preview/{id}', [QuestionCardController::class, 'get_preview'])->name('question_card_preview');
+        Route::get('download/{id}', [QuestionCardController::class, 'get_download'])->name('question_card_download');
     });
 });

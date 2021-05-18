@@ -16,9 +16,13 @@ class CreateQuestionCardHeadersTable extends Migration
         Schema::create('question_card_headers', function (Blueprint $table) {
             $table->id();
             $table->foreignId('teachers_id')->constrained('teachers');
+            $table->foreignId('profiles_id')->constrained('profiles');
+            $table->foreignId('studies_id')->constrained('studies');
             $table->foreignId('grade_generalizations_id')->constrained('grade_generalizations');
-            $table->string('question_form');
+            $table->boolean('temp');
             $table->string('school_year');
+            $table->string('type');
+            $table->enum('semesters', ['Ganjil', 'Genap']);
 
 
             // $table->integer('number');

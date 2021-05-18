@@ -206,6 +206,7 @@ class QuestionGridController extends Controller
             DB::commit();
         }catch(Exception $ex){
             DB::rollback();
+            echo $ex->getMessage();
         }
 
         $question_grids = QuestionGrid::where('question_grid_headers_id', $question_grid_header->id)->get(); // ambil rownya untuk looping    
@@ -293,7 +294,7 @@ class QuestionGridController extends Controller
         // Real Document
         $template_processor = new TemplateProcessor('template/question_grid.docx');
 
-        date_default_timezone_set('Asia\Jakarta');
+        date_default_timezone_set('Asia/Jakarta');
 
         $template_processor->setValues([
             'tipe' => $tipe,
@@ -315,6 +316,99 @@ class QuestionGridController extends Controller
         $template_processor->saveAs($filename.'.docx');
         return response()->download($filename.'.docx')->deleteFileAfterSend(true);
     }
+
+    public function get_download($id){
+        $question_grid_header = QuestionGridHeader::where('id', $id)->where('temp', false)->first();
+        if($question_grid_header == null){
+            return back();
+        }
+
+        $tipe = '';
+        switch($question_grid_header->type){
+            case 'PTS' : $tipe = 'PENILAIAN TENGAH SEMESTER (PTS)'; break;
+            case 'PAT' : $tipe = 'PENILAIAN AKHIR TAHUN (PAT)'; break;
+            case 'PKK' : $tipe = 'PENILAIAN KENAIKAN KELAS (PKK)'; break;
+        }
+
+        //Create table
+        $document_with_table = new PhpWord();
+        $section = $document_with_table->addSection();
+        $table = $section->addTable();
+        $count = $question_grid_header->question_grid->count();
+        
+        $cell_text_style = array('name' => 'Times New Roman', 'size' => 12);
+        $cell_header_text_style = array('name' => 'Times New Roman', 'size' => 12);
+        $cell_header_paragraph_style = array('align' => 'center');
+        $cell_style = array('borderColor' =>'000000', 'borderSize' => 6);
+
+        // Row for table header
+        $table->addRow();
+        $table->addCell(50, $cell_style)->addText('NO', $cell_header_text_style, $cell_header_paragraph_style);
+        $table->addCell(3500, $cell_style)->addText('KOMPETENSI DASAR', $cell_header_text_style, $cell_header_paragraph_style);
+        $table->addCell(1750, $cell_style)->addText('LINGKUP MATERI', $cell_header_text_style, $cell_header_paragraph_style);
+        $table->addCell(3000, $cell_style)->addText('MATERI', $cell_header_text_style, $cell_header_paragraph_style);
+        $table->addCell(3000, $cell_style)->addText('LEVEL KOGNITIF', $cell_header_text_style, $cell_header_paragraph_style);
+        $table->addCell(3500, $cell_style)->addText('INDIKATOR SOAL', $cell_header_text_style, $cell_header_paragraph_style);
+        $table->addCell(1750, $cell_style)->addText('BENTUK SOAL', $cell_header_text_style, $cell_header_paragraph_style);
+        $table->addCell(50, $cell_style)->addText('NO SOAL', $cell_header_text_style, $cell_header_paragraph_style);
+        $i = 1;
+        foreach($question_grid_header->question_grid as $question_grid){
+            $table->addRow();
+            $table->addCell(50, $cell_style)->addText($i, $cell_text_style);
+            $table->addCell(3500, $cell_style)->addText($question_grid->basic_competency->name, $cell_text_style);
+            $table->addCell(1750, $cell_style)->addText($question_grid->study_lesson_scope_lesson->scope_lesson->name, $cell_text_style);
+            $table->addCell(3000, $cell_style)->addText($question_grid->study_lesson_scope_lesson->lesson->name, $cell_text_style);
+            $table->addCell(3000, $cell_style)->addText($question_grid->level.' / '.$question_grid->cognitive, $cell_text_style);
+            $table->addCell(3500, $cell_style)->addText($question_grid->indicator, $cell_text_style);
+            if($question_grid->question_form == 'pg'){
+                $form = 'Pilihan Ganda';
+            }else if($question_grid->question_form == 'jumble'){
+                $form = 'Menjodohkan';
+            }else if($question_grid->question_form == 'isian'){
+                $form = 'Isian';
+            }else if($question_grid->question_form == 'uraian'){
+                $form = 'Uraian';
+            }
+            $table->addCell(1750, $cell_style)->addText($form, $cell_text_style);
+            $table->addCell(50, $cell_style)->addText($question_grid->question_number, $cell_text_style);
+            $i++;
+        }
+
+        // Create writer to convert document to xml
+        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($document_with_table, 'Word2007');
+
+        // Get all document xml code
+        $fullxml = $objWriter->getWriterPart('Document')->write();
+
+        // Get only table xml code
+        $tablexml = preg_replace('/^[\s\S]*(<w:tbl\b.*<\/w:tbl>).*/', '$1', $fullxml);
+
+        // Real Document
+        $template_processor = new TemplateProcessor('template/question_grid.docx');
+
+        date_default_timezone_set('Asia/Jakarta');
+
+        $template_processor->setValues([
+            'tipe' => $tipe,
+            'jenjang_pendidikan' => $question_grid_header->profile->name,
+            'mata_pelajaran' => $question_grid_header->study->name,
+            'kelas' => $question_grid_header->grade_generalization->name,
+            'tahun_ajaran' => $question_grid_header->school_year,
+            'semester' => $question_grid_header->semesters,
+            'kurikulum' => $question_grid_header->curriculum,
+            'tanggal' => date('d-m-Y'),
+            'nama_guru' => $question_grid_header->teacher->name,
+            'nip_guru' => $question_grid_header->teacher->nip,
+        ]);
+
+        // Replace mark by xml code of table
+        $template_processor->setValue('table', $tablexml);
+        
+        $filename = 'Kisi-Kisi-Soal-'.$question_grid_header->study->name;
+        $template_processor->saveAs($filename.'.docx');
+        return response()->download($filename.'.docx')->deleteFileAfterSend(true);
+    }
+
 
     protected function get_session($question_grid_step_number)
     {

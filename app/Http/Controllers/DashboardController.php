@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Models\QuestionGrid;
 use App\Models\QuestionGridHeader;
+use App\Models\QuestionCard;
+use App\Models\QuestionCardHeader;
 
 class DashboardController extends Controller
 {
@@ -35,9 +37,22 @@ class DashboardController extends Controller
             // Jika sebelumnya sudah ada dan pernah mengunjungi halaman question_grid maka hapus data sebelumnya dari tabel
             QuestionGrid::join('question_grid_headers', 'question_grids.question_grid_headers_id', 'question_grid_headers.id')->where('question_grid_headers.teachers_id', $user->teacher->id)->where('question_grid_headers.temp', true)->forceDelete();
             QuestionGridHeader::where('teachers_id', $user->teacher->id)->where('temp', true)->forceDelete();
+            
+            // Jika sebelumnya sudah ada dan pernah mengunjungi halaman ini maka hapus data sebelumnya dari tabel
+            QuestionCard::join('question_card_headers', 'question_cards.question_card_headers_id', 'question_card_headers.id')->where('question_card_headers.teachers_id', $user->teacher->id)->where('question_card_headers.temp', true)->forceDelete();
+            QuestionCardHeader::where('teachers_id', $user->teacher->id)->where('temp', true)->forceDelete();
 
-            $question_grid_header = QuestionGridHeader::where('teachers_id', $user->teacher->id)->where('temp', false)->get();
-            return view('user.dashboard', compact('question_grid_header'));
+            // For step question card
+            if(Session::has('users_id_'.$user->id.'_question_card_step_1')){
+                Session::forget('users_id_'.$user->id.'_question_card_step_1');
+            }
+            if(Session::has('users_id_'.$user->id.'_question_card_step_2')){
+                Session::forget('users_id_'.$user->id.'_question_card_step_2');
+            }
+
+            $question_grid_headers = QuestionGridHeader::where('teachers_id', $user->teacher->id)->where('temp', false)->get();
+            $question_card_headers = QuestionCardHeader::where('teachers_id', $user->teacher->id)->where('temp', false)->get();
+            return view('user.dashboard', compact('question_grid_headers', 'question_card_headers'));
         }else{
             return back();
         }

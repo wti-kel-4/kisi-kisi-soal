@@ -161,8 +161,11 @@
                     <div class="col-lg-4 col-sm-12 my-1">
                       <a href="{{ route('user.question_card_step_0') }}" class="btn btn-icon icon-right btn-primary w-100"><i class="fas fa-arrow-left"></i> Kembali ke halaman sebelumnya</a>
                     </div>
-                    <div class="col-lg-8 col-sm-12 my-1">
+                    <div class="col-lg-6 col-sm-12 my-1">
                       <a class="btn btn-icon icon-right {{ ($question_grid_header->question_grid != null) ? 'btn-success' : 'btn-secondary' }} w-100" {{ ($question_grid_header->question_grid != null) ? "href=".route('user.question_card_step_2') : "href=# disabled"}}>Oke, sudah benar. Gunakan Data Ini</a>
+                    </div>
+                    <div class="col-lg-2 col-sm-12 my-1">
+                      <a class="btn btn-icon icon-right {{ ($question_grid_header->question_grid != null) ? 'btn-warning' : 'btn-secondary' }} w-100" {{ ($question_grid_header->question_grid != null) ? "href=".url('user/question-grid/download/'.$question_grid_header->id) : "href=# disabled"}}><i class="fa fa-file-word"></i> Download</a>
                     </div>
                   </div>
                 </div>

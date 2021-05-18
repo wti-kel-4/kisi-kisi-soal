@@ -26,7 +26,7 @@ class CreateQuestionCardsTable extends Migration
             $table->text('answer_d');
             $table->text('answer_e');
             $table->string('answer_key');
-            $table->boolean('temp');
+            $table->string('question_number');
             $table->timestamps();
             $table->softDeletes();
         });

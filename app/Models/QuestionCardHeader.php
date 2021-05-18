@@ -25,6 +25,14 @@ class QuestionCardHeader extends Model
         return $this->belongsTo('App\Models\GradeGeneralization', 'grade_generalizations_id', 'id');
     }
 
+    public function profile(){
+        return $this->belongsTo('App\Models\Profile', 'profiles_id', 'id');
+    }
+
+    public function study(){
+        return $this->belongsTo('App\Models\Study', 'studies_id', 'id');
+    }
+
     protected static function boot()
     {
         parent::boot();

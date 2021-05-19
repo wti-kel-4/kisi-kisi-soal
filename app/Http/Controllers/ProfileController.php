@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\LogActivity;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -24,10 +25,11 @@ class ProfileController extends Controller
         return view('user.profile.index');
     }
 
-    public function view_log()
+    public function view_log_user()
     {
-        $log_activities = LogActivity::all();
-        return view('admin.log_activity.index', compact('log_activities'))->with('question_grid', 'question_card','user');
+        $user = Auth::guard('user')->user();
+        $log_activities = LogActivity::where('users_id', $user->id)->orWhere('used_for_users_id', $user->id)->orderBy('created_at', 'DESC')->simplePaginate(10);
+        return view('user.log_activity.index', compact('log_activities'));
     }
 
     /**
@@ -95,12 +97,16 @@ class ProfileController extends Controller
 
         
         if($request->url_photo){
-            $imagesName = time().'.'.$request->url_photo->extension();
-            Storage::putFileAs(
-                'public/images',
-                $request->file('url_photo'),
-                $imagesName,
-            );
+            $file = $request->file('url_photo');
+            $tujuan_upload = 'user/photo';
+            $file->move($tujuan_upload, $file->getClientOriginalName());
+            
+            if($user->url_photo != null || $user->url_photo != ''){
+                $file_path = public_path().'/'.$user->url_photo;
+                unlink($file_path);
+            }
+            
+            $user->url_photo = 'user/photo/'.$file->getClientOriginalName();
         }else{
             $imagesName = $this->imagesName;
         }
@@ -115,10 +121,10 @@ class ProfileController extends Controller
                 'password' => Hash::make($request->password),
                 'url_photo' => $imagesName,
             ]);
-            return redirect()->route('profile.index')
+            return redirect()->route('user.profile.index')
                                 ->with('success', 'Berhasil mengedit data.');
         }else{
-            return redirect()->route('profile.edit')
+            return redirect()->route('user.profile.edit')
                                 ->with('error', 'Password Tidak Sesuai.');
         }
     }

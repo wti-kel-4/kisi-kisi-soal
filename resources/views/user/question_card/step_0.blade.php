@@ -3,9 +3,11 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-          <h1>Data Kartu Soal</h1>
+          <h1>Data Kisi - Kisi Soal</h1>
         </div>
         <div class="section-body">
+            <h2 class="section-title">Pilih salah satu kisi - kisi soal untuk membuat kartu soal baru</h2>
+            <p class="section-lead">PTS, PAT, PKK</p>
             <div class="row">
                 <div class="col-12">
                   <div class="card">

@@ -24,7 +24,7 @@
                 <div class="col-12 col-md-12 col-lg-12">
                     <div class="card profile-widget">
                         <div class="profile-widget-header">
-                            <img alt="Foto User" src="{{ asset('storage/images/'.Auth::guard('user')->user()->url_photo) }}" class="rounded-circle profile-widget-picture" style="max-height: 150px">
+                            <img alt="Foto User" src="{{ asset(Auth::guard('user')->user()->url_photo) }}" class="rounded-circle profile-widget-picture" style="max-height: 150px">
                         </div>
                         <div class="profile-widget-description">
                             <div class="row">
@@ -76,7 +76,7 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <a href="{{ route('profile.edit', Auth::guard('user')->user()->id) }}" class="btn btn-primary">Edit Profile</a>
+                            <a href="{{ route('user.profile.edit', Auth::guard('user')->user()->id) }}" class="btn btn-primary">Edit Profile</a>
                             
                         </div>
                     </div>

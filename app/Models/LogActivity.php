@@ -9,15 +9,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class LogActivity extends Model
 {
     use HasFactory, SoftDeletes;
-	protected static $relations_to_cascade = ['question_grid', 'question_card', 'user', 'used_for_user']; 
+	protected static $relations_to_cascade = ['question_grid_header', 'question_card_header', 'user', 'used_for_user']; 
     protected $table = 'log_activity_users';
 
-    public function question_card() {
-		return $this->belongsTo('App\Models\QuestionCard', 'question_grids_id', 'id');
+    public function question_card_header() {
+		return $this->belongsTo('App\Models\QuestionCardHeader', 'question_card_headers_id', 'id');
 	}
 
-    public function question_grid() {
-		return $this->belongsTo('App\Models\QuestionGrid', 'question_cards_id', 'id');
+    public function question_grid_header() {
+		return $this->belongsTo('App\Models\QuestionGridHeader', 'question_grid_headers_id', 'id');
 	}
 
     public function user() {

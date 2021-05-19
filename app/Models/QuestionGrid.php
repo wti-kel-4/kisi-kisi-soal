@@ -30,7 +30,7 @@ class QuestionGrid extends Model
 		'teachers_id',
     ];
 
-	protected static $relations_to_cascade = ['question_card', 'log_activity_user'];
+	protected static $relations_to_cascade = ['question_card'];
 
 	public function question_grid_header(){
 		return $this->belongsTo('App\Models\QuestionGridHeader', 'question_grid_headers_id', 'id');
@@ -46,10 +46,6 @@ class QuestionGrid extends Model
 
 	public function question_card(){
 		return $this->hasMany('App\Models\QuestionCard', 'question_grids_id', 'id');
-	}
-
-	public function log_activity_user(){
-		return $this->hasMany('App\Models\LogActivity', 'log_activity_users_id', 'id');
 	}
 
 	protected static function boot()

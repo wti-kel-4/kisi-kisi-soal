@@ -14,6 +14,7 @@ use App\Classes\QuestionGridHeaderClass;
 use App\Models\BasicCompetency;
 use App\Models\QuestionGridHeader;
 use App\Models\Lesson;
+use App\Models\LogActivity;
 use App\Models\StudyLessonScopeLesson;
 use App\Models\TeacherGradeGeneralization;
 use Illuminate\Support\Facades\DB;
@@ -173,7 +174,6 @@ class QuestionGridController extends Controller
 
         DB::beginTransaction();
         try{
-            
             // Jika sebelumnya sudah ada dan pernah mengunjungi halaman ini maka hapus data sebelumnya dari tabel
             QuestionGrid::join('question_grid_headers', 'question_grids.question_grid_headers_id', 'question_grid_headers.id')->where('question_grid_headers.teachers_id', $user->teacher->id)->where('question_grid_headers.temp', true)->forceDelete();
             QuestionGridHeader::where('teachers_id', $user->teacher->id)->where('temp', true)->forceDelete();
@@ -181,29 +181,36 @@ class QuestionGridController extends Controller
             // Buat ulang
             $question_grid_header = new QuestionGridHeader; // Buat headernya dulu
             $question_grid_header->type = $session_0;
-            $question_grid_header->profiles_id = Profile::where('name', 'LIKE', $session_1->satuan_pendidikan)->first()->id;
+            $question_grid_header->profiles_id = Profile::first()->id;
             $question_grid_header->studies_id = $session_1->mata_pelajaran;
             $question_grid_header->grade_generalizations_id = $session_1->kelas;
             $question_grid_header->school_year = $session_1->tahun_ajaran.'-'.(intval($session_1->tahun_ajaran) + 1);
-            $question_grid_header->semesters = $session_1->semester;
+            if($session_1->semester){
+                $semester = 'Ganjil';
+            }else{
+                $semester = 'Genap';
+            }
+            $question_grid_header->semesters = $semester;
             $question_grid_header->curriculum = $session_1->kurikulum;
             $question_grid_header->teachers_id = $session_1->teachers_id;
             $question_grid_header->temp = true; // (true) karena masih belum fix atau bisa diedit/diulang/dipreview
             $question_grid_header->save();
-            
-            for($i = 0; $i < count($session_2); $i++){
-                $question_grid = new QuestionGrid; // Buat rows nya
-                $question_grid->question_grid_headers_id = $question_grid_header->id;
-                $question_grid->basic_competencies_id = $session_2[$i]->kompetensi_dasar;
-                $question_grid->study_lesson_scope_lessons_id = StudyLessonScopeLesson::where('studies_id', $session_1->mata_pelajaran)->where('scope_lessons_id', $session_2[$i]->lingkup_materi)->where('lessons_id', $session_2[$i]->materi)->first()->id;
-                $question_grid->level = $session_2[$i]->level;
-                $question_grid->cognitive = $session_2[$i]->kognitif;
-                $question_grid->indicator = $session_2[$i]->indikator;
-                $question_grid->question_form = $session_2[$i]->bentuk;
-                $question_grid->question_number = $session_2[$i]->no_soal;
-                $question_grid->save();       
+
+            if($session_2 != null){
+                for($i = 0; $i < count($session_2); $i++){
+                    $question_grid = new QuestionGrid; // Buat rows nya
+                    $question_grid->question_grid_headers_id = $question_grid_header->id;
+                    $question_grid->basic_competencies_id = $session_2[$i]->kompetensi_dasar;
+                    $question_grid->study_lesson_scope_lessons_id = StudyLessonScopeLesson::where('studies_id', $session_1->mata_pelajaran)->where('scope_lessons_id', $session_2[$i]->lingkup_materi)->where('lessons_id', $session_2[$i]->materi)->first()->id;
+                    $question_grid->level = $session_2[$i]->level;
+                    $question_grid->cognitive = $session_2[$i]->kognitif;
+                    $question_grid->indicator = $session_2[$i]->indikator;
+                    $question_grid->question_form = $session_2[$i]->bentuk;
+                    $question_grid->question_number = $session_2[$i]->no_soal;
+                    $question_grid->save();       
+                }
+                DB::commit();
             }
-            DB::commit();
         }catch(Exception $ex){
             DB::rollback();
             echo $ex->getMessage();
@@ -215,11 +222,22 @@ class QuestionGridController extends Controller
 
     public function get_step_finish($id)
     {
+        $user = Auth::guard('user')->user();
         DB::beginTransaction();
         try{
             $question_grid_header = QuestionGridHeader::find($id);
-            $question_grid_header->temp = false; // Simpan permanen
-            $question_grid_header->save();
+            // Jika sudah pernah dicatat jangan catat lagi
+            if($question_grid_header->temp == true){
+                $question_grid_header->temp = false; // Simpan permanen
+                $question_grid_header->save();
+
+                // Catat di log activity
+                $log_activity_new = new LogActivity;
+                $log_activity_new->question_grid_headers_id = $id;
+                $log_activity_new->action = 'make';
+                $log_activity_new->users_id = $user->id;
+                $log_activity_new->save();
+            }
             DB::commit();
         }catch(Exception $ex){
             DB::rollback();

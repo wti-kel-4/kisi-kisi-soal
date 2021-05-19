@@ -11,7 +11,7 @@ class QuestionGridHeader extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'question_grid_headers';
-    protected static $relations_to_cascade = ['question_grid'];
+    protected static $relations_to_cascade = ['question_grid', 'log_activity'];
 
     public function profile(){
         return $this->belongsTo('App\Models\Profile', 'profiles_id', 'id');
@@ -31,6 +31,10 @@ class QuestionGridHeader extends Model
 
     public function question_grid(){
 		return $this->hasMany('App\Models\QuestionGrid', 'question_grid_headers_id', 'id');
+	}
+
+    public function log_activity_user(){
+		return $this->hasMany('App\Models\LogActivity', 'question_grid_headers_id', 'id');
 	}
 
     protected static function boot()

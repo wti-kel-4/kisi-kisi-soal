@@ -10,17 +10,13 @@ class QuestionCard extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected static $relations_to_cascade = ['question_card_header', 'question_grid', 'log_activity_user']; 
+    protected static $relations_to_cascade = ['question_card_header', 'question_grid']; 
     public function question_grid() {
         return $this->belongsTo('App\Models\QuestionGrid', 'question_grids_id', 'id');
     }
 
     public function question_card_header(){
         return $this->belongsTo('App\Models\QuestionCardHeader', 'question_card_headers_id', 'id');
-    }
-
-    public function log_activity_user(){
-        return $this->hasMany('App\Models\LogActivity', 'question_cards_id', 'id');
     }
 
     protected static function boot()

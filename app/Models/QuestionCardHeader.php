@@ -11,7 +11,7 @@ class QuestionCardHeader extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'question_card_headers';
-    protected static $relations_to_cascade = ['teacher', 'question_card', 'grade_generalization']; 
+    protected static $relations_to_cascade = ['teacher', 'question_card', 'grade_generalization', 'log_activity_user']; 
 
     public function teacher(){
         return $this->belongsTo('App\Models\Teacher', 'teachers_id', 'id');
@@ -31,6 +31,10 @@ class QuestionCardHeader extends Model
 
     public function study(){
         return $this->belongsTo('App\Models\Study', 'studies_id', 'id');
+    }
+
+    public function log_activity_user(){
+        return $this->hasMany('App\Models\LogActivity', 'question_card_headers_id', 'id');
     }
 
     protected static function boot()

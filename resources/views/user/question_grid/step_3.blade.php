@@ -106,7 +106,7 @@
                           </tr>
                         </thead>
                         <tbody>
-                          @if (count($question_grids) != null || count($question_grids) != 0)
+                          @if (count($question_grids) > 0)
                             @foreach($question_grids as $question_grid)
                               @if (!empty($question_grid))
                               <tr>

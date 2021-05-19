@@ -38,6 +38,7 @@ Route::prefix('admin')->name('admin.')->middleware(['admin'])->group(function(){
 Route::prefix('user')->name('user.')->middleware(['user'])->group(function(){
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::resource('profile', ProfileController::class);
+    Route::get('log-activity', [ProfileController::class, 'view_log_user'])->name('log_activity');
 
     Route::group(['prefix' => 'question-grid'], function(){
         Route::get('step-0', [QuestionGridController::class, 'get_step_0'])->name('question_grid_step_0');

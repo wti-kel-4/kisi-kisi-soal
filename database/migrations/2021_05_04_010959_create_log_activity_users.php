@@ -15,11 +15,11 @@ class CreateLogActivityUsers extends Migration
     {
         Schema::create('log_activity_users', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('question_grids_id')->constrained('question_grids')->nullable();
-            $table->foreignId('question_cards_id')->constrained('question_cards')->nullable();
+            $table->foreignId('question_grid_headers_id')->nullable()->constrained('question_grid_headers');
+            $table->foreignId('question_card_headers_id')->nullable()->constrained('question_card_headers');
             $table->enum('action',['make','update','remove','used']);
             $table->foreignId('users_id')->constrained('users');
-            $table->foreignId('used_for_users_id')->constrained('users')->nullable();
+            $table->foreignId('used_for_users_id')->nullable()->constrained('users');
             $table->timestamps();
             $table->softDeletes();
         });

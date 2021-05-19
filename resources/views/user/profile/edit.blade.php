@@ -15,7 +15,7 @@
             <div class="row mt-sm-4">
                 <div class="col-12 col-md-12 col-lg-12">
                     <div class="card">
-                        <form method="post" action="{{ route('profile.update', $users->id) }}" enctype="multipart/form-data" >
+                        <form method="post" action="{{ route('user.profile.update', $users->id) }}" enctype="multipart/form-data" >
                             {{ method_field('PUT') }}
                             {{ csrf_field()}} 
                             <div class="card-header">
@@ -26,7 +26,7 @@
                                     <div class="form-group col-md-4 col-12">
                                         <label>Foto profile</label>
                                         <br>
-                                            <img alt="Foto User" src="{{ asset('storage/images/'.$users->url_photo) }}" class="rounded-circle profile-widget-picture" style="max-height: 150px ; min-height:100px; min-width:100px">
+                                            <img alt="Foto User" src="{{ asset($users->url_photo) }}" class="rounded-circle profile-widget-picture" style="max-height: 150px ; min-height:100px; min-width:100px">
                                     </div>
                                     <div class="form-group col-md-8 col-12">
                                         <label>File</label>

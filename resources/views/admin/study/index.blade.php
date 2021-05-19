@@ -54,7 +54,7 @@
                         <tr>
                             <td>{{ $no }}</td>
                             <td>{{ $study->name }}</td>
-                            <td>{{ $study->grade->name }}</td>
+                            <td>{{ $study->grade_generalization->name }}</td>
                             <td>
                             <form method="POST" action="{{ route('admin.study.destroy', $study->id) }}">
                                 @csrf

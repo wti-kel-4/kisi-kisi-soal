@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Study;
 use App\Models\Teacher;
 use App\Models\Grade;
+use App\Models\GradeGeneralization;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Exception;
@@ -77,8 +78,8 @@ class StudyController extends Controller
     public function show($id)
     {
         $study = Study::find($id);
-        $grades = Grade::all();
-        return view('admin.study.show', compact('study', 'grades'));
+        $grade_generalizations = GradeGeneralization::all();
+        return view('admin.study.show', compact('study', 'grade_generalizations'));
     }
 
     /**
@@ -89,10 +90,9 @@ class StudyController extends Controller
      */
     public function edit($id)
     {
-        $study = Study::with('teacher','grade')->findorfail($id);
-        $teacher = Teacher::all();
-        $grade = Grade::all();
-        return view('admin.study.edit', compact('study','teacher','grade'));
+        $study = Study::findorfail($id);
+        $grade_generalizations = GradeGeneralization::all();
+        return view('admin.study.edit', compact('study','grade_generalizations'));
     }
 
     /**
@@ -106,7 +106,7 @@ class StudyController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'id' => ['required', 'exists:studies,id'],
-            'grades_id' => ['required', 'exists:grades,id'],
+            'grade_generalizations_id' => ['required', 'exists:grade_generalizations,id'],
             'name' => ['required'],
         ]);
 

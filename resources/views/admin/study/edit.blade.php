@@ -8,7 +8,7 @@
                 <div class="breadcrumb-item active"><a href="{{ route('admin.study.index') }}">Mata Pelajaran</a></div>
             </div>
             </div>
-
+            @include('admin.master.alert_error')
             <div class="section-body">
             <div class="row">
                 <div class="col">
@@ -31,14 +31,14 @@
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="">Kelas</label>
-                                        <select name="grades_id" id="name" class="form-control select2">
-                                            <option value="{{ $study->grades_id }}">{{ $study->grade->name }}</option>
-                                            @foreach ($grade as $grade)
+                                        <select name="grade_generalizations_id" id="name" class="form-control select2">
+                                            <option value="{{ $study->grade_generalizations_id }}">{{ $study->grade_generalization->name }}</option>
+                                            @foreach ($grade_generalizations as $grade_generalization)
                                             <option 
-                                            @if ($grade->id == $study->grades_id)
+                                            @if ($grade_generalization->id == $study->grade_generalizations_id)
                                                 selected    
                                             @endif
-                                            value="{{$grade->id}}">{{$grade->name}}</option>
+                                            value="{{$grade_generalization->id}}">{{$grade_generalization->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>

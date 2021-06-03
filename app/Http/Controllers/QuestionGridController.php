@@ -25,12 +25,6 @@ use PhpOffice\PhpWord\PhpWord;
 
 class QuestionGridController extends Controller
 {
-    public function index()
-    {
-        $question_grids = QuestionGrid::orderBy('teachers_id', 'ASC')->get();
-        return view('admin.question_grid.index', compact('question_grids'))->with('teacher','study','basic_competency');
-    }
-
     public function show($id)
     {
         $question_grid = QuestionGrid::find($id);
@@ -50,7 +44,11 @@ class QuestionGridController extends Controller
 
     public function get_step_0()
     {
-        return view('user.question_grid.step_0');
+        if(Auth::guard('admin')->user()){
+            return view('admin.question_grid.step_0');
+        }else{
+            return view('user.question_grid.step_0');
+        }
     }
 
     public function get_step_0_store($type)
@@ -98,8 +96,8 @@ class QuestionGridController extends Controller
         $user = Auth::guard('user')->user();
         $session = $this->get_session('_question_grid_header_step_1');
         $studies_id = $session->mata_pelajaran;
-        $scope_lessons = StudyLessonScopeLesson::select('scope_lessons_id')->where('studies_id', $studies_id)->groupBy('scope_lessons_id')->get();
-        $lessons = StudyLessonScopeLesson::select('lessons_id')->where('studies_id', $studies_id)->groupBy('lessons_id')->get();
+        $scope_lessons = StudyLessonScopeLesson::select('study_lesson_scope_lesson.scope_lessons_id')->join('studies', 'study_lesson_scope_lesson.studies_id', 'studies.id')->where('study_lesson_scope_lesson.studies_id', $studies_id)->where('studies.grade_generalizations_id', $session->kelas)->groupBy('scope_lessons_id')->get();
+        $lessons = StudyLessonScopeLesson::select('study_lesson_scope_lesson.lessons_id')->join('studies', 'study_lesson_scope_lesson.studies_id', 'studies.id')->where('study_lesson_scope_lesson.studies_id', $studies_id)->where('studies.grade_generalizations_id', $session->kelas)->groupBy('lessons_id')->get();
 
         $basic_competencies = BasicCompetency::where('studies_id', $studies_id)->where('grade_generalizations_id', $session->kelas)->get();
         return view('user.question_grid.step_2', compact('scope_lessons', 'lessons', 'basic_competencies'));
@@ -201,7 +199,18 @@ class QuestionGridController extends Controller
                     $question_grid = new QuestionGrid; // Buat rows nya
                     $question_grid->question_grid_headers_id = $question_grid_header->id;
                     $question_grid->basic_competencies_id = $session_2[$i]->kompetensi_dasar;
-                    $question_grid->study_lesson_scope_lessons_id = StudyLessonScopeLesson::where('studies_id', $session_1->mata_pelajaran)->where('scope_lessons_id', $session_2[$i]->lingkup_materi)->where('lessons_id', $session_2[$i]->materi)->first()->id;
+                    if($study_lesson_scope_lesson_id = StudyLessonScopeLesson::where('studies_id', $session_1->mata_pelajaran)->where('scope_lessons_id', $session_2[$i]->lingkup_materi)->where('lessons_id', $session_2[$i]->materi)->first()->id) // if null
+                    {
+                        $study_lesson_scope_lesson_new = new StudyLessonScopeLesson;
+                        $study_lesson_scope_lesson_new->studies_id = $session_1->mata_pelajaran;
+                        $study_lesson_scope_lesson_new->scope_lessons_id = $session_2[$i]->lingkup_materi;
+                        $study_lesson_scope_lesson_new->lessons_id = $session_2[$i]->materi;
+                        $study_lesson_scope_lesson_new->save();
+                        $question_grid->study_lesson_scope_lessons_id = $study_lesson_scope_lesson_new->id;
+                    }else{
+                        $question_grid->study_lesson_scope_lessons_id = $study_lesson_scope_lesson_id;
+                    }
+                    
                     $question_grid->level = $session_2[$i]->level;
                     $question_grid->cognitive = $session_2[$i]->kognitif;
                     $question_grid->indicator = $session_2[$i]->indikator;

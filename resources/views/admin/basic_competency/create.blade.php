@@ -16,18 +16,26 @@
                         <form action="{{ route('admin.basic-competency.store') }}" method="post">
                             @csrf
                         <div class="card-header">
-                            <h4>Default Validation</h4>
+                            <h4>Tambah Kompetensi Dasar</h4>
                         </div>
                         <div class="card-body">
                             <div class="form-group mb-0">
-                            <label>Nama Kompetensi Dasar</label>
-                            <textarea name="name" class="form-control" required=""></textarea>
+                                <label>Nama Kompetensi Dasar</label>
+                                <textarea name="name" class="form-control" required=""></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="">Mata Pelajaran</label>
-                                <select name="studies_id" id="name" class="form-control">
+                                <select name="studies_id" id="studies_id" class="form-control">
                                     @foreach ($study as $study)
-                                    <option selected value="{{$study->id}}">{{$study->name}}</option>
+                                        <option selected value="{{$study->id}}">{{$study->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Kelas</label>
+                                <select name="grade_generalizations_id" id="grade_generalizations_id" class="form-control">
+                                    @foreach ($grade_generalizations as $grade_generalization)
+                                        <option selected value="{{$grade_generalization->id}}">{{$grade_generalization->name}}</option>
                                     @endforeach
                                 </select>
                             </div>

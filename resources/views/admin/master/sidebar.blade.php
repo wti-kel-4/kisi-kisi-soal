@@ -13,14 +13,14 @@
                     <span>Dashboard</span>
                 </a>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a href="{{ route('admin.question-card.index') }}" class="nav-link">
                     <i class="fas fa-address-card"></i>
                     <span>Kartu Soal</span>
                 </a>
-            </li>
+            </li> --}}
             <li class="nav-item">
-                <a href="{{ route('admin.question-grid.index') }}" class="nav-link">
+                <a href="{{ route('admin.question_grid_step_0') }}" class="nav-link">
                     <i class="fas fa-address-card"></i>
                     <span>Kisi - Kisi</span>
                 </a>

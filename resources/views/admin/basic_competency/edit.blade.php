@@ -33,6 +33,15 @@
                                     @endforeach
                                 </select>
                             </div>
+                            <div class="form-group">
+                                <label for="">Kelas</label>
+                                <select name="grade_generalizations_id" id="name" class="form-control">
+                                    <option selected value="{{$basic_competencies->grade_generalization->id}}">{{$basic_competencies->grade_generalization->name}}</option>
+                                    @foreach ($grade_generalizations as $grade_generalization)
+                                    <option value="{{$grade_generalization->id}}">{{$grade_generalization->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
                         <div class="card-footer text-right">
                             <button type="submit" class="btn btn-primary">Ubah Data</button>

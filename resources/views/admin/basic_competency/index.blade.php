@@ -46,6 +46,7 @@
                             <th>No</th>
                             <th>Nama</th>
                             <th>Mata Pelajaran</th>
+                            <th>Kelas</th>
                             <th style="width: 300px">Aksi</th>
                         </tr>
                         @php
@@ -56,6 +57,7 @@
                             <td>{{ $no }}<br><br></td>
                             <td>{{ $basic_competency->name }} <br><br></td>
                             <td>{{ $basic_competency->study->name }} <br><br></td>
+                            <td>{{ $basic_competency->grade_generalization->name }} <br><br></td>
                             <td><form action="{{ route('admin.basic-competency.destroy', $basic_competency->id)}}" method="POST">
                                 <a href="{{ route('admin.basic-competency.show', $basic_competency->id) }}" class="btn btn-info">Detail</a>
                                 <a href="{{ route('admin.basic-competency.edit', $basic_competency->id) }}" class="btn btn-primary">Edit</a>

@@ -27,8 +27,19 @@ Route::prefix('admin')->name('admin.')->middleware(['admin'])->group(function(){
     Route::resource('grade', GradeController::class);
     Route::resource('lesson', LessonController::class);
     Route::resource('profile', ProfileController::class);
-    Route::resource('question-card', QuestionCardController::class);
-    Route::resource('question-grid', QuestionGridController::class);
+    Route::group(['prefix' => 'question-grid'], function(){
+        Route::get('/', [QuestionGridController::class, 'get_step_0'])->name('question_grid_step_0');
+        Route::get('/{type}', [QuestionGridController::class, 'get_step_0_store'])->name('question_grid_step_0_store');
+        Route::get('step-1', [QuestionGridController::class, 'get_step_1'])->name('question_grid_step_1');
+        Route::post('step-1', [QuestionGridController::class, 'get_step_1_store'])->name('question_grid_step_1.store');
+        Route::get('step-2', [QuestionGridController::class, 'get_step_2'])->name('question_grid_step_2');
+        Route::post('step-2-save', [QuestionGridController::class, 'get_step_2_save'])->name('question_grid_step_2.save');
+        Route::delete('step-2-delete/{i}', [QuestionGridController::class, 'get_step_2_delete'])->name('question_grid_step_2.delete');
+        Route::get('step-3', [QuestionGridController::class, 'get_step_3'])->name('question_grid_step_3');
+        Route::get('step-finish/{id}', [QuestionGridController::class, 'get_step_finish'])->name('question_grid_step_finish');
+        Route::get('preview/{id}', [QuestionGridController::class, 'get_preview'])->name('question_grid_preview');
+        Route::get('download/{id}', [QuestionGridController::class, 'get_download'])->name('question_grid_download');
+    });
     Route::resource('study', StudyController::class);
     Route::resource('teacher', TeacherController::class);
     Route::resource('user', UserController::class);

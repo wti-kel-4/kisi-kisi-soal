@@ -34,6 +34,18 @@
                                     @endforeach
                                 </select>
                             </div>
+                            <div class="form-group">
+                                <label for="">Kelas</label>
+                                <select disabled name="grade_generalizations_id" id="name" class="form-control">
+                                    @foreach ($grade_generalizations as $grade_generalization)
+                                    <option 
+                                    @if ($basic_competency->grade_generalization->id == $grade_generalization->id)
+                                        selected    
+                                    @endif
+                                    value="{{$grade_generalization->id}}">{{$grade_generalization->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
                         </form>
                     </div>

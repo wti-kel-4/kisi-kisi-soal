@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\BasicCompetency;
+use App\Models\GradeGeneralization;
 use App\Models\Study;
 
 class BasicCompetencyController extends Controller
@@ -27,7 +28,8 @@ class BasicCompetencyController extends Controller
     public function create()
     {
         $study = Study::all();
-        return view('admin.basic_competency.create', compact('study'));
+        $grade_generalizations = GradeGeneralization::all();
+        return view('admin.basic_competency.create', compact('study', 'grade_generalizations'));
     }
 
     /**
@@ -46,7 +48,7 @@ class BasicCompetencyController extends Controller
 
 
         BasicCompetency::create($request->all());
-        return redirect()->route('basic-competency.index')
+        return redirect()->route('admin.basic-competency.index')
                             ->with('success', 'Berhasil menambahkan data.');
     }
 
@@ -60,7 +62,8 @@ class BasicCompetencyController extends Controller
     {
         $basic_competency = BasicCompetency::find($id);
         $studies = Study::all();
-        return view('admin.basic_competency.show', compact('basic_competency', 'studies'));
+        $grade_generalizations = GradeGeneralization::all();
+        return view('admin.basic_competency.show', compact('basic_competency', 'studies', 'grade_generalizations'));
     }
 
     /**
@@ -73,7 +76,8 @@ class BasicCompetencyController extends Controller
     {
         $basic_competencies = BasicCompetency::findorfail($id);
         $study = Study::all();
-        return view('admin.basic_competency.edit', compact('basic_competencies', 'study'));
+        $grade_generalizations = GradeGeneralization::all();
+        return view('admin.basic_competency.edit', compact('basic_competencies', 'study', 'grade_generalizations'));
     }
 
     /**
@@ -86,8 +90,8 @@ class BasicCompetencyController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-        'name' => 'required',
-        'studies_id' => 'required',
+            'name' => 'required',
+            'studies_id' => 'required',
         ]);
 
         $basic_competency = BasicCompetency::findorfail($id);

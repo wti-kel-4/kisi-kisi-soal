@@ -86,16 +86,7 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validateData = $request->validate([
-        'password' => 'required|confirmed',
-        ]);
-
         $user = User::findorfail($id);   
-
-        $this->imagesName = $user->url_photo;
-        $this->userName = $user->username;
-
-        
         if($request->url_photo){
             $file = $request->file('url_photo');
             $tujuan_upload = 'user/photo';
@@ -103,30 +94,33 @@ class ProfileController extends Controller
             
             if($user->url_photo != null || $user->url_photo != ''){
                 $file_path = public_path().'/'.$user->url_photo;
-                unlink($file_path);
+                if(file_exists($file_path)){
+                    unlink($file_path);
+                }
             }
             
             $user->url_photo = 'user/photo/'.$file->getClientOriginalName();
-        }else{
-            $imagesName = $this->imagesName;
         }
 
-        if($request->username){
-            $this->userName = $request->username;
+        if($request->has('username')){
+            $user->username = $request->username;
         }
 
-        if($validateData){
-            $user->update([
-                'username' => $this->userName,
-                'password' => Hash::make($request->password),
-                'url_photo' => $imagesName,
-            ]);
-            return redirect()->route('user.profile.index')
-                                ->with('success', 'Berhasil mengedit data.');
-        }else{
-            return redirect()->route('user.profile.edit')
-                                ->with('error', 'Password Tidak Sesuai.');
+        if($request->has('password') && $request->has('password_confirmation')){
+            if(isset($request->password) && isset($request->password_confirmation)){
+                if($request->password == $request->password_confirmation){
+                    $user->password = Hash::make($request->password);
+                }else{
+                    return redirect()->route('user.profile.edit', ['profile' => $user->id])
+                        ->with('error', 'Password Tidak Sesuai.');
+                }
+            }
+            
         }
+        $user->save();
+
+        return redirect()->route('user.profile.index')
+        ->with('success', 'Berhasil mengedit data.');
     }
 
     /**

@@ -1,11 +1,19 @@
 <div class="main-sidebar">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
-            <a href="index.html">Kisi - Kisi & Kartu Soal</a>
+            <a href="{{ route('user.dashboard.index') }}">Kisi - Kisi & Kartu Soal</a>
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
-            <a href="index.html">Kisi - Kisi & Kartu Soal</a>
+            <a href="{{ route('user.dashboard.index') }}">Kisi - Kisi & Kartu Soal</a>
         </div>
+        <ul class="sidebar-menu">
+            <li class="nav-item">
+                <a href="{{ route('user.dashboard.index') }}" class="nav-link">
+                    <i class="fas fa-desktop"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+        </ul>
         <div class="mt-2 p-3 hide-sidebar-mini">
             <a href="{{ route('user.question_grid_step_0') }}" class="btn btn-success btn-lg btn-block btn-icon-split">
             <i class="far fa-newspaper"></i> Buat Kisi - Kisi Soal

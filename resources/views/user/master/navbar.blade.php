@@ -8,7 +8,7 @@
   </form>
   <ul class="navbar-nav navbar-right">
     <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-      <img alt="image" src="{{ asset(Auth::guard('user')->user()->url_photo) }}" class="rounded-circle mr-1">
+      @if (file_exists(public_path(Auth::guard('user')->user()->url_photo))) <img alt="image" src="{{ asset(Auth::guard('user')->user()->url_photo) }}" class="rounded-circle mr-1"> @else <img alt="image" src="{{ asset('assets/img/user.png') }}" class="rounded-circle mr-1"> @endif
       <div class="d-sm-none d-lg-inline-block">{{ Auth::guard('user')->user()->teacher->name }}</div></a>
       <div class="dropdown-menu dropdown-menu-right">
         <a href="{{ url('user/profile') }}" class="dropdown-item has-icon">

@@ -24,7 +24,11 @@
                 <div class="col-12 col-md-12 col-lg-12">
                     <div class="card profile-widget">
                         <div class="profile-widget-header">
-                            <img alt="Foto User" src="{{ asset(Auth::guard('user')->user()->url_photo) }}" class="rounded-circle profile-widget-picture" style="max-height: 150px">
+                            @if (file_exists(public_path(Auth::guard('user')->user()->url_photo)))
+                                <img alt="Foto User" src="{{ asset(Auth::guard('user')->user()->url_photo) }}" class="rounded-circle profile-widget-picture" style="max-height: 150px">    
+                            @else
+                                <img alt="Foto User" src="{{ asset('assets/img/user.png') }}" class="rounded-circle profile-widget-picture" style="max-height: 150px">
+                            @endif
                         </div>
                         <div class="profile-widget-description">
                             <div class="row">

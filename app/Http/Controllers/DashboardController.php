@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BasicCompetency;
+use App\Models\Grade;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -9,13 +11,23 @@ use App\Models\QuestionGrid;
 use App\Models\QuestionGridHeader;
 use App\Models\QuestionCard;
 use App\Models\QuestionCardHeader;
+use App\Models\Study;
+use App\Models\Teacher;
+use App\Models\User;
 
 class DashboardController extends Controller
 {
     public function index()
     {
         if (Auth::guard('admin')->check()) {
-            return view('admin.dashboard');
+            $count_user = User::count();
+            $count_grade = Grade::count();
+            $count_study = Study::count();
+            $count_teacher = Teacher::count();
+            $count_basic_competency = BasicCompetency::count();
+            $count_question_grid = QuestionGridHeader::count();
+            $count_question_card = QuestionCard::count();
+            return view('admin.dashboard', compact('count_user', 'count_grade', 'count_study', 'count_teacher', 'count_basic_competency', 'count_question_grid', 'count_question_card'));
         } else if (Auth::guard('user')->check()) {
             $user = Auth::guard('user')->user();
             // For general

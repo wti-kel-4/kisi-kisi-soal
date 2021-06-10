@@ -5,9 +5,7 @@
     <div class="section-header">
         <h1>Aktivitas User</h1>
         <div class="section-header-breadcrumb">
-            <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-            <div class="breadcrumb-item"><a href="#">Components</a></div>
-            <div class="breadcrumb-item">Table</div>
+            <div class="breadcrumb-item active"><a href="{{ route('admin.dashboard.index') }}">Dashboard</a></div>
         </div>
     </div>
 
@@ -22,52 +20,48 @@
                         <div class="table-responsive">
                             <table class="table table-striped table-md">
                                 <tr>
-                                    <th>No</th>
-                                    <th>Kisi</th>
-                                    <th>Kartu Soal</th>
                                     <th>User</th>
-                                    <th>Digunakan oleh</th>
-                                    <th>Created At</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
+                                    <th>Waktu</th>
+                                    <th>Aksi</th>
                                 </tr>
-                                @php
-                                    $no = 1;  
-                                @endphp
-                                @foreach ($log_activities as $log )
-                                <tr>
-                                    <td>{{ $no }}</td>
-                                    <td>{{ $log->question_grid->type }}</td>
-                                    <td>{{ $log->question_card->question}}</td>
-                                    <td>{{ $log->user->username }}</td>
-                                    <td>{{ $log->used_for_users_id }}</td>
-                                    <td>{{ $log->created_at }}</td>
-                                    <td><div class="badge badge-success">{{ $log->action }}</div></td>
-                                    <td><a href="#" class="btn btn-secondary">Detail</a></td>
-                                </tr>
-                                @php
-                                    $no++;
-                                @endphp
-                                @endforeach
+                                @if ($log_activities->count() != 0)
+                                    @foreach ($log_activities as $log_activity )
+                                    <tr>
+                                        <td>{{ $log_activity->user->teacher->name }} (dengan ID : {{ $log_activity->users_id }})</td>
+                                        <td>{{ $log_activity->created_at }}</td>
+                                        <td>
+                                            @if ($log_activity->action == 'make')
+                                                Telah Membuat
+                                            @endif
+                                            @if ($log_activity->action == 'update')
+                                                Telah Mengubah
+                                            @endif
+                                            @if ($log_activity->action == 'remove')
+                                                Telah Menghapus
+                                            @endif
+
+                                            @if ($log_activity->question_grid_header != null)
+                                                Kisi - Kisi Soal {{ $log_activity->question_grid_header->type.', '.$log_activity->question_grid_header->school_year.', '.$log_activity->question_grid_header->study->name.' ('.$log_activity->question_grid_header->grade_generalization->name.'/'.$log_activity->question_grid_header->semesters.') '.$log_activity->question_grid_header->curriculum }}
+                                            @endif
+                                            @if ($log_activity->question_card_header != null)
+                                                Kartu Soal {{ $log_activity->question_card_header->type.', '.$log_activity->question_card_header->school_year.', '.$log_activity->question_card_header->study->name.' ('.$log_activity->question_card_header->grade_generalization->name.'/'.$log_activity->question_card_header->semesters.') '.$log_activity->question_card_header->curriculum }}
+                                            @endif
+                                            
+                                            @if ($log_activity->action == 'used')
+                                                Telah digunakan oleh {{ $log_activity->used_for_user->teacher->name }}
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td colspan="2">
+                                            Belum Ada Aktivitas Yang Anda Lakukan atau Kepada Anda
+                                        </td>
+                                    </tr>
+                                @endif
                             </table>
                         </div>
-                    </div>
-                    <div class="card-footer text-right">
-                        <nav class="d-inline-block">
-                             <ul class="pagination mb-0">
-                                <li class="page-item disabled">
-                                    <a class="page-link" href="#" tabindex="-1"><i class="fas fa-chevron-left"></i></a>
-                                </li>
-                                <li class="page-item active"><a class="page-link" href="#">1 <span class="sr-only">(current)</span></a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">2</a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a>
-                                </li>
-                             </ul>
-                        </nav>
                     </div>
                 </div>
             </div>

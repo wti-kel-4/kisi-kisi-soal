@@ -8,6 +8,7 @@ use App\Models\QuestionGrid;
 use App\Models\QuestionGridHeader;
 use App\Models\QuestionCardHeader;
 use App\Classes\QuestionCardClass;
+use App\Models\LogActivity;
 use App\Models\Profile;
 use Exception;
 use Illuminate\Support\Facades\Auth;
@@ -488,8 +489,17 @@ class QuestionCardController extends Controller
         DB::beginTransaction();
         try{
             $question_card_header = QuestionCardHeader::find($id);
-            $question_card_header->temp = false; // Simpan permanen
-            $question_card_header->save();
+            // Jika sudah pernah dicatat jangan catat lagi
+            if($question_card_header->temp == true){
+                $question_card_header->temp = false; // Simpan permanen
+                $question_card_header->save();
+
+                $log_activity_users = new LogActivity;
+                $log_activity_users->question_grid_headers_id = $question_card_header->id;
+                $log_activity_users->action = 'make';
+                $log_activity_users->users_id = Auth::guard('user')->user()->id;
+                $log_activity_users->save();
+            }
             DB::commit();
         }catch(Exception $ex){
             DB::rollback();

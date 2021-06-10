@@ -32,6 +32,13 @@ class ProfileController extends Controller
         return view('user.log_activity.index', compact('log_activities'));
     }
 
+    public function view_log_all()
+    {
+        $user = Auth::guard('user')->user();
+        $log_activities = LogActivity::orderBy('created_at', 'DESC')->simplePaginate(10);
+        return view('admin.log_activity.index', compact('log_activities'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *

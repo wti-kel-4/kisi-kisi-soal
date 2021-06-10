@@ -199,16 +199,17 @@ class QuestionGridController extends Controller
                     $question_grid = new QuestionGrid; // Buat rows nya
                     $question_grid->question_grid_headers_id = $question_grid_header->id;
                     $question_grid->basic_competencies_id = $session_2[$i]->kompetensi_dasar;
-                    if($study_lesson_scope_lesson_id = StudyLessonScopeLesson::where('studies_id', $session_1->mata_pelajaran)->where('scope_lessons_id', $session_2[$i]->lingkup_materi)->where('lessons_id', $session_2[$i]->materi)->first()->id) // if null
+                    $study_lesson_scope_lesson_selected = StudyLessonScopeLesson::where('studies_id', $session_1->mata_pelajaran)->where('scope_lessons_id', $session_2[$i]->lingkup_materi)->where('lessons_id', $session_2[$i]->materi)->first();
+                    if($study_lesson_scope_lesson_selected) // if null
                     {
+                        $question_grid->study_lesson_scope_lessons_id = $study_lesson_scope_lesson_selected->id;
+                    }else{
                         $study_lesson_scope_lesson_new = new StudyLessonScopeLesson;
                         $study_lesson_scope_lesson_new->studies_id = $session_1->mata_pelajaran;
                         $study_lesson_scope_lesson_new->scope_lessons_id = $session_2[$i]->lingkup_materi;
                         $study_lesson_scope_lesson_new->lessons_id = $session_2[$i]->materi;
                         $study_lesson_scope_lesson_new->save();
                         $question_grid->study_lesson_scope_lessons_id = $study_lesson_scope_lesson_new->id;
-                    }else{
-                        $question_grid->study_lesson_scope_lessons_id = $study_lesson_scope_lesson_id;
                     }
                     
                     $question_grid->level = $session_2[$i]->level;

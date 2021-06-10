@@ -4,7 +4,7 @@
         <a href="index.html">SMA Antartika Sidoarjo</a>
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
-        <a href="index.html">Antartika</a>
+        <a href="index.html">SIM</a>
         </div>
         <ul class="sidebar-menu">
             <li class="nav-item">
@@ -19,12 +19,12 @@
                     <span>Kartu Soal</span>
                 </a>
             </li> --}}
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a href="{{ route('admin.question_grid_step_0') }}" class="nav-link">
                     <i class="fas fa-address-card"></i>
                     <span>Kisi - Kisi</span>
                 </a>
-            </li>
+            </li> --}}
             <li class="nav-item">
                 <a href="{{ route('admin.basic-competency.index') }}" class="nav-link">
                     <i class="fas fa-address-book"></i>

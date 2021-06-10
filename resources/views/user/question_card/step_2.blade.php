@@ -55,9 +55,6 @@
                       <div class="card card-info">
                         <div class="card-header">
                           <h4>Rumusan Soal</h4>
-                          <div class="card-header-action">
-                              <button class="btn btn-icon icon-right btn-success w-100">Simpan Data <i class="fas fa-save"></i></button>
-                          </div>
                         </div>
                         <div class="card-body my-0 py-0 row">
                           <div class="col-sm-12 col-md-9 col-lg-9 pt-2">
@@ -116,6 +113,11 @@
                     </form>
                   </div>
                   <div class="card-footer">
+                    <div class="row card-footer">
+                      <div class="col text-right">
+                        <button class="btn btn-icon icon-right btn-success">Simpan Data <i class="fas fa-save"></i></button>
+                      </div>
+                    </div>
                     <div class="row card-footer">
                       <div class="col text-left">
                         <a href="{{ route('user.question_card_step_1', [$question_card_step_1->id]) }}" class="btn btn-icon icon-right btn-primary"><i class="fas fa-arrow-left"></i>Kembali Ke Step Sebelumnya</a>

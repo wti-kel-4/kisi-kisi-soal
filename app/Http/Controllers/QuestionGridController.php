@@ -13,6 +13,7 @@ use App\Classes\QuestionGridClass;
 use App\Classes\QuestionGridHeaderClass;
 use App\Models\BasicCompetency;
 use App\Models\QuestionGridHeader;
+use App\Models\QuestionCardHeader;
 use App\Models\Lesson;
 use App\Models\LogActivity;
 use App\Models\StudyLessonScopeLesson;
@@ -25,6 +26,12 @@ use PhpOffice\PhpWord\PhpWord;
 
 class QuestionGridController extends Controller
 {
+    public function index()
+    {
+        $question_grid_headers = QuestionGridHeader::where('temp', false)->get();
+        return view('admin.question_grid.index', compact('question_grid_headers'));
+    }
+
     public function show($id)
     {
         $question_grid = QuestionGrid::find($id);

@@ -27,6 +27,8 @@ Route::prefix('admin')->name('admin.')->middleware(['admin'])->group(function(){
     Route::resource('grade', GradeController::class);
     Route::resource('lesson', LessonController::class);
     Route::resource('profile', ProfileController::class);
+    Route::get('question-grid', [QuestionGridController::class, 'index'])->name('question_grid.index');
+    Route::get('question-card', [QuestionCardController::class, 'index'])->name('question_card.index');
     // Route::group(['prefix' => 'question-grid'], function(){
     //     Route::get('/', [QuestionGridController::class, 'get_step_0'])->name('question_grid_step_0');
     //     Route::get('/{type}', [QuestionGridController::class, 'get_step_0_store'])->name('question_grid_step_0_store');

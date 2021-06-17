@@ -9,6 +9,7 @@
     <meta name="description" content="EEducation master is one of the best eEducational html template, it's suitable for all eEducation websites like university,college,school,online eEducation,tution center,distance eEducation,computer eEducation">
     <meta name="keyword" content="eEducation html template, university template, college template, school template, online eEducation template, tution center template">
     @include('admin.master.style')
+    @yield('style')
 </head>
 
 <body>

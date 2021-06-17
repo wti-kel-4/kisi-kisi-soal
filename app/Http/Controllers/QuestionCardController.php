@@ -23,8 +23,8 @@ class QuestionCardController extends Controller
 
     public function index()
     {
-        $question_cards = QuestionCard::orderBy('number', 'ASC')->get();
-        return view('admin.question_card.index', compact('question_cards'))->with('question_grid');
+        $question_card_headers = QuestionCardHeader::where('temp', false)->get();
+        return view('admin.question_card.index', compact('question_card_headers'));
     }
     
     /**

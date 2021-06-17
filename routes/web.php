@@ -13,11 +13,16 @@ use App\Http\Controllers\QuestionGridController;
 use App\Http\Controllers\StudyController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MyStudyController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
-Route::get('login', [AuthController::class, 'index']);
-Route::post('login', [AuthController::class, 'login'])->name('login');
+Route::get('/', function () {
+    return redirect('/login');
+});
+
+Route::get('/login', [AuthController::class, 'index']);
+Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('logout', [AuthController::class, 'logout']);
 
 Route::prefix('admin')->name('admin.')->middleware(['admin'])->group(function(){
@@ -54,6 +59,7 @@ Route::prefix('user')->name('user.')->middleware(['user'])->group(function(){
     Route::get('log-activity', [ProfileController::class, 'view_log_user'])->name('log_activity');
     Route::resource('grade', GradeController::class);
     Route::resource('lesson', LessonController::class);
+    Route::resource('my-study', MyStudyController::class);
     
     Route::group(['prefix' => 'question-grid'], function(){
         Route::get('step-0', [QuestionGridController::class, 'get_step_0'])->name('question_grid_step_0');

@@ -14,7 +14,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('user.study.index') }}" class="nav-link">
+                <a href="{{ route('user.my-study.index') }}" class="nav-link">
                     <i class="fas fa-graduation-cap"></i>
                     <span>Mata Pelajaran Saya</span>
                 </a>

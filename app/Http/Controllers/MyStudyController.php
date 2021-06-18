@@ -21,12 +21,17 @@ class MyStudyController extends Controller
     public function create()
     {
         $user = Auth::guard('user')->user();
+        $teacher_grade_generalizations = TeacherGradeGeneralization::where('teachers_id', $user->teachers_id)->get();
+        $array_of_grade_generalizations_id = array();
+        foreach($teacher_grade_generalizations as $teacher_grade_generalization){
+            $array_of_grade_generalizations_id = $teacher_grade_generalization->grade_generalization->id;
+        }
         $teacher_studies = TeacherStudy::select('studies_id')->where('teachers_id', $user->teachers_id)->orderBy('created_at', 'DESC')->get();
         $array_except_of_studies_id = array();
-        foreach($teacher_studies as $teacher_studies){
-            array_push($array_except_of_studies_id, $teacher_studies->studies_id);
+        foreach($teacher_studies as $teacher_study){
+            array_push($array_except_of_studies_id, $teacher_study->studies_id);
         }
-        $studies = Study::whereNotIn('id', $array_except_of_studies_id)->get();
+        $studies = Study::whereNotIn('id', $array_except_of_studies_id)->whereIn('grade_generalizations_id', $array_of_grade_generalizations_id)->get();
         return view('user.my_study.create', compact('studies'));
     }
 

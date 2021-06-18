@@ -1,4 +1,7 @@
 @extends('user.master.main')
+@section('title')
+  Step 1 : Kisi - Kisi Soal
+@endsection
 @php
   use Illuminate\Support\Facades\Auth;
   use Illuminate\Support\Facades\Session;

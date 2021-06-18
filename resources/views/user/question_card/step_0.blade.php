@@ -1,4 +1,7 @@
 @extends('user.master.main')
+@section('title')
+  Kartu Soal
+@endsection
 @section('body')
 <div class="main-content">
     <section class="section">

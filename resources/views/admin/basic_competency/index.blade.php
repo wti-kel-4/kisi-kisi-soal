@@ -1,4 +1,7 @@
 @extends('admin.master.main')
+@section('title')
+  Kompetensi Dasar
+@endsection
 @section('body')
 <div class="main-content">
     <section class="section">

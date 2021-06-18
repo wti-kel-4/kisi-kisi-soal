@@ -1,4 +1,7 @@
 @extends('user.master.main')
+@section('title')
+  Step 2 : Kartu Soal
+@endsection
 @php
   use Illuminate\Support\Facades\Auth;
   $user = Auth::guard('user')->user();

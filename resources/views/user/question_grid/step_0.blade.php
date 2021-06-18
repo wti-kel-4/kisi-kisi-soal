@@ -1,4 +1,7 @@
 @extends('user.master.main')
+@section('title')
+  Kisi - Kisi Soal
+@endsection
 @section('body')
      <!-- Main Content -->
      <div class="main-content">

@@ -1,6 +1,7 @@
-
-
 @extends('user.master.main')
+@section('title')
+    Profile
+@endsection
 @section('body')
 <div class="main-content">
 

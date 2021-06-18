@@ -1,6 +1,6 @@
 @extends('user.master.main')
 @section('title')
-  Dashboard | SIM Kisi - Kisi & Kartu Soal
+  Dashboard
 @endsection
 @section('style')
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css">

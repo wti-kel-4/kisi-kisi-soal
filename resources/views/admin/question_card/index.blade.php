@@ -1,6 +1,6 @@
 @extends('admin.master.main')
 @section('title')
-  Kartu Soal | SIM Kisi - Kisi & Kartu Soal
+  Kartu Soal
 @endsection
 @section('style')
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css">

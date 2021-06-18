@@ -1,4 +1,7 @@
 @extends('admin.master.main')
+@section('title')
+  Mata Pelajaran
+@endsection
 @section('body')
 <div class="main-content" style="min-height: 564px;">
     <section class="section">

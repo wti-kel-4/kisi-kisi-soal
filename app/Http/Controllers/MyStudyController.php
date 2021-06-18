@@ -24,7 +24,7 @@ class MyStudyController extends Controller
         $teacher_grade_generalizations = TeacherGradeGeneralization::where('teachers_id', $user->teachers_id)->get();
         $array_of_grade_generalizations_id = array();
         foreach($teacher_grade_generalizations as $teacher_grade_generalization){
-            $array_of_grade_generalizations_id = $teacher_grade_generalization->grade_generalization->id;
+            array_push($array_of_grade_generalizations_id, $teacher_grade_generalization->grade_generalization->id);
         }
         $teacher_studies = TeacherStudy::select('studies_id')->where('teachers_id', $user->teachers_id)->orderBy('created_at', 'DESC')->get();
         $array_except_of_studies_id = array();

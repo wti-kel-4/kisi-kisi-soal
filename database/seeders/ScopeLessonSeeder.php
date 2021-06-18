@@ -34,7 +34,19 @@ class ScopeLessonSeeder extends Seeder
             [
                 'id' => '5',
                 'name' => 'Kesetimbangan'
-            ]
+            ],
+            [
+                'id' => '6',
+                'name' => 'Aisatsu'
+            ],
+            [
+                'id' => '7',
+                'name' => 'Jikoshoukai'
+            ],
+            [
+                'id' => '8',
+                'name' => 'Jikan'
+            ],
         ];
 
         foreach($datas as $data){

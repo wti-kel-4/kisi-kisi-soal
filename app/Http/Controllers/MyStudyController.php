@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Study;
+use App\Models\TeacherGradeGeneralization;
 use App\Models\TeacherStudy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,7 +15,7 @@ class MyStudyController extends Controller
     {
         $user = Auth::guard('user')->user();
         $teacher_studies = TeacherStudy::where('teachers_id', $user->teachers_id)->orderBy('created_at', 'DESC')->get();
-        return view('user.my-study.index', compact('teacher_studies'));
+        return view('user.my_study.index', compact('teacher_studies'));
     }
 
     public function create()
@@ -26,7 +27,7 @@ class MyStudyController extends Controller
             array_push($array_except_of_studies_id, $teacher_studies->studies_id);
         }
         $studies = Study::whereNotIn('id', $array_except_of_studies_id)->get();
-        return view('user.my-study.create', compact('studies'));
+        return view('user.my_study.create', compact('studies'));
     }
 
     public function store(Request $request)
@@ -46,11 +47,23 @@ class MyStudyController extends Controller
         $teacher_study_new->studies_id = $studies_id;
         $teacher_study_new->save();
 
+        // Ketika teacher_grade_generalizations tidak terdapat id user->teachers_id ini, maka tambahkan
+        // Untuk otomatis mendeteksi ada kelas baru untuk mata pelajaran ini
+        // Kalau tidak ditambahkan maka mata pelajaran dan kelas tidak sinkron saat pembuatan karu/kisi soal
+        $study_selected = Study::find($studies_id);
+        if(!TeacherGradeGeneralization::where('teachers_id', $user->teachers_id)->where('grade_generalizations_id', $study_selected->grade_generalizations_id)->first()){
+            $teacher_grade_generalization_new = new TeacherGradeGeneralization;
+            $teacher_grade_generalization_new->teachers_id = $user->teachers_id;
+            $teacher_grade_generalization_new->grade_generalizations_id = $study_selected->grade_generalizations_id;
+            $teacher_grade_generalization_new->save();
+        }
+
         return redirect()->route('user.my-study.index')->with('success', 'Berhasil Menambahkan Data');
     }
 
     public function destroy(Request $request, $my_study){
-        $my_study->delete();
+        $teacher_study_selected = TeacherStudy::find($my_study);
+        $teacher_study_selected->delete();
         return redirect()->route('user.my-study.index')->with('success', 'Berhasil Menghapus Data');
     }
 }

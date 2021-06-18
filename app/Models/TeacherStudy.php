@@ -13,7 +13,7 @@ class TeacherStudy extends Model
     protected $table = 'teacher_study';
     protected $fillable = ['id', 'teachers_id', 'studies_id'];
     
-    protected static $relations_to_cascade = ['study', 'teacher']; 
+    // protected static $relations_to_cascade = ['study', 'teacher']; 
     public function study(){
         return $this->belongsTo('App\Models\Study', 'studies_id', 'id');
     }
@@ -26,16 +26,16 @@ class TeacherStudy extends Model
     {
         parent::boot();
 
-        static::deleting(function($resource){
-            foreach(static::$relations_to_cascade as $relation){
-                $resource->{$relation}()->delete();
-            }
-        });
+        // static::deleting(function($resource){
+        //     foreach(static::$relations_to_cascade as $relation){
+        //         $resource->{$relation}()->delete();
+        //     }
+        // });
 
-        static::restoring(function($resource) {
-            foreach (static::$relations_to_cascade as $relation) {
-                $resource->{$relation}()->withTrashed()->restore();
-            }
-        });
+        // static::restoring(function($resource) {
+        //     foreach (static::$relations_to_cascade as $relation) {
+        //         $resource->{$relation}()->withTrashed()->restore();
+        //     }
+        // });
     }
 }

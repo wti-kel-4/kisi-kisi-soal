@@ -207,7 +207,7 @@ class QuestionGridController extends Controller
                     $question_grid->question_grid_headers_id = $question_grid_header->id;
                     $question_grid->basic_competencies_id = $session_2[$i]->kompetensi_dasar;
                     $study_lesson_scope_lesson_selected = StudyLessonScopeLesson::where('studies_id', $session_1->mata_pelajaran)->where('scope_lessons_id', $session_2[$i]->lingkup_materi)->where('lessons_id', $session_2[$i]->materi)->first();
-                    if($study_lesson_scope_lesson_selected) // if null
+                    if($study_lesson_scope_lesson_selected) // if exists
                     {
                         $question_grid->study_lesson_scope_lessons_id = $study_lesson_scope_lesson_selected->id;
                     }else{

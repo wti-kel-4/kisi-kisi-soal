@@ -16,9 +16,9 @@ class AdminSeeder extends Seeder
     {
         Admin::create([
             'id' => 1,
-            'name' => 'Hello Admin 1',
-            'username' => 'admin1',
-            'password' => '$2b$10$LG1S/ftGKRa5y3U96PFDfeC2LlcFT.MhkO00TTCgQcsyGFZc5nh4C'
+            'name' => 'Administrator',
+            'username' => 'Admin',
+            'password' => '$2b$10$OZ.MmiImspbAYTbI/VsbEOis5sfmSXo75gpomRixXLGLnsnGLXiD2'
         ]);
     }
 }

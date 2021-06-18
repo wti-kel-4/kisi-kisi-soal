@@ -1,4 +1,7 @@
 @extends('user.master.main')
+@section('title')
+    Mata Pelajaran Saya
+@endsection
 @section('body')
 <div class="main-content">
     <section class="section">
@@ -48,6 +51,7 @@
                                 <td>{{ $teacher_study->study->grade_generalization->name }}</td>
                                 <td>
                                     <form action={{ route('user.my-study.destroy', ['my_study' => $teacher_study]) }} method="POST">
+                                        @csrf
                                         @method('DELETE')
                                         <button class="btn btn-danger">Hapus</button>
                                     </form>

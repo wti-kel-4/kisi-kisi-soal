@@ -1,11 +1,14 @@
 @extends('user.master.main')
+@section('title')
+    Kelas Saya
+@endsection
 @section('body')
 <div class="main-content" style="min-height: 564px;">
     <section class="section">
         <div class="section-header">
-            <h1>Data Mata Pelajaran Saya Baru</h1>
+            <h1>Data Kelas Saya Baru</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('user.my-study.index') }}">Mata Pelajaran Saya</a></div>
+                <div class="breadcrumb-item active"><a href="{{ route('user.my-class.index') }}">Kelas Saya</a></div>
             </div>
             </div>
             <div class="section-body">
@@ -16,17 +19,17 @@
                 <div class="col">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Tambahkan Mata Pelajaran Ke Mata Pelajaran Saya</h4>
+                            <h4>Tambahkan Kelas Ke Kelas Saya</h4>
                         </div>
-                        <form action="{{ route('user.my-study.store') }}" method="POST">
+                        <form action="{{ route('user.my-class.store') }}" method="POST">
                             @csrf
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label>Mata Pelajaran</label>
-                                    @if (count($studies))
-                                        <select name="studies_id" class="form-control select2" required>
-                                            @foreach ($studies as $study)
-                                                <option value="{{ $study->id }}">{{ $study->name }}</option>
+                                    <label>Kelas</label>
+                                    @if (count($grade_generalizations))
+                                        <select name="grade_generalizations_id" class="form-control select2" required>
+                                            @foreach ($grade_generalizations as $grade_generalization)
+                                                <option value="{{ $grade_generalization->id }}">{{ $grade_generalization->name }}</option>
                                             @endforeach
                                         </select>
                                     @endif
@@ -34,7 +37,7 @@
                             </div>
                             
                             <div class="card-footer text-right">
-                                @if (count($studies))
+                                @if (count($grade_generalizations))
                                     <button class="btn btn-primary">Submit</button>
                                 @else
                                 <button class="btn btn-secondary" disabled>Submit</button>

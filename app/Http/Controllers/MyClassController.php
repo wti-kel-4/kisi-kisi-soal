@@ -6,6 +6,7 @@ use App\Models\GradeGeneralization;
 use App\Models\TeacherGradeGeneralization;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class MyClassController extends Controller
 {
@@ -13,7 +14,7 @@ class MyClassController extends Controller
     {
         $user = Auth::guard('user')->user();
         $teacher_grade_generalizations = TeacherGradeGeneralization::where('teachers_id', $user->teachers_id)->orderBy('created_at', 'DESC')->get();
-        return view('user.my-class.index', compact('teacher_grade_generalizations'));
+        return view('user.my_class.index', compact('teacher_grade_generalizations'));
     }
 
     public function create()
@@ -25,7 +26,7 @@ class MyClassController extends Controller
             array_push($array_except_of_grade_generalizations_id, $teacher_grade_generalization->grade_generalizations_id);
         }
         $grade_generalizations = GradeGeneralization::whereNotIn('id', $array_except_of_grade_generalizations_id)->get();
-        return view('user.my-class.create', compact('grade_generalizations'));
+        return view('user.my_class.create', compact('grade_generalizations'));
     }
 
     public function store(Request $request)
@@ -49,7 +50,8 @@ class MyClassController extends Controller
     }
 
     public function destroy(Request $request, $my_class){
-        $my_class->delete();
+        $teacher_grade_generalization = TeacherGradeGeneralization::find($my_class);
+        $teacher_grade_generalization->delete();
         return redirect()->route('user.my-class.index')->with('success', 'Berhasil Menghapus Data');
     }
 }

@@ -10,7 +10,7 @@ class TeacherGradeGeneralization extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected static $relations_to_cascade = ['teacher', 'grade_generalization'];
+    // protected static $relations_to_cascade = ['teacher', 'grade_generalization'];
     protected $table = 'teacher_grade_generalization';
     protected $fillable = ['id', 'teachers_id', 'grade_generalizations_id'];
     
@@ -28,17 +28,17 @@ class TeacherGradeGeneralization extends Model
     {
         parent::boot();
 
-        static::deleting(function($resource){
-            foreach(static::$relations_to_cascade as $relation){
-                $resource->{$relation}()->delete();
-            }
-        });
+        // static::deleting(function($resource){
+        //     foreach(static::$relations_to_cascade as $relation){
+        //         $resource->{$relation}()->delete();
+        //     }
+        // });
 
-        static::restoring(function($resource) {
-            foreach (static::$relations_to_cascade as $relation) {
-                $resource->{$relation}()->withTrashed()->restore();
-            }
-        });
+        // static::restoring(function($resource) {
+        //     foreach (static::$relations_to_cascade as $relation) {
+        //         $resource->{$relation}()->withTrashed()->restore();
+        //     }
+        // });
     }
 
 }

@@ -14,139 +14,139 @@ class LessonSeeder extends Seeder
      */
     public function run()
     {
-        Lesson::create([
-            'id' => '1',
-            'name' => 'Limit Fungsi Trigonometri'
-        ]);
-        Lesson::create([
-            'id' => '2',
-            'name' => 'Limit Fungsi Menuju Ke Takhinggaan'
-        ]);
-        Lesson::create([
-            'id' => '3',
-            'name' => 'Turunan Fungsi Trigonometri'
-        ]);        
-        Lesson::create([
-            'id' => '4',
-            'name' => 'Nilai Maks, Nilai Min, kemiringan garis singgung Dan titik belok dari fungsi Trigonometri'
-        ]);
-        Lesson::create([
-            'id' => '5',
-            'name' => 'Aisatsu'
-        ]);
-        Lesson::create([
-            'id' => '6',
-            'name' => 'Tatte Kudasai'
-        ]);
-        Lesson::create([
-            'id' => '7',
-            'name' => 'Denwa bangou'
-        ]);
-        Lesson::create([
-            'id' => '8',
-            'name' => 'Nihongo de nan desuka'
-        ]);
-        Lesson::create([
-            'id' => '9',
-            'name' => 'Doko ni arimasuka'
-        ]);
-        Lesson::create([
-            'id' => '10',
-            'name' => 'Doni-san wa doko ni imasuka'
-        ]);
-        Lesson::create([
-            'id' => '11',
-            'name' => 'Tono-san no enpitsu desuka'
-        ]);
-        Lesson::create([
-            'id' => '12',
-            'name' => 'Toire wa doko desuka'
-        ]);
-        Lesson::create([
-            'id' => '13',
-            'name' => 'Tanjoubi'
-        ]);
-        Lesson::create([
-            'id' => '14',
-            'name' => 'Tesuto wa nan-youbi desuka'
-        ]);
 
         $datas = [
             [
-                'id' => '15',
+                'id' => '1',
                 'name' => 'Isomer'
             ],
             [
-                'id' => '16',
+                'id' => '2',
                 'name' => 'Polimerisasi'
             ],
             [
-                'id' => '17',
+                'id' => '3',
                 'name' => 'Rumus molekul'
             ],
             [
-                'id' => '18',
+                'id' => '4',
                 'name' => 'Jenis reaksi senyawa hidrokarbon'
             ],
             [
-                'id' => '19',
+                'id' => '5',
                 'name' => 'Nilai Oktan'
             ],
             [
-                'id' => '20',
+                'id' => '6',
                 'name' => 'Hukum Hess'
             ],
             [
-                'id' => '21',
+                'id' => '7',
                 'name' => 'Menentukan deltaH reaksi'
             ],
             [
-                'id' => '22',
+                'id' => '8',
                 'name' => 'Energi Ikatan Rata rata'
             ],
             [
-                'id' => '23',
+                'id' => '9',
                 'name' => 'Hukum laju reaksi dan penentuan laju reaksi'
             ],
             [
-                'id' => '24',
+                'id' => '10',
                 'name' => 'Orde Reaksi'
             ],
             [
-                'id' => '25',
+                'id' => '11',
                 'name' => 'Persamaan laju reaksi'
             ],
             [
-                'id' => '26',
+                'id' => '12',
                 'name' => 'Pengaruh Suhu terhadap laju reaksi'
             ],
             [
-                'id' => '27',
+                'id' => '13',
                 'name' => 'Pegeseran  kesetimbangan'
             ],
             [
-                'id' => '28',
+                'id' => '14',
                 'name' => 'Tetapan Kesetimbangan ( Kc )'
             ],
             [
-                'id' => '29',
+                'id' => '15',
                 'name' => 'Tetapan kesetimbangan dengan konstanta berderet-deret'
             ],
             [
-                'id' => '30',
+                'id' => '16',
                 'name' => 'Hubungan antara Kp dengan Kc'
             ],
             [
-                'id' => '31',
+                'id' => '17',
                 'name' => 'Kemolaran ( M )'
             ],
             [
-                'id' => '32',
+                'id' => '18',
                 'name' => 'Hubungan Molaritas dengan % massa'
             ],
             [
-                'id' => '33',
+                'id' => '19',
                 'name' => 'Kesetimbangan tekanan parsial ( Kp )'
+            ],
+            [
+                'id' => '20',
+                'name' => 'Aisatsu'
+            ],
+            [
+                'id' => '21',
+                'name' => 'Tatte Kudasai'
+            ],
+            [
+                'id' => '22',
+                'name' => 'Denwa bangou'
+            ],
+            [
+                'id' => '23',
+                'name' => 'Nihongo de nan desuka'
+            ],
+            [
+                'id' => '24',
+                'name' => 'Doko ni arimasuka'
+            ],
+            [
+                'id' => '25',
+                'name' => 'Doni-san wa doko ni imasuka'
+            ],
+            [
+                'id' => '26',
+                'name' => 'Tono-san no enpitsu desuka'
+            ],
+            [
+                'id' => '27',
+                'name' => 'Toire wa doko desuka'
+            ],
+            [
+                'id' => '28',
+                'name' => 'Tanjoubi'
+            ],
+            [
+                'id' => '29',
+                'name' => 'Tesuto wa nan-youbi desuka'
+            ],
+            [
+                'id' => '30',
+                'name' => 'Limit Fungsi Trigonometri'
+            ],
+            [
+                'id' => '31',
+                'name' => 'Limit Fungsi Menuju Ke Takhinggaan'
+            ],
+            [
+                'id' => '32',
+                'name' => 'Turunan Fungsi Trigonometri'
+            ],
+            [
+                'id' => '33',
+                'name' => 'Nilai Maks, Nilai Min, kemiringan garis singgung Dan titik belok dari fungsi Trigonometri'
             ],
         ];
 

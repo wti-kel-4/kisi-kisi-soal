@@ -20,7 +20,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('user.grade.index') }}" class="nav-link">
+                <a href="{{ route('user.my-class.index') }}" class="nav-link">
                     <i class="fas fa-building"></i>
                     <span>Kelas Saya</span>
                 </a>

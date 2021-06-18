@@ -3,9 +3,9 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-        <h1>Data Mata Pelajaran Saya</h1>
+        <h1>Data Kelas Saya</h1>
         <div class="section-header-breadcrumb">
-            <a href="{{ route('user.my-study.create') }}" class="btn btn-icon icon-left btn-success"><i class="fas fa-plus"></i> Tambah Data</a>
+            <a href="{{ route('user.my-class.create') }}" class="btn btn-icon icon-left btn-success"><i class="fas fa-plus"></i> Tambah Data</a>
         </div>
         </div>
         <div class="section-body">
@@ -16,7 +16,7 @@
                 <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                    <h4>Data Mata Pelajaran</h4>
+                    <h4>Data Kelas</h4>
                     <div class="card-header-form">
                         <form>
                         <div class="input-group">
@@ -33,21 +33,19 @@
                         <table class="table table-striped">
                         <tr>
                             <th>No</th>
-                            <th>Nama</th>
                             <th>Kelas</th>
                             <th>Aksi</th>
                         </tr>
-                        @if (count($teacher_studies))
+                        @if (count($teacher_grade_generalizations))
                             @php
                                 $no = 1;  
                             @endphp
-                            @foreach ($teacher_studies as $teacher_study)
+                            @foreach ($teacher_grade_generalizations as $teacher_grade_generalization)
                             <tr>
                                 <td>{{ $no }}</td>
-                                <td>{{ $teacher_study->study->name }}</td>
-                                <td>{{ $teacher_study->study->grade_generalization->name }}</td>
+                                <td>{{ $teacher_grade_generalization->grade_generalization->name }}</td>
                                 <td>
-                                    <form action={{ route('user.my-study.destroy', ['my_study' => $teacher_study]) }} method="POST">
+                                    <form action={{ route('user.my-class.destroy', ['my_class' => $teacher_grade_generalization]) }} method="POST">
                                         @method('DELETE')
                                         <button class="btn btn-danger">Hapus</button>
                                     </form>

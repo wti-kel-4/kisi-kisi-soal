@@ -14,6 +14,7 @@ use App\Http\Controllers\StudyController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MyStudyController;
+use App\Http\Controllers\MyClassController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
@@ -60,6 +61,7 @@ Route::prefix('user')->name('user.')->middleware(['user'])->group(function(){
     Route::resource('grade', GradeController::class);
     Route::resource('lesson', LessonController::class);
     Route::resource('my-study', MyStudyController::class);
+    Route::resource('my-class', MyClassController::class);
     
     Route::group(['prefix' => 'question-grid'], function(){
         Route::get('step-0', [QuestionGridController::class, 'get_step_0'])->name('question_grid_step_0');

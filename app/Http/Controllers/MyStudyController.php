@@ -50,7 +50,7 @@ class MyStudyController extends Controller
     }
 
     public function destroy(Request $request, $my_study){
-        var_dump($my_study->id);
-        // return back();
+        $my_study->delete();
+        return redirect()->route('user.my-study.index')->with('success', 'Berhasil Menghapus Data');
     }
 }

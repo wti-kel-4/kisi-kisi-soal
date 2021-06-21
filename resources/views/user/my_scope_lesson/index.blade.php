@@ -36,7 +36,7 @@
                         <table class="table table-striped">
                         <tr>
                             <th>No</th>
-                            <th>Kelas</th>
+                            <th>Nama Lingkup Materi</th>
                             <th>Aksi</th>
                         </tr>
                         @forelse ($scope_lessons as $index=>$scope_lesson)

@@ -20,6 +20,7 @@ use App\Models\StudyLessonScopeLesson;
 use App\Models\TeacherGradeGeneralization;
 use Illuminate\Support\Facades\DB;
 use Exception;
+use Illuminate\Support\Facades\Validator;
 use PhpOffice\PhpWord\TemplateProcessor;
 use PhpOffice\PhpWord\Element\Table;
 use PhpOffice\PhpWord\PhpWord;
@@ -112,6 +113,21 @@ class QuestionGridController extends Controller
 
     public function get_step_2_save(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+                        'no_soal' => ['required'],
+                        'kompetensi_dasar' => ['required'],
+                        'materi' => ['required'],
+                        'lingkup_materi' => ['required'],
+                        'indikator' => ['required'],
+                        'bentuk' => ['required'],
+                        'level' => ['required'],
+                        'kognitif' => ['required'],
+                    ]);
+
+        if($validator->fails()){
+            return back()->with('error', 'Kisi - kisi gagal disimpan, form ada yang terlewat');
+        }
+
         $no_soal = $request->no_soal;
         $kompetensi_dasar = $request->kompetensi_dasar;
         $materi = $request->materi;

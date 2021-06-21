@@ -146,7 +146,7 @@
                 <div class="col-lg-4 col-sm-12">
                   <div class="card card-primary">
                     <div class="card-header">
-                      <h4>No Urut : {{ $question_grid_step_2[$i]->no_urut }}</h4>
+                      <h4>No Soal : {{ $question_grid_step_2[$i]->no_soal }}</h4>
                     </div>
                     <div class="card-body">
                       <h6>Level Kognitif : {{ $question_grid_step_2[$i]->level }}/{{ $question_grid_step_2[$i]->kognitif }}</h6>

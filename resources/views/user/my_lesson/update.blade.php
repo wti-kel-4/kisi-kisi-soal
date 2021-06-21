@@ -1,14 +1,14 @@
 @extends('user.master.main')
 @section('title')
-    Lingkup Materi 
+    Materi Saya
 @endsection
 @section('body')
 <div class="main-content" style="min-height: 564px;">
     <section class="section">
         <div class="section-header">
-            <h1>Data Lingkup Materi Baru</h1>
+            <h1> Edit Materi </h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('user.my-class.index') }}">Lingkup Materi </a></div>
+                <div class="breadcrumb-item active"><a href="{{ route('user.my-lesson.index') }}">Materi Saya</a></div>
             </div>
             </div>
             <div class="section-body">
@@ -19,21 +19,19 @@
                 <div class="col">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Tambahkan Lingkup Materi</h4>
+                            <h4>Ubah Materi Saya</h4>
                         </div>
-                        <form action="{{ route('user.my-scope-lesson.store') }}" method="POST">
+                        <form action="{{ route('user.my-lesson.update', $lesson->id) }}" method="PUT">
                             @csrf
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label>Nama Lingkup Materi</label>
-                                    <input type="text" class="form-control" name="scope_lesson_name" required>
-                                    
+                                    <label>Nama Materi</label>
+                                    <input type="text" class="form-control" name="edit_lesson_name" value="{{$lesson->name}}" required>
                                 </div>
                             </div>
                             
                             <div class="card-footer text-right">
-                                
-                                <button class="btn btn-success">Submit</button>
+                                <button class="btn btn-success" >Submit</button>
                             </div>
                         </form>
                     </div>

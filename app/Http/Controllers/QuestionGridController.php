@@ -16,6 +16,7 @@ use App\Models\QuestionGridHeader;
 use App\Models\QuestionCardHeader;
 use App\Models\Lesson;
 use App\Models\LogActivity;
+use App\Models\ScopeLesson;
 use App\Models\StudyLessonScopeLesson;
 use App\Models\TeacherGradeGeneralization;
 use Illuminate\Support\Facades\DB;
@@ -104,8 +105,8 @@ class QuestionGridController extends Controller
         $user = Auth::guard('user')->user();
         $session = $this->get_session('_question_grid_header_step_1');
         $studies_id = $session->mata_pelajaran;
-        $scope_lessons = StudyLessonScopeLesson::select('study_lesson_scope_lesson.scope_lessons_id')->join('studies', 'study_lesson_scope_lesson.studies_id', 'studies.id')->where('study_lesson_scope_lesson.studies_id', $studies_id)->where('studies.grade_generalizations_id', $session->kelas)->groupBy('scope_lessons_id')->get();
-        $lessons = StudyLessonScopeLesson::select('study_lesson_scope_lesson.lessons_id')->join('studies', 'study_lesson_scope_lesson.studies_id', 'studies.id')->where('study_lesson_scope_lesson.studies_id', $studies_id)->where('studies.grade_generalizations_id', $session->kelas)->groupBy('lessons_id')->get();
+        $scope_lessons = ScopeLesson::orderBy('name', 'DESC')->distinct()->get();
+        $lessons = Lesson::orderBy('name', 'DESC')->distinct()->get();
 
         $basic_competencies = BasicCompetency::where('studies_id', $studies_id)->where('grade_generalizations_id', $session->kelas)->get();
         return view('user.question_grid.step_2', compact('scope_lessons', 'lessons', 'basic_competencies'));

@@ -46,10 +46,10 @@
                             <label>Lingkup Materi</label>
                             <select name="lingkup_materi" class="form-control select2">
                               @if (count($scope_lessons) == 0)
-                                  <option selected disabled>Anda tidak memiliki materi dari kelas yang Anda pilih</option>
+                                  <option selected disabled>Tidak ada lingkup materi yang tersedia</option>
                               @endif
                               @foreach ($scope_lessons as $scope_lesson)
-                                  <option value="{{ $scope_lesson->scope_lesson->id }}">{{ $scope_lesson->scope_lesson->name }}</option>
+                                  <option value="{{ $scope_lesson->id }}">{{ $scope_lesson->name }}</option>
                               @endforeach
                             </select>
                           </div>
@@ -60,7 +60,7 @@
                                   <option selected disabled>Anda tidak memiliki materi dari kelas yang Anda pilih</option>
                                 @endif
                               @foreach ($lessons as $lesson)
-                                  <option value="{{ $lesson->lesson->id }}">{{ $lesson->lesson->name }}</option>
+                                  <option value="{{ $lesson->id }}">{{ $lesson->name }}</option>
                               @endforeach
                             </select>
                           </div>

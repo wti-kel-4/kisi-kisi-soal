@@ -21,12 +21,13 @@
                         <div class="card-header">
                             <h4>Tambahkan Lingkup Materi</h4>
                         </div>
-                        <form action="{{ route('user.my-scope-lesson.store') }}" method="POST">
+                        <form action="{{ route('user.my-scope-lesson.update', $scope_lesson->id) }}" method="PUT">
+                            @method('PUT')
                             @csrf
                             <div class="card-body">
                                 <div class="form-group">
                                     <label>Nama Lingkup Materi</label>
-                                    <input type="text" class="form-control" name="scope_lesson_name" required>
+                                    <input value="{{$scope_lesson->name}}" type="text" class="form-control" name="edit_scope_lesson_name" required>
                                     
                                 </div>
                             </div>

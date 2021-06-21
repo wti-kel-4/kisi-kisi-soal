@@ -1,12 +1,12 @@
 @extends('user.master.main')
 @section('title')
-    Lingkup Materi 
+    Materi Saya
 @endsection
 @section('body')
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-        <h1>Lingkup Materi Saya</h1>
+        <h1> Materi Saya</h1>
         <div class="section-header-breadcrumb">
             <a href="{{ route('user.my-scope-lesson.create') }}" class="btn btn-icon icon-left btn-success"><i class="fas fa-plus"></i> Tambah Data</a>
         </div>
@@ -19,7 +19,7 @@
                 <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                    <h4>Data Lingkup Materi</h4>
+                    <h4>Data  Materi</h4>
                     <div class="card-header-form">
                         <form>
                         <div class="input-group">
@@ -39,26 +39,26 @@
                             <th>Kelas</th>
                             <th>Aksi</th>
                         </tr>
-                        @forelse ($scope_lessons as $index=>$scope_lesson)
+                        @forelse ($lessons as $index=>$lesson)
                         <tr>
                             <td>{{ $index+1 }}</td>
-                            <td>{{ $scope_lesson->name }}</td>
+                            <td>{{ $lesson->name }}</td>
                             <td>
-                                <form action={{ route('user.my-scope-lesson.destroy', $scope_lesson->id) }} method="POST">
-                                    <a href="{{ route('user.my-scope-lesson.edit', $scope_lesson->id)}}" class="btn btn-info">Edit</a>
+                                <form action={{ route('user.my-lesson.destroy', $lesson) }} method="POST">
+                                    <a href="{{ route('user.my-lesson.edit', $lesson->id)}}" class="btn btn-info">Edit</a>
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-danger">Hapus</button>
                                 </form>
                             </td>
                         </tr>
-                        @empty
+                    @empty
                         <tr>
                             <td colspan="3">
                                 <p class="text-primary text-center">Belum ada data, tambahkan data baru</p>
                             </td>
                         </tr>
-                        @endforelse
+                    @endforelse
                       </table>
                     </div>
                     </div>
@@ -69,3 +69,4 @@
     </section>
 </div>
 @endsection
+

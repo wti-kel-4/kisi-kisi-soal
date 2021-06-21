@@ -25,6 +25,18 @@
                     <span>Kelas Saya</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="{{ route('user.my-lesson.index') }}" class="nav-link">
+                    <i class="fas fa-book"></i>
+                    <span>Materi </span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('user.my-scope-lesson.index') }}" class="nav-link">
+                    <i class="fas fa-book"></i>
+                    <span>Lingkup Materi</span>
+                </a>
+            </li>
         </ul>
         <div class="mt-2 p-3 hide-sidebar-mini">
             <a href="{{ route('user.question_grid_step_0') }}" class="btn btn-success btn-lg btn-block btn-icon-split">

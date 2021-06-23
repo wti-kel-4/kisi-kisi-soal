@@ -21,8 +21,9 @@
                         <div class="card-header">
                             <h4>Ubah Materi Saya</h4>
                         </div>
-                        <form action="{{ route('user.my-lesson.update', $lesson->id) }}" method="PUT">
-                            @csrf
+                        <form action="{{ route('user.my-lesson.update', $lesson->id) }}" method="POST">
+                            {{ method_field('PUT') }}
+                            {{ csrf_field()}}
                             <div class="card-body">
                                 <div class="form-group">
                                     <label>Nama Materi</label>

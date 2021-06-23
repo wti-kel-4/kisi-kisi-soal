@@ -1,4 +1,4 @@
-@extends('user.master.main')
+@extends('admin.master.main')
 @section('title')
     Materi 
 @endsection
@@ -8,20 +8,20 @@
         <div class="section-header">
             <h1> Materi Baru</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('user.my-lesson.index') }}">Materi</a></div>
+                <div class="breadcrumb-item active"><a href="{{ route('admin.lesson.index') }}">Materi </a></div>
             </div>
             </div>
             <div class="section-body">
-            @include('user.master.alert_success')
-            @include('user.master.alert_error')
-            @include('user.master.alert_info')
+            @include('admin.master.alert_success')
+            @include('admin.master.alert_error')
+            @include('admin.master.alert_info')
             <div class="row">
                 <div class="col">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Tambahkan Materi</h4>
+                            <h4>Tambahkan Materi </h4>
                         </div>
-                        <form action="{{ route('user.my-lesson.store') }}" method="POST">
+                        <form action="{{ route('admin.lesson.store') }}" method="POST">
                             @csrf
                             <div class="card-body">
                                 <div class="form-group">

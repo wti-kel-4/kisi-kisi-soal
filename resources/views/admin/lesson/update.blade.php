@@ -1,32 +1,33 @@
-@extends('user.master.main')
+@extends('admin.master.main')
 @section('title')
-    Materi 
+    Materi Saya
 @endsection
 @section('body')
 <div class="main-content" style="min-height: 564px;">
     <section class="section">
         <div class="section-header">
-            <h1> Materi Baru</h1>
+            <h1> Edit Materi </h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('user.my-lesson.index') }}">Materi</a></div>
+                <div class="breadcrumb-item active"><a href="{{ route('admin.lesson.index') }}">Materi Saya</a></div>
             </div>
             </div>
             <div class="section-body">
-            @include('user.master.alert_success')
-            @include('user.master.alert_error')
-            @include('user.master.alert_info')
+            @include('admin.master.alert_success')
+            @include('admin.master.alert_error')
+            @include('admin.master.alert_info')
             <div class="row">
                 <div class="col">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Tambahkan Materi</h4>
+                            <h4>Ubah Materi Saya</h4>
                         </div>
-                        <form action="{{ route('user.my-lesson.store') }}" method="POST">
-                            @csrf
+                        <form action="{{ route('admin.lesson.update', $lesson->id) }}" method="POST">
+                            {{ method_field('PUT') }}
+                            {{ csrf_field()}}
                             <div class="card-body">
                                 <div class="form-group">
                                     <label>Nama Materi</label>
-                                    <input type="text" class="form-control" name="lesson_name" required>
+                                    <input type="text" class="form-control" name="edit_lesson_name" value="{{$lesson->name}}" required>
                                 </div>
                             </div>
                             

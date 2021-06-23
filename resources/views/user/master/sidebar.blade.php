@@ -14,15 +14,23 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a href="{{ route('user.my-class.index') }}" class="nav-link">
+                    <i class="fas fa-building"></i>
+                    <span>Kelas Saya</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
                 <a href="{{ route('user.my-study.index') }}" class="nav-link">
                     <i class="fas fa-graduation-cap"></i>
                     <span>Mata Pelajaran Saya</span>
                 </a>
             </li>
+            
             <li class="nav-item">
-                <a href="{{ route('user.my-class.index') }}" class="nav-link">
-                    <i class="fas fa-building"></i>
-                    <span>Kelas Saya</span>
+                <a href="#" class="nav-link">
+                    <i class="fas fa-book"></i>
+                    <span>Kompetensi Dasar</span>
                 </a>
             </li>
             <li class="nav-item">

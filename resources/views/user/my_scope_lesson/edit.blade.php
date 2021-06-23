@@ -6,7 +6,7 @@
 <div class="main-content" style="min-height: 564px;">
     <section class="section">
         <div class="section-header">
-            <h1>Data Lingkup Materi Baru</h1>
+            <h1>Ubah Data Lingkup Materi </h1>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="{{ route('user.my-class.index') }}">Lingkup Materi </a></div>
             </div>
@@ -19,7 +19,7 @@
                 <div class="col">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Tambahkan Lingkup Materi</h4>
+                            <h4>Ubah Lingkup Materi</h4>
                         </div>
                         <form action="{{ route('user.my-scope-lesson.update', $scope_lesson->id) }}" method="POST">
                             {{ method_field('PUT') }}

@@ -113,14 +113,12 @@
                           </div>
                         </div>
                       </div>
+                      <div class="row">
+                        <button class="btn btn-icon icon-right btn-success">Simpan Data <i class="fas fa-save"></i></button>
+                      </div>
                     </form>
                   </div>
                   <div class="card-footer">
-                    <div class="row card-footer">
-                      <div class="col text-right">
-                        <button class="btn btn-icon icon-right btn-success">Simpan Data <i class="fas fa-save"></i></button>
-                      </div>
-                    </div>
                     <div class="row card-footer">
                       <div class="col text-left">
                         <a href="{{ route('user.question_card_step_1', [$question_card_step_1->id]) }}" class="btn btn-icon icon-right btn-primary"><i class="fas fa-arrow-left"></i>Kembali Ke Step Sebelumnya</a>

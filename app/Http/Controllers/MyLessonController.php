@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class MyLessonController extends Controller
 {
+
      /**
      * Display a listing of the resource.
      *
@@ -15,9 +16,18 @@ class MyLessonController extends Controller
      */
     public function index()
     {
+        
         $user = Auth::guard('user')->user();
         $lessons = Lesson::orderBy('created_at', 'desc')->get();
-        return view('user.my_lesson.index', compact('lessons'));
+        
+        if (Auth::guard('user')->user() != null) {
+            return view('user.my_lesson.index', compact('lessons'));
+        }elseif (Auth::guard('admin')->user() != null) {
+            return view('admin.lesson.index', compact('lessons'));
+        }
+        else {
+            return back();
+        }
     }
 
     /**
@@ -27,7 +37,15 @@ class MyLessonController extends Controller
      */
     public function create()
     {
-        return view('user.my_lesson.create');
+        if (Auth::guard('user')->user() != null) {
+            return view('user.my_lesson.create');
+        }elseif (Auth::guard('admin')->user() != null) {
+            return view('admin.lesson.create');
+        }
+        else {
+            return back();
+        }
+        // return view('user.my_lesson.create');
     }
 
     /**
@@ -46,8 +64,14 @@ class MyLessonController extends Controller
             Lesson::create([
                 'name' => $request->lesson_name,
             ]);
-            return redirect()->route('user.my-lesson.index')
-                                ->with('success', 'Berhasil menambahkan data.');
+            if (Auth::guard('user')->user() != null) {
+                return redirect()->route('user.my-lesson.index')->with('success', 'Berhasil menambahkan data.');
+            }elseif (Auth::guard('admin')->user() != null) {
+                return redirect()->route('admin.lesson.index')->with('success', 'Berhasil menambahkan data.');
+            }
+            else {
+                return back();
+            }
         }
     }
 
@@ -72,7 +96,14 @@ class MyLessonController extends Controller
     {
         // dd($id);
         $lesson = Lesson::findorfail($id);
-        return view('user.my_lesson.update', compact('lesson'));
+        if (Auth::guard('user')->user() != null) {
+            return view('user.my_lesson.update', compact('lesson'));
+        }elseif (Auth::guard('admin')->user() != null) {
+            return view('admin.lesson.update', compact('lesson'));
+        }
+        else {
+            return back();
+        }
     }
 
     /**
@@ -92,8 +123,15 @@ class MyLessonController extends Controller
         $lesson->update([
             'name' => $request->edit_lesson_name,
         ]);
-        return redirect()->route('user.my-lesson.index')
-                            ->with('success', 'Berhasil mengedit data.');
+        
+        if (Auth::guard('user')->user() != null) {
+            return redirect()->route('user.my-lesson.index')->with('success', 'Berhasil Mengubah Data.');
+        }elseif (Auth::guard('admin')->user() != null) {
+            return redirect()->route('admin.lesson.index')->with('success', 'Berhasil Mengubah Data.');
+        }
+        else {
+            return back();
+        }
     }
 
     /**
@@ -106,6 +144,13 @@ class MyLessonController extends Controller
     {
         $lesson = Lesson::find($id);
         $lesson->delete();
-        return redirect()->route('user.my-lesson.index')->with('success', 'Berhasil Menghapus Data');
+        if (Auth::guard('user')->user() != null) {
+            return redirect()->route('user.my-lesson.index')->with('success', 'Berhasil Menghapus Data.');
+        }elseif (Auth::guard('admin')->user() != null) {
+            return redirect()->route('admin.lesson.index')->with('success', 'Berhasil Menghapus Data.');
+        }
+        else {
+            return back();
+        }
     }
 }

@@ -6,7 +6,7 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-        <h1>Lingkup Materi Saya</h1>
+        <h1>Lingkup Materi </h1>
         <div class="section-header-breadcrumb">
             <a href="{{ route('user.my-scope-lesson.create') }}" class="btn btn-icon icon-left btn-success"><i class="fas fa-plus"></i> Tambah Data</a>
         </div>

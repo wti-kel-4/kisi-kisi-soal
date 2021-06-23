@@ -17,7 +17,15 @@ class MyScopeLessonController extends Controller
     {
         $user = Auth::guard('user')->user();
         $scope_lessons = ScopeLesson::orderBy('created_at', 'desc')->get();
-        return view('user.my_scope_lesson.index', compact('scope_lessons'));
+        
+        if (Auth::guard('user')->user() != null) {
+            return view('user.my_scope_lesson.index', compact('scope_lessons'));
+        }elseif (Auth::guard('admin')->user() != null) {
+            return view('admin.scope_lesson.index', compact('scope_lessons'));
+        }
+        else {
+            return back();
+        }
     }
 
     /**
@@ -27,7 +35,15 @@ class MyScopeLessonController extends Controller
      */
     public function create()
     {
-        return view('user.my_scope_lesson.create');
+        
+        if (Auth::guard('user')->user() != null) {
+            return view('user.my_scope_lesson.create');
+        }elseif (Auth::guard('admin')->user() != null) {
+            return view('admin.scope_lesson.create');
+        }
+        else {
+            return back();
+        }
     }
 
     /**
@@ -46,8 +62,15 @@ class MyScopeLessonController extends Controller
             ScopeLesson::create([
                 'name' => $request->scope_lesson_name,
             ]);
-            return redirect()->route('user.my-scope-lesson.index')
-                                ->with('success', 'Berhasil menambahkan data.');
+            
+            if (Auth::guard('user')->user() != null) {
+                return redirect()->route('user.my-scope-lesson.index')->with('success', 'Berhasil menambahkan data.');
+            }elseif (Auth::guard('admin')->user() != null) {
+                return redirect()->route('admin.scope-lesson.index')->with('success', 'Berhasil menambahkan data.');
+            }
+            else {
+                return back();
+            }
         }
     }
 
@@ -70,9 +93,17 @@ class MyScopeLessonController extends Controller
      */
     public function edit($id)
     {
-        // dd($id);
+        
         $scope_lesson = ScopeLesson::findorfail($id);
-        return view('user.my_scope_lesson.edit', compact('scope_lesson'));
+        
+        if (Auth::guard('user')->user() != null) {
+            return view('user.my_scope_lesson.edit', compact('scope_lesson'));
+        }elseif (Auth::guard('admin')->user() != null) {
+            return view('admin.scope_lesson.edit', compact('scope_lesson'));
+        }
+        else {
+            return back();
+        }
     }
 
     /**
@@ -92,8 +123,15 @@ class MyScopeLessonController extends Controller
         $scope_lesson->update([
             'name' => $request->edit_scope_lesson_name,
         ]);
-        return redirect()->route('user.my-scope-lesson.index')
-                            ->with('success', 'Berhasil mengedit data.');
+        
+        if (Auth::guard('user')->user() != null) {
+            return redirect()->route('user.my-scope-lesson.index')->with('success', 'Berhasil Mengubah Data.');
+        }elseif (Auth::guard('admin')->user() != null) {
+            return redirect()->route('admin.scope-lesson.index')->with('success', 'Berhasil Mengubah Data.');
+        }
+        else {
+            return back();
+        }
     }
 
     /**
@@ -106,6 +144,14 @@ class MyScopeLessonController extends Controller
     {
         $scope_lesson = ScopeLesson::find($id);
         $scope_lesson->delete();
-        return redirect()->route('user.my-scope-lesson.index')->with('success', 'Berhasil Menghapus Data');
+        
+        if (Auth::guard('user')->user() != null) {
+            return redirect()->route('user.my-scope-lesson.index')->with('success', 'Berhasil Menghapus Data.');
+        }elseif (Auth::guard('admin')->user() != null) {
+            return redirect()->route('admin.scope-lesson.index')->with('success', 'Berhasil Menghapus Data.');
+        }
+        else {
+            return back();
+        }
     }
 }

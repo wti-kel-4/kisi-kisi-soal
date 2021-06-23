@@ -20,33 +20,9 @@
                 </a>
             </li> --}}
             <li class="nav-item">
-                <a href="{{ route('admin.question_card.index') }}" class="nav-link">
-                    <i class="fas fa-address-card"></i>
-                    <span>Kartu Soal</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route('admin.question_grid.index') }}" class="nav-link">
-                    <i class="fas fa-address-card"></i>
-                    <span>Kisi - Kisi Soal</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route('admin.basic-competency.index') }}" class="nav-link">
-                    <i class="fas fa-address-book"></i>
-                    <span>Kompetensi Dasar</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route('admin.teacher.index') }}" class="nav-link">
-                    <i class="fas fa-chalkboard-teacher"></i>
-                    <span>Guru</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route('admin.study.index') }}" class="nav-link">
-                    <i class="fas fa-graduation-cap"></i>
-                    <span>Mata Pelajaran</span>
+                <a href="{{ route('admin.user.index') }}" class="nav-link">
+                    <i class="fas fa-user-circle"></i>
+                    <span>Pengguna</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -56,11 +32,50 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('admin.user.index') }}" class="nav-link">
-                    <i class="fas fa-user-circle"></i>
-                    <span>Pengguna</span>
+                <a href="{{ route('admin.study.index') }}" class="nav-link">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Mata Pelajaran</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="{{ route('admin.question_grid.index') }}" class="nav-link">
+                    <i class="fas fa-address-card"></i>
+                    <span>Kisi - Kisi Soal</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('admin.question_card.index') }}" class="nav-link">
+                    <i class="fas fa-address-card"></i>
+                    <span>Kartu Soal</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('admin.basic-competency.index') }}" class="nav-link">
+                    <i class="fas fa-address-book"></i>
+                    <span>Kompetensi Dasar</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('admin.lesson.index') }}" class="nav-link">
+                    <i class="fas fa-address-book"></i>
+                    <span>Materi</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('admin.scope-lesson.index') }}" class="nav-link">
+                    <i class="fas fa-address-book"></i>
+                    <span>Lingkup Materi</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('admin.teacher.index') }}" class="nav-link">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <span>Guru</span>
+                </a>
+            </li>
+            
+            
+            
         </ul>
     </aside>
 </div>

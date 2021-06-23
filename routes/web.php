@@ -33,10 +33,13 @@ Route::prefix('admin')->name('admin.')->middleware(['admin'])->group(function(){
     Route::resource('basic-competency', BasicCompetencyController::class);
     Route::resource('department', DepartmentController::class);
     Route::resource('grade', GradeController::class);
-    Route::resource('lesson', LessonController::class);
     Route::resource('profile', ProfileController::class);
     Route::get('question-grid', [QuestionGridController::class, 'index'])->name('question_grid.index');
     Route::get('question-card', [QuestionCardController::class, 'index'])->name('question_card.index');
+    // Route::resource('lesson', LessonController::class);
+   
+    Route::resource('lesson', MyLessonController::class);
+    Route::resource('scope-lesson', MyScopeLessonController::class);
     // Route::group(['prefix' => 'question-grid'], function(){
     //     Route::get('/', [QuestionGridController::class, 'get_step_0'])->name('question_grid_step_0');
     //     Route::get('/{type}', [QuestionGridController::class, 'get_step_0_store'])->name('question_grid_step_0_store');

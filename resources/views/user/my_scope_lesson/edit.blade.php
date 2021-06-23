@@ -21,9 +21,9 @@
                         <div class="card-header">
                             <h4>Tambahkan Lingkup Materi</h4>
                         </div>
-                        <form action="{{ route('user.my-scope-lesson.update', $scope_lesson->id) }}" method="PUT">
-                            @method('PUT')
-                            @csrf
+                        <form action="{{ route('user.my-scope-lesson.update', $scope_lesson->id) }}" method="POST">
+                            {{ method_field('PUT') }}
+                            {{ csrf_field()}}
                             <div class="card-body">
                                 <div class="form-group">
                                     <label>Nama Lingkup Materi</label>

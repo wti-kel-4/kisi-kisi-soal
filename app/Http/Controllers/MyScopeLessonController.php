@@ -85,14 +85,14 @@ class MyScopeLessonController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'edit_lesson_name' => 'required',
+            'edit_scope_lesson_name' => 'required',
         ]);
 
         $scope_lesson = ScopeLesson::findorfail($id);
         $scope_lesson->update([
-            'name' => $request->edit_lesson_name,
+            'name' => $request->edit_scope_lesson_name,
         ]);
-        return redirect()->route('user.my-lesson.index')
+        return redirect()->route('user.my-scope-lesson.index')
                             ->with('success', 'Berhasil mengedit data.');
     }
 

@@ -113,8 +113,12 @@
                           </div>
                         </div>
                       </div>
-                      <div class="row">
-                        <button class="btn btn-icon icon-right btn-success">Simpan Data <i class="fas fa-save"></i></button>
+                      <div class="card-footer">
+                        <div class="row">
+                          <div class="col">
+                            <button class="btn btn-icon icon-right btn-success w-100">Simpan Data <i class="fas fa-save"></i></button>
+                          </div>
+                        </div>
                       </div>
                     </form>
                   </div>

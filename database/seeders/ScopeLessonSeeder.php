@@ -16,35 +16,27 @@ class ScopeLessonSeeder extends Seeder
     {
         $datas = [
             [
-                'id' => '1',
                 'name' => 'Senyawa Hidrokarbon'
             ],
             [
-                'id' => '2',
                 'name' => 'Minyak Bumi'
             ],
             [
-                'id' => '3',
                 'name' => 'Termokimia'
             ],
             [
-                'id' => '4',
                 'name' => 'Laju Reaksi'
             ],
             [
-                'id' => '5',
                 'name' => 'Kesetimbangan'
             ],
             [
-                'id' => '6',
                 'name' => 'Aisatsu'
             ],
             [
-                'id' => '7',
                 'name' => 'Jikoshoukai'
             ],
             [
-                'id' => '8',
                 'name' => 'Jikan'
             ],
         ];

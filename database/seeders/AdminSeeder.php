@@ -15,7 +15,6 @@ class AdminSeeder extends Seeder
     public function run()
     {
         Admin::create([
-            'id' => 1,
             'name' => 'Administrator',
             'username' => 'Admin',
             'password' => '$2b$10$OZ.MmiImspbAYTbI/VsbEOis5sfmSXo75gpomRixXLGLnsnGLXiD2'

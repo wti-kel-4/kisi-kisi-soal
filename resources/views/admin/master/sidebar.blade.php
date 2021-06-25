@@ -43,18 +43,7 @@
                     <span>Mata Pelajaran</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a href="{{ route('admin.question_grid.index') }}" class="nav-link">
-                    <i class="fas fa-address-card"></i>
-                    <span>Kisi - Kisi Soal</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route('admin.question_card.index') }}" class="nav-link">
-                    <i class="fas fa-address-card"></i>
-                    <span>Kartu Soal</span>
-                </a>
-            </li>
+            
             <li class="nav-item">
                 <a href="{{ route('admin.basic-competency.index') }}" class="nav-link">
                     <i class="fas fa-address-book"></i>
@@ -75,7 +64,18 @@
             </li>
             
             
-            
+            <li class="nav-item">
+                <a href="{{ route('admin.question_grid.index') }}" class="nav-link">
+                    <i class="fas fa-address-card"></i>
+                    <span>Kisi - Kisi Soal</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('admin.question_card.index') }}" class="nav-link">
+                    <i class="fas fa-address-card"></i>
+                    <span>Kartu Soal</span>
+                </a>
+            </li>
             
         </ul>
     </aside>

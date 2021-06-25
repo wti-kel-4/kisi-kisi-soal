@@ -62,8 +62,6 @@
                     <span>Lingkup Materi</span>
                 </a>
             </li>
-            
-            
             <li class="nav-item">
                 <a href="{{ route('admin.question_grid.index') }}" class="nav-link">
                     <i class="fas fa-address-card"></i>
@@ -76,7 +74,6 @@
                     <span>Kartu Soal</span>
                 </a>
             </li>
-            
         </ul>
     </aside>
 </div>

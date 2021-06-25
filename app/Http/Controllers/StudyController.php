@@ -31,7 +31,7 @@ class StudyController extends Controller
      */
     public function create()
     {
-        $grades = Grade::orderBy('name', 'ASC')->get();
+        $grades = GradeGeneralization::orderBy('name', 'ASC')->get();
         return view('admin.study.create', compact('grades'));
     }
 
@@ -59,7 +59,7 @@ class StudyController extends Controller
         try{
             $study_new = new Study;
             $study_new->name = $name;
-            $study_new->grades_id = $grades_id;
+            $study_new->grade_generalizations_id = $grades_id;
             $study_new->save();
             DB::commit();
             return redirect()->route('admin.study.index')->with('success', 'Berhasil mendaftarkan mata pelajaran '.$name);
@@ -91,7 +91,7 @@ class StudyController extends Controller
     public function edit($id)
     {
         $study = Study::findorfail($id);
-        $grade_generalizations = GradeGeneralization::all();
+        $grade_generalizations = GradeGeneralization::orderBy('name', 'ASC')->get();
         return view('admin.study.edit', compact('study','grade_generalizations'));
     }
 
@@ -116,19 +116,20 @@ class StudyController extends Controller
 
         $id = $request->id;
         $name = $request->name;
-        $grades_id = $request->grades_id;
+        $grades_id = $request->grade_generalizations_id;
 
         DB::beginTransaction();
         try{
             $study = Study::find($id);
             $study->name = $name;
-            $study->grades_id = $grades_id;
+            $study->grade_generalizations_id = $grades_id;
             $study->save();
             DB::commit();
             return redirect()->route('admin.study.index')->with('success', 'Berhasil mengubah data mata pelajaran');
         }catch(Exception $ex){
             DB::rollback();
-            return back()->with('error', 'Gagal mendaftarkan mata pelajaran');
+            dd($ex);
+            return back()->with('error', 'Gagal mengubah mata pelajaran');
         }
     }
 

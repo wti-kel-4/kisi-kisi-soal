@@ -20,6 +20,12 @@
                 </a>
             </li> --}}
             <li class="nav-item">
+                <a href="{{ route('admin.teacher.index') }}" class="nav-link">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <span>Guru</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a href="{{ route('admin.user.index') }}" class="nav-link">
                     <i class="fas fa-user-circle"></i>
                     <span>Pengguna</span>
@@ -67,12 +73,7 @@
                     <span>Lingkup Materi</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a href="{{ route('admin.teacher.index') }}" class="nav-link">
-                    <i class="fas fa-chalkboard-teacher"></i>
-                    <span>Guru</span>
-                </a>
-            </li>
+            
             
             
             

@@ -69,6 +69,7 @@ Route::prefix('user')->name('user.')->middleware(['user'])->group(function(){
     Route::resource('my-class', MyClassController::class);
     Route::resource('my-lesson', MyLessonController::class);
     Route::resource('my-scope-lesson', MyScopeLessonController::class);
+    Route::resource('basic-competency', BasicCompetencyController::class);
     
     Route::group(['prefix' => 'question-grid'], function(){
         Route::get('step-0', [QuestionGridController::class, 'get_step_0'])->name('question_grid_step_0');

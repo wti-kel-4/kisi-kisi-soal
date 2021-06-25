@@ -128,7 +128,6 @@ class StudyController extends Controller
             return redirect()->route('admin.study.index')->with('success', 'Berhasil mengubah data mata pelajaran');
         }catch(Exception $ex){
             DB::rollback();
-            dd($ex);
             return back()->with('error', 'Gagal mengubah mata pelajaran');
         }
     }

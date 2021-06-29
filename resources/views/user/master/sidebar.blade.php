@@ -28,7 +28,7 @@
             </li>
             
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{ route('user.basic-competency.index') }}" class="nav-link">
                     <i class="fas fa-book"></i>
                     <span>Kompetensi Dasar</span>
                 </a>

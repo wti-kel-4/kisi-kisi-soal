@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\BasicCompetency;
 use App\Models\GradeGeneralization;
 use App\Models\Study;
+use Illuminate\Support\Facades\Auth;
 
 class BasicCompetencyController extends Controller
 {
@@ -16,8 +17,16 @@ class BasicCompetencyController extends Controller
      */
     public function index()
     {
-        $basic_competencies = BasicCompetency::all();
-        return view('admin.basic_competency.index', compact('basic_competencies'))->with('study');
+        $basic_competencies = BasicCompetency::orderBy('created_at', 'desc')->get();
+        if (Auth::guard('user')->user() != null) {
+            return view('user.basic_competency.index', compact('basic_competencies'))->with('study');
+        }elseif (Auth::guard('admin')->user() != null) {
+            return view('admin.basic_competency.index', compact('basic_competencies'))->with('study');
+        }
+        else {
+            return back();
+        }
+        // return view('admin.basic_competency.index', compact('basic_competencies'))->with('study');
     }
 
     /**
@@ -29,7 +38,15 @@ class BasicCompetencyController extends Controller
     {
         $study = Study::all();
         $grade_generalizations = GradeGeneralization::all();
-        return view('admin.basic_competency.create', compact('study', 'grade_generalizations'));
+        if (Auth::guard('user')->user() != null) {
+            return view('user.basic_competency.create', compact('study', 'grade_generalizations'));
+        }elseif (Auth::guard('admin')->user() != null) {
+            return view('admin.basic_competency.create', compact('study', 'grade_generalizations'));
+        }
+        else {
+            return back();
+        }
+        // return view('admin.basic_competency.create', compact('study', 'grade_generalizations'));
     }
 
     /**
@@ -41,15 +58,26 @@ class BasicCompetencyController extends Controller
     public function store(Request $request)
     {
         
-        $request->validate([
+        $validate = $request->validate([
             'name' => 'required',
             'studies_id' => 'required',
         ]);
 
 
-        BasicCompetency::create($request->all());
-        return redirect()->route('admin.basic-competency.index')
-                            ->with('success', 'Berhasil menambahkan data.');
+        if ($validate) {
+            BasicCompetency::create($request->all());
+    
+            if (Auth::guard('user')->user() != null) {
+                return redirect()->route('user.basic-competency.index')->with('success', 'Berhasil menambahkan data.');
+            }elseif (Auth::guard('admin')->user() != null) {
+                return redirect()->route('admin.basic-competency.index')->with('success', 'Berhasil menambahkan data.');
+            }
+            else {
+                return back();
+            }
+            
+        }
+        // return redirect()->route('admin.basic-competency.index')->with('success', 'Berhasil menambahkan data.');
     }
 
     /**
@@ -60,10 +88,22 @@ class BasicCompetencyController extends Controller
      */
     public function show($id)
     {
-        $basic_competency = BasicCompetency::find($id);
-        $studies = Study::all();
-        $grade_generalizations = GradeGeneralization::all();
-        return view('admin.basic_competency.show', compact('basic_competency', 'studies', 'grade_generalizations'));
+        if ($id) {
+            $basic_competency = BasicCompetency::find($id);
+            $studies = Study::all();
+            $grade_generalizations = GradeGeneralization::all();
+
+            if (Auth::guard('user')->user() != null) {
+                return view('user.basic_competency.show', compact('basic_competency', 'studies', 'grade_generalizations'));
+            }elseif (Auth::guard('admin')->user() != null) {
+                return view('admin.basic_competency.show', compact('basic_competency', 'studies', 'grade_generalizations'));
+            }
+            else {
+                return back();
+            }
+            // return view('admin.basic_competency.show', compact('basic_competency', 'studies', 'grade_generalizations'));
+        }
+        
     }
 
     /**
@@ -77,7 +117,16 @@ class BasicCompetencyController extends Controller
         $basic_competencies = BasicCompetency::findorfail($id);
         $study = Study::all();
         $grade_generalizations = GradeGeneralization::all();
-        return view('admin.basic_competency.edit', compact('basic_competencies', 'study', 'grade_generalizations'));
+
+        if (Auth::guard('user')->user() != null) {
+            return view('user.basic_competency.edit', compact('basic_competencies', 'study', 'grade_generalizations'));
+        }elseif (Auth::guard('admin')->user() != null) {
+            return view('admin.basic_competency.edit', compact('basic_competencies', 'study', 'grade_generalizations'));
+        }
+        else {
+            return back();
+        }
+        // return view('admin.basic_competency.edit', compact('basic_competencies', 'study', 'grade_generalizations'));
     }
 
     /**
@@ -89,15 +138,26 @@ class BasicCompetencyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
+        $validate = $request->validate([
             'name' => 'required',
             'studies_id' => 'required',
         ]);
 
-        $basic_competency = BasicCompetency::findorfail($id);
-        $basic_competency->update($request->all());
-        return redirect()->route('admin.basic-competency.index')
-                            ->with('success', 'Berhasil mengedit data.');
+        if ($validate) {
+            $basic_competency = BasicCompetency::findorfail($id);
+            $basic_competency->update($request->all());
+    
+            if (Auth::guard('user')->user() != null) {
+                return redirect()->route('user.basic-competency.index')->with('success', 'Berhasil mengedit data.');
+            }elseif (Auth::guard('admin')->user() != null) {
+                return redirect()->route('admin.basic-competency.index')->with('success', 'Berhasil mengedit data.');
+            }
+            else {
+                return back();
+            }
+        }
+        
+        // return redirect()->route('admin.basic-competency.index')->with('success', 'Berhasil mengedit data.');
     }
 
     /**
@@ -109,11 +169,17 @@ class BasicCompetencyController extends Controller
     public function destroy($id)
     {
         $basic_competency = BasicCompetency::findorfail($id);
-        // Hapus yang lain
-        // BasicCompetency::where('id', '!=', $id)->where('studies_id', $basic_competency->studies_id)->orWhere('grade_generalizations_id', $basic_competency->grade_generalizations_id)->delete();
-        // Hapus yang terpilih
+
         $basic_competency->delete();
-        return redirect()->route('admin.basic-competency.index')
-                            ->with('success', 'Berhasil menghapus data.');
+
+        if (Auth::guard('user')->user() != null) {
+            return redirect()->route('user.basic-competency.index')->with('success', 'Berhasil menghapus data.');
+        }elseif (Auth::guard('admin')->user() != null) {
+            return redirect()->route('admin.basic-competency.index')->with('success', 'Berhasil menghapus data.');
+        }
+        else {
+            return back();
+        }
+        // return redirect()->route('admin.basic-competency.index')->with('success', 'Berhasil menghapus data.');
     }
 }

@@ -30,7 +30,8 @@ class QuestionGridController extends Controller
 {
     public function index()
     {
-        $question_grid_headers = QuestionGridHeader::where('temp', false)->get();
+        $tahun_ajaran = Session::get('tahun_ajaran');
+        $question_grid_headers = QuestionGridHeader::where('school_year', $tahun_ajaran)->where('temp', false)->get();
         return view('admin.question_grid.index', compact('question_grid_headers'));
     }
 
@@ -186,6 +187,9 @@ class QuestionGridController extends Controller
 
     public function get_step_3()
     {
+        // Ambil tahun ajaran dari session
+        $tahun_ajaran = Session::get('tahun_ajaran');
+
         // Disimpan semua supaya bisa dipreview dan diurut
         $user = Auth::guard('user')->user();
 
@@ -198,7 +202,7 @@ class QuestionGridController extends Controller
         try{
             // Jika sebelumnya sudah ada dan pernah mengunjungi halaman ini maka hapus data sebelumnya dari tabel
             QuestionGrid::join('question_grid_headers', 'question_grids.question_grid_headers_id', 'question_grid_headers.id')->where('question_grid_headers.teachers_id', $user->teacher->id)->where('question_grid_headers.temp', true)->forceDelete();
-            QuestionGridHeader::where('teachers_id', $user->teacher->id)->where('temp', true)->forceDelete();
+            QuestionGridHeader::where('school_year', $tahun_ajaran)->where('teachers_id', $user->teacher->id)->where('temp', true)->forceDelete();
             
             // Buat ulang
             $question_grid_header = new QuestionGridHeader; // Buat headernya dulu

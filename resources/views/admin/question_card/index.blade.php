@@ -10,7 +10,7 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-          <h1>Data Kartu Soal</h1>
+          <h1>Data Kartu Soal Thn. {{ session('tahun_ajaran') }}</h1>
         </div>
         <div class="row">
             <div class="col-12">

@@ -10,7 +10,7 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-        <h1>Dashboard User</h1>
+        <h1>Dashboard User Thn. {{ session('tahun_ajaran') }}</h1>
         </div>
         @include('user.master.alert_success')
         @include('user.master.alert_error')

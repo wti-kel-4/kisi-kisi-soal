@@ -19,14 +19,15 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        $tahun_ajaran = Session::get('tahun_ajaran');
         if (Auth::guard('admin')->check()) {
             $count_user = User::count();
             $count_grade = Grade::count();
             $count_study = Study::count();
             $count_teacher = Teacher::count();
             $count_basic_competency = BasicCompetency::count();
-            $count_question_grid = QuestionGridHeader::count();
-            $count_question_card = QuestionCard::count();
+            $count_question_grid = QuestionGridHeader::where('school_year', $tahun_ajaran)->count();
+            $count_question_card = QuestionCardHeader::where('school_year', $tahun_ajaran)->count();
             return view('admin.dashboard', compact('count_user', 'count_grade', 'count_study', 'count_teacher', 'count_basic_competency', 'count_question_grid', 'count_question_card'));
         } else if (Auth::guard('user')->check()) {
             $user = Auth::guard('user')->user();
@@ -62,8 +63,8 @@ class DashboardController extends Controller
                 Session::forget('users_id_'.$user->id.'_question_card_step_2');
             }
 
-            $question_grid_headers = QuestionGridHeader::where('teachers_id', $user->teacher->id)->where('temp', false)->get();
-            $question_card_headers = QuestionCardHeader::where('teachers_id', $user->teacher->id)->where('temp', false)->get();
+            $question_grid_headers = QuestionGridHeader::where('school_year', $tahun_ajaran)->where('teachers_id', $user->teacher->id)->where('temp', false)->get();
+            $question_card_headers = QuestionCardHeader::where('school_year', $tahun_ajaran)->where('teachers_id', $user->teacher->id)->where('temp', false)->get();
             return view('user.dashboard', compact('question_grid_headers', 'question_card_headers'));
         }else{
             return back();

@@ -23,7 +23,8 @@ class QuestionCardController extends Controller
 
     public function index()
     {
-        $question_card_headers = QuestionCardHeader::where('temp', false)->get();
+        $tahun_ajaran = Session::get('tahun_ajaran');
+        $question_card_headers = QuestionCardHeader::where('temp', false)->where('school_year', $tahun_ajaran)->get();
         return view('admin.question_card.index', compact('question_card_headers'));
     }
     
@@ -102,9 +103,10 @@ class QuestionCardController extends Controller
 
     public function get_step_0()
     {
-        $question_grid_headers_pts = QuestionGridHeader::where('temp', false)->where('type', 'PTS')->get();
-        $question_grid_headers_pat = QuestionGridHeader::where('temp', false)->where('type', 'PAT')->get();
-        $question_grid_headers_pkk = QuestionGridHeader::where('temp', false)->where('type', 'PKK')->get();
+        $tahun_ajaran = Session::get('tahun_ajaran');
+        $question_grid_headers_pts = QuestionGridHeader::where('school_year', $tahun_ajaran)->where('temp', false)->where('type', 'PTS')->get();
+        $question_grid_headers_pat = QuestionGridHeader::where('school_year', $tahun_ajaran)->where('temp', false)->where('type', 'PAT')->get();
+        $question_grid_headers_pkk = QuestionGridHeader::where('school_year', $tahun_ajaran)->where('temp', false)->where('type', 'PKK')->get();
         return view('user.question_card.step_0', compact('question_grid_headers_pts', 'question_grid_headers_pat', 'question_grid_headers_pkk'));
     }
 
@@ -184,6 +186,9 @@ class QuestionCardController extends Controller
 
     public function get_step_3()
     {
+        // Ambil tahun ajaran yang sesuai dari session
+        $tahun_ajaran = Session::get('tahun_ajaran');
+        
         // Disimpan semua supaya bisa dipreview dan diurut
         $user = Auth::guard('user')->user();
 
@@ -196,7 +201,7 @@ class QuestionCardController extends Controller
             
             // Jika sebelumnya sudah ada dan pernah mengunjungi halaman ini maka hapus data sebelumnya dari tabel
             QuestionCard::join('question_card_headers', 'question_cards.question_card_headers_id', 'question_card_headers.id')->where('question_card_headers.teachers_id', $user->teacher->id)->where('question_card_headers.temp', true)->forceDelete();
-            QuestionCardHeader::where('teachers_id', $user->teacher->id)->where('temp', true)->forceDelete();
+            QuestionCardHeader::where('school_year', $tahun_ajaran)->where('teachers_id', $user->teacher->id)->where('temp', true)->forceDelete();
             
             // Buat ulang
             $question_card_header = new QuestionCardHeader; // Buat headernya dulu

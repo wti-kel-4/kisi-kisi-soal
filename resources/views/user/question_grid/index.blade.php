@@ -17,7 +17,7 @@
                 <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                    <h4>Data Kisi - Kisi Soal</h4>
+                    <h4>Data Kisi - Kisi Soal Thn. {{ session('tahun_ajaran') }}</h4>
                     <div class="card-header-form">
                         <form>
                         <div class="input-group">

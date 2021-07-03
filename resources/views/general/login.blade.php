@@ -11,13 +11,25 @@
           <form method="POST" action="{{ route('login') }}" class="needs-validation" novalidate="">
             @csrf
             <div class="form-group">
+              <label for="tahun-ajaran">Tahun Ajaran</label>
+              <select name="tahun_ajaran" class="form-control" required>
+                <option value="{{ date("Y",strtotime("-1 year")).'-' }}{{ date("Y") }}">{{ date("Y",strtotime("-1 year")) }} / {{ date("Y") }}</option>
+                <option value="{{ date("Y",strtotime("-2 year")).'-' }}{{ date("Y",strtotime("-1 year")) }}">{{ date("Y",strtotime("-2 year")) }} / {{ date("Y",strtotime("-1 year")) }}</option>
+                <option value="{{ date("Y",strtotime("-3 year")).'-' }}{{ date("Y",strtotime("-2 year")) }}">{{ date("Y",strtotime("-3 year")) }} / {{ date("Y",strtotime("-2 year")) }}</option>
+                <option value="{{ date("Y",strtotime("-4 year")).'-' }}{{ date("Y",strtotime("-3 year")) }}">{{ date("Y",strtotime("-4 year")) }} / {{ date("Y",strtotime("-3 year")) }}</option>
+                <option value="{{ date("Y",strtotime("-5 year")).'-' }}{{ date("Y",strtotime("-4 year")) }}">{{ date("Y",strtotime("-5 year")) }} / {{ date("Y",strtotime("-4 year")) }}</option>
+              </select>
+              <div class="invalid-feedback">
+                Masukkan Username Anda
+              </div>
+            </div>
+            <div class="form-group">
               <label for="email">Username</label>
               <input id="email" type="text" class="form-control" name="username" tabindex="1" required autofocus>
               <div class="invalid-feedback">
                 Masukkan Username Anda
               </div>
             </div>
-
             <div class="form-group">
               <div class="d-block">
                 <label for="password" class="control-label">Password</label>

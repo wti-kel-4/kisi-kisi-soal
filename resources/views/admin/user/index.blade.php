@@ -8,7 +8,8 @@
         <div class="section-header">
             <h1>Data User</h1>
             <div class="section-header-breadcrumb">
-                <a href="{{route('admin.user.create')}}" class="btn btn-icon icon-left btn-success"><i class="fas fa-plus"></i> Tambah Data</a>
+                <a href="{{route('admin.user.create.import_excel')}}" class="btn btn-icon icon-left btn-success mx-2"><i class="fas fa-file-excel"></i> Tambah Data (Excel) </a>
+                <a href="{{route('admin.user.create')}}" class="btn btn-icon icon-left btn-success mx-2"><i class="fas fa-plus"></i> Tambah Data</a>
             </div>
         </div>
         @include('admin.master.alert_success')

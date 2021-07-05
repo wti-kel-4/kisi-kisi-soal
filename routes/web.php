@@ -55,6 +55,8 @@ Route::prefix('admin')->name('admin.')->middleware(['admin'])->group(function(){
     // });
     Route::resource('study', StudyController::class);
     Route::resource('teacher', TeacherController::class);
+    Route::get('user/import-excel', [UserController::class, 'createImportExcel'])->name('user.create.import_excel');
+    Route::post('user/import-excel', [UserController::class, 'importExcel'])->name('user.import_excel');
     Route::resource('user', UserController::class);
     Route::get('log-activity', [ProfileController::class, 'view_log_all'])->name('log-activity');
 });

@@ -9,6 +9,8 @@ use Exception;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Excel;
+use App\Imports\UsersImport;
 
 class UserController extends Controller
 {
@@ -186,8 +188,26 @@ class UserController extends Controller
             return back()->with('success', 'Berhasil menghapus data user');
         }catch(Exception $ex){
             DB::rollback();
-            echo $ex->getMessage();
-            // return back()->with('error', 'Gagal menghapus data user');
+            return back()->with('error', 'Gagal menghapus data user');
+        }
+    }
+
+    public function createImportExcel()
+    {
+        return view('admin.user.create_excel');
+    }
+
+    public function importExcel(Request $request)
+    {
+        if(!$request->has('file')){
+            return back()->with('error', 'Gagal menambahkan data user, coba periksa file excel yang Anda pilih (xls, xlsx, csv)');
+        }
+
+        try{
+            $excel = Excel::import(new UsersImport, $request->file('file')->store('temp'));
+            return redirect()->route('admin.user.index')->with('success', 'Anda sudah berhasil menambahkan data user dengan excel');
+        }catch(\Exception $ex){
+            dd($ex->getMessage());
         }
     }
 }
